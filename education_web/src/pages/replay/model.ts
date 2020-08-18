@@ -241,14 +241,19 @@ class ReplayStore {
     this.commit(this.state);
   }
 
-  // loadFirstFrame() {
-  //   if (!this.state) return
-  //   this.state = {
-  //     ...this.state,
-  //     isFirstScreenReady: true,
-  //   }
-  //   this.commit(this.state);
-  // }
+  loadFirstFrame() {
+    console.log("invoke loadFirstFrame")
+    if (!this.state) return
+    this.state = {
+      ...this.state,
+      isFirstScreenReady: true,
+    }
+    if (this.state.player) {
+      this.state.player.seekToScheduleTime(0)
+    }
+    console.log("invoke loadFirstFrame success", this.state.isFirstScreenReady)
+    this.commit(this.state);
+  }
 
   addWhiteboardPlayer(player: any) {
     if (!this.state) return

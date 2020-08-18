@@ -10,3 +10,4 @@ release
 *.*~
 package-lock.json
 education_web/package-lock.json
+node_modules

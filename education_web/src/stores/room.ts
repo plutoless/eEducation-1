@@ -1078,35 +1078,9 @@ export class RoomStore {
   // 仅用于electron运行环境
   async startNativeScreenShare() {
     const rtcClient = this.rtcClient;
-
-    const items = (rtcClient as AgoraElectronClient).getScreenShareWindows()
-
-    const noImageItems = items.filter((it: any) => !it.image)
-
-    if (noImageItems.length) {
-      globalStore.showToast({
-        type: 'screenSharePermission',
-        message: t('screen_share_permission'),
-      })
-      //@ts-ignore
-      if (window.os_platform === 'darwin') {
-        //@ts-ignore
-        if (window.openPrivacyForCaptureScreen) {
-          //@ts-ignore
-          window.openPrivacyForCaptureScreen()
-        }
-      }
-      return 
-    }
-
-    const windowItems = items.map((item: any) => ({
-      ...item,
-      image: CustomBtoa(item.image)
-    }))
-
     globalStore.setNativeWindowInfo({
       visible: true,
-      items: windowItems
+      items: (rtcClient as AgoraElectronClient).getScreenShareWindows()
     })
   }
 
@@ -1152,6 +1126,7 @@ export class RoomStore {
     }
     this.commit(this.state)
   }
+  
   async startRecording () {
     this.lockRecording()
     try {
