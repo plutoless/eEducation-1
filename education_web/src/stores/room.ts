@@ -10,6 +10,7 @@ import { get, set } from 'lodash';
 import { isElectron } from '../utils/platform';
 import GlobalStorage from '../utils/custom-storage';
 import { t } from '../i18n';
+import { CustomBtoa } from '@/utils/helper';
 import { eduApi, UserAttrsParams } from '../services/edu-api';
 
 export interface NotifyFlag {
@@ -277,6 +278,22 @@ export class RoomStore {
     return true;
   }
 
+  updateRecordState(params: RecordStateParams) {
+    this.state = {
+      ...this.state,
+      course: {
+        ...this.state.course,
+        roomId: params.roomId,
+        recordId: params.recordId,
+        recordingTime: params.recordingTime,
+        isRecording: !!params.isRecording,
+      },
+    }
+
+    console.log(">>>: updateRecordState ", params)
+    this.commit(this.state)
+  }
+
   async fetchCurrentRoom() {
     try {
       const res = await eduApi.fetchRoomBy(roomStore.state.course.roomId);
@@ -464,21 +481,6 @@ export class RoomStore {
       }
     }
     this.commit(this.state);
-  }
-
-  updateRecordState(params: RecordStateParams) {
-    this.state = {
-      ...this.state,
-      course: {
-        ...this.state.course,
-        roomId: params.roomId,
-        recordId: params.recordId,
-        recordingTime: params.recordingTime,
-        isRecording: !!params.isRecording,
-      },
-    }
-
-    this.commit(this.state)
   }
 
   updateDevice(state: MediaDeviceState) {
@@ -1132,7 +1134,7 @@ export class RoomStore {
       const {data: recordId} = await eduApi.startRecording({
         recordingConfig: {
           maxIdleTime
-        }
+        },
       })
       this.state = {
         ...this.state,

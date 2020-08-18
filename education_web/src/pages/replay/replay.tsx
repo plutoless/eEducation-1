@@ -187,7 +187,7 @@ export const NetlessAgoraReplay: React.FC<NetlessAgoraReplayProps> = ({
               replayStore.updateWhiteboardPhase(phase);
             },
             onLoadFirstFrame: () => {
-              // replayStore.loadFirstFrame();
+              replayStore.loadFirstFrame();
             },
             onSliceChanged: () => {
             },
@@ -208,6 +208,7 @@ export const NetlessAgoraReplay: React.FC<NetlessAgoraReplayProps> = ({
           }).then((player: Player | undefined) => {
             if (player) {
               replayStore.setPlayer(player);
+              player.seekToScheduleTime(0);
               player.bindHtmlElement(document.getElementById("whiteboard") as HTMLDivElement);
             }
           })
@@ -231,6 +232,8 @@ export const NetlessAgoraReplay: React.FC<NetlessAgoraReplayProps> = ({
     if (!player) {
       return (<Progress title={t("replay.loading")} />)
     }
+
+    if (!state.isFirstScreenReady) return null
 
     if (player.phase === PlayerPhase.Playing) return null;
 
@@ -289,7 +292,7 @@ export const NetlessAgoraReplay: React.FC<NetlessAgoraReplayProps> = ({
       </div>
       <div className="video-container">
         <div className="video-player">
-          <video id="white-sdk-video-js" className="video-js video-layout" style={{width: "100%", height: "100%", objectFit: "cover"}}></video>
+          <video playsInline={true} id="white-sdk-video-js" className="video-js video-layout" style={{width: "100%", height: "100%", objectFit: "cover"}}></video>
         </div>
         <div className="chat-holder chat-board chat-messages-container">
           <RTMReplayer

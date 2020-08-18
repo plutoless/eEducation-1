@@ -9,4 +9,5 @@ release
 *.*~.DS_Store
 *.*~
 package-lock.json
+education_web/package-lock.json
 node_modules

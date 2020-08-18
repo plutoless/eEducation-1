@@ -207,7 +207,11 @@ export const RootProvider: React.FC<any> = ({children}) => {
           userId: data.userId
         })
       }
+
+      // TODO: recordingStateChanged
+      // TODO: 录制状态发生改变了
       if (cmd === ChatCmdType.recordStateChanged) {
+        console.log("Received, ChatCmdType.recordStateChanged: ", cmd)
         roomStore.updateRecordState({
           roomId: data.roomId,
           recordId: data.recordId,
