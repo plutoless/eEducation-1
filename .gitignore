@@ -6,8 +6,10 @@ release
 .env
 !.env.example
 *.~
-*.*~.DS_Store
+*.*~
+.DS_Store
 *.*~
 package-lock.json
 education_web/package-lock.json
 node_modules
+education_web/package-lock.json

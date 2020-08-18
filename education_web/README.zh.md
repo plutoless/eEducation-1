@@ -49,6 +49,12 @@
    # 声网 HTTP basic 认证 Authorization 字段
    REACT_APP_AGORA_RESTFULL_TOKEN=agora_restful_api_token
    ```
+   - **（必填）Netless的APP ID**
+   具体详情请参考netless[官方文档](https://developer.netless.link/docs/faq/app-identifier/#docsNav)  
+   ```
+   # netless的app id
+   REACT_APP_NETLESS_APP_ID=netless_appid
+   ```  
    - **（选填）适用于白板课件服务，如不需要可以直接按照下列配置**
    ```bash
    # 你自己的 OSS bucket name

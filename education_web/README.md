@@ -48,6 +48,12 @@
   # agora http basic authorization
   REACT_APP_AGORA_RESTFULL_TOKEN=agora_restful_api_token
   ```
+  - **(Required) Netless appid**
+  more details, please read netless [app-identifier](https://developer.netless.link/docs/faq/app-identifier/#docsNav) documentation  
+  ```bash
+  # netless appId
+  REACT_APP_NETLESS_APP_ID=netless_appid
+  ```
   - **(Optional) OSS configurations for whiteboard courseware. Ignore these if you do not need this.**
   ```bash
   # your oss bucket name
