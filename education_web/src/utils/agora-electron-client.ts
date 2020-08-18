@@ -2,6 +2,7 @@ import { APP_ID } from './config';
 import EventEmitter from 'events';
 import { RoomStore } from '../stores/room';
 import { globalStore } from '../stores/global';
+import { CustomBtoa } from './helper';
 // @ts-ignore
 export const AgoraRtcEngine = window.rtcEngine;
 
@@ -225,7 +226,7 @@ export class AgoraElectronClient {
         ownerName: item.ownerName,
         name: item.name,
         windowId: item.windowId,
-        image: item.image,
+        image: CustomBtoa(item.image),
       }));
   }
 
