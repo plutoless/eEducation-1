@@ -83,10 +83,11 @@ function cacheNetlessStaticRequest(request) {
     .then((response) => {
       openCache().then(function(cache) {
         if (request.url) {
-          var truncate = request.url.split(targetUrl)
+          var truncate = request.url.split(targetUrl+'/')
           if (truncate[1]) {
-            console.log('[sw] set cached ')
-            cache.put(truncate[1], response)
+            var location = getLocation(truncate[1])
+            console.log('[sw] set cached location: ', location)
+            cache.put(location, response.clone())
           }
         }
       });
@@ -140,7 +141,7 @@ function cacheEntry(entry) {
         }
         console.log('-> cache.put', location,
         '(size:', entry.uncompressedSize, 'bytes)'); 
-        return cache.put(location, response);
+        return cache.put(location, response.clone());
       }).then(fulfill, reject);
     });
   });
@@ -188,11 +189,10 @@ self.addEventListener('fetch', function(event) {
               return fetch(request)
             })
           } else {
-            // console.log("fetch>>>> ", method, url, request, truncate[1])
             event.respondWith(
-              caches.match(truncate[1])
+              caches.match(request)
                 .then(function(response) {
-                  console.log("[sw] get cached ", truncate[1])
+                  console.log("[sw] try to match ", truncate[1], ' response: ', response)
                   if (response) {
                     return response;
                   } else {
