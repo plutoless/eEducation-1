@@ -13,3 +13,4 @@ src/assets/.DS_Store
 node_modules
 app/log
 app/*.log
+test_education_web

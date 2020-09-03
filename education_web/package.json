@@ -2,7 +2,7 @@
   "name": "Agora-Edu-Web",
   "version": "5.4.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "/test_education_web",
   "main": "./src/index.tsx",
   "agora_electron": {
     "platform": "darwin",
@@ -88,8 +88,8 @@
     "electron:copy:web": "cross-env REACT_APP_RUNTIME_PLATFORM=electron react-app-rewired build",
     "electron:copy:electron": "cpx ./app/**/*.js ./build",
     "electron:build": "npm run electron:copy:web && npm run electron:copy:electron",
-    "dev": "cross-env TSC_COMPILE_ON_ERROR=false REACT_APP_RUNTIME_PLATFORM=web react-app-rewired start",
-    "build": "cross-env TSC_COMPILE_ON_ERROR=false ENV=production REACT_APP_RUNTIME_PLATFORM=web react-app-rewired build",
+    "dev": "cross-env NODE_ENV=production WITH_SERVICE_WORKER=true TSC_COMPILE_ON_ERROR=false REACT_APP_RUNTIME_PLATFORM=web react-app-rewired start",
+    "build": "cross-env TSC_COMPILE_ON_ERROR=false WITH_SERVICE_WORKER=true ENV=production REACT_APP_RUNTIME_PLATFORM=web react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "eject": "react-scripts eject",
@@ -175,6 +175,7 @@
     "wait-on": "^3.3.0",
     "webpack-bundle-analyzer": "^3.8.0",
     "white-web-sdk": "2.7.5",
+    "workbox-webpack-plugin": "^5.1.3",
     "worker-loader": "^2.0.0",
     "zlib": "^1.0.5"
   }

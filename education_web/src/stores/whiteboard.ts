@@ -148,13 +148,13 @@ class Whiteboard extends EventEmitter {
 
   getNameByScenePath(scenePath: string) {
     const sceneMap = get(this.state.room, `state.globalState.sceneMap`, {})
-    console.log("sceneMap", sceneMap)
+    // console.log("sceneMap", sceneMap)
     return get(sceneMap, scenePath, 'default name')
   }
 
   updateRoomState() {
     if (!this.state.room) return;
-    console.log("current room state", this.state.room.state);
+    // console.log("current room state", this.state.room.state);
     const roomState = this.state.room.state;
 
     const path = roomState.sceneState.scenePath;
