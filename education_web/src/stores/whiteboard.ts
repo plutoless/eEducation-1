@@ -99,6 +99,8 @@ class Whiteboard extends EventEmitter {
     type: 'static'
   }
 
+  public disconnected: boolean = true
+
   public readonly client: WhiteWebSdk = new WhiteWebSdk({
     deviceType: DeviceType.Surface,
     // handToolKey: " ",
@@ -178,9 +180,9 @@ class Whiteboard extends EventEmitter {
       }
     }
 
-    const entrieScenes = this.state.room ? this.state.room.entireScenes() : {};
+    const entireScenes = this.state.room ? this.state.room.entireScenes() : {};
 
-    const paths = Object.keys(entrieScenes);
+    const paths = Object.keys(entireScenes);
 
     let scenes: CustomScene[] = [];
     for (let dirPath of paths) {
@@ -193,9 +195,9 @@ class Whiteboard extends EventEmitter {
         type: 'static',
         rootPath: '',
       }
-      if (entrieScenes[dirPath]) {
-        sceneInfo.rootPath = ['/', '/init'].indexOf(dirPath) !== -1 ? '/init' : `${dirPath}/${entrieScenes[dirPath][0].name}`
-        sceneInfo.type = entrieScenes[dirPath][0].ppt ? 'dynamic' : 'static'
+      if (entireScenes[dirPath]) {
+        sceneInfo.rootPath = ['/', '/init'].indexOf(dirPath) !== -1 ? '/init' : `${dirPath}/${entireScenes[dirPath][0].name}`
+        sceneInfo.type = entireScenes[dirPath][0].ppt ? 'dynamic' : 'static'
         if (sceneInfo.type === 'dynamic') {
           sceneInfo.file.type = 'ppt';
         }
@@ -296,8 +298,10 @@ class Whiteboard extends EventEmitter {
     const room = await this.client.joinRoom(roomParams, {
       onPhaseChanged: (phase: RoomPhase) => {
         if (phase === RoomPhase.Connected) {
+          this.disconnected = false
           this.updateLoading(false);
         } else {
+          this.disconnected = true
           this.updateLoading(true);
         }
         console.log("[White] onPhaseChanged phase : ", phase);
@@ -341,6 +345,7 @@ class Whiteboard extends EventEmitter {
     } catch(err) {
       console.warn('disconnect whiteboard failed', err);
     } finally {
+      this.disconnected = true
       this.cleanRoom();
       console.log("cleanRoom");
     }

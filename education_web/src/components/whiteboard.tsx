@@ -4,6 +4,7 @@ import { Room } from 'white-web-sdk';
 import { whiteboard } from '../stores/whiteboard';
 import { t } from '../i18n';
 import { Progress } from '../components/progress/progress';
+import { ResizeObserver } from '@juggle/resize-observer';
 
 interface WhiteBoardProps {
   room?: Room | null
@@ -18,22 +19,25 @@ export default function Whiteboard ({
 }: WhiteBoardProps) {
 
   const domRef = useRef(null);
+  const domObserver = useRef<any>(null)
 
   useEffect(() => {
     if (!room || !whiteboard.state.room || !domRef.current) return;
     room.bindHtmlElement(domRef.current);
-    whiteboard.updateRoomState();
-    window.addEventListener("resize", (evt: any) => {
-      if (whiteboard.state.room !== null && whiteboard.state.room.isWritable) {
+    domObserver.current = new ResizeObserver((entries, observer) => {
+      if (!whiteboard.disconnected && whiteboard.state.room !== null && whiteboard.state.room.isWritable) {
         whiteboard.state.room.moveCamera({centerX: 0, centerY: 0});
         whiteboard.state.room.refreshViewSize();           
       }
-    });
+    })
+    if (domObserver.current) {
+      domObserver.current.observe(domRef.current)
+    }
+    whiteboard.updateRoomState();
     return () => {
       if (whiteboard.state.room) {
         whiteboard.state.room.bindHtmlElement(null);
       }
-      window.removeEventListener("resize", (evt: any) => {});
     }
   }, [room, domRef]);
 
