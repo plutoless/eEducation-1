@@ -79,6 +79,7 @@ function getContentType(filename) {
 
 function cacheNetlessStaticRequest(request) {
   return new Promise((resolve, reject) => {
+    console.log('[sw] trying send request caching static resources')
     fetch(request)
     .then((response) => {
       openCache().then(function(cache) {
@@ -156,7 +157,7 @@ function loadCacheFromZip(request) {
         .then(getZipReader)
         .then(cacheContents)
         .then(function(res) {
-          console.log('[sw] zip>>>>>> ', res)
+          console.log('[sw] zip>>>>>> ')
           resolve(res)
         })
     })
@@ -199,9 +200,9 @@ self.addEventListener('fetch', function(event) {
                     return cacheNetlessStaticRequest(request)
                   }
                 })
-                .catch(function() {
-                  return cacheNetlessStaticRequest(request)
-                })
+                // .catch(function() {
+                //   return cacheNetlessStaticRequest(request)
+                // })
     
             );
           }
