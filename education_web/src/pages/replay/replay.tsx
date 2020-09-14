@@ -276,6 +276,23 @@ export const NetlessAgoraReplay: React.FC<NetlessAgoraReplayProps> = ({
                     lock.current = false;
                   }
                 }}
+                onTouchStart={() => {
+                  console.log('onTouchEnd')
+                  if (replayStore.state && replayStore.state.player) {
+                    const player = replayStore.state.player as Player;
+                    player.pause();
+                    lock.current = true;
+                  }
+                }}
+                onTouchEnd={() => {
+                  console.log('onTouchStart')
+                  if (replayStore.state && replayStore.state.player) {
+                    const player = replayStore.state.player as Player;
+                    player.seekToScheduleTime(state.currentTime);
+                    player.play();
+                    lock.current = false;
+                  }
+                }}
                 onChange={handleChange}
                 min={0}
                 max={duration}
