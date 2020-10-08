@@ -24,6 +24,8 @@ export interface AgoraStreamSpec {
   }
 }
 
+type AgoraBaseStream = ReturnType<typeof AgoraRTC.createStream>
+
 const streamEvents: string[] = [
   'accessAllowed', 
   'accessDenied',
@@ -198,6 +200,65 @@ export class AgoraRTCClient {
     return new Promise((resolve, reject) => {
       this._client.enableDualStream(resolve, reject);
     });
+  }
+
+  compositeAVStream(audioStream: AgoraBaseStream, videoStream: AgoraBaseStream) {
+    if(!audioStream && !videoStream){
+      return null
+    }
+
+    if(!audioStream && videoStream) {
+      return videoStream
+    }
+
+    if(audioStream && !videoStream) {
+      return audioStream
+    }
+
+    if(audioStream && videoStream) {
+      let videoTrack = videoStream.getVideoTrack()
+      audioStream.addTrack(videoTrack)
+      return audioStream
+    }
+  }
+
+  acquireMediaStream(data: AgoraStreamSpec): Promise<any> {
+    const tempAudioStream = AgoraRTC.createStream({ ...data, audio: true, video: false });
+    const tempVideoStream = AgoraRTC.createStream({ ...data, audio: false, video: true });
+
+    const getAudioStream = new Promise(resolve => {
+      tempAudioStream.init(() => {
+        resolve({err: null, stream:tempAudioStream})
+      }, (err: any) => {
+        resolve({err})
+      });
+    });
+    const getVideoStream = new Promise(resolve => {
+      tempVideoStream.init(() => {
+        resolve({err: null, stream:tempVideoStream})
+      }, (err: any) => {
+        resolve({err})
+      });
+    });
+
+    return new Promise((resolve, reject) => {
+      Promise.all([getAudioStream, getVideoStream]).then(results => {
+        let streams = results.map((r:any) => r.stream)
+        let errors = results.map((r:any) => r.err)
+
+        if(streams[0] === null && streams[1] === null) {
+          return reject(new Error(`video: ${errors[0].message}; audio: ${errors[1].message}}`))
+        }
+
+        let tmpStream = this.compositeAVStream(streams[0], streams[1])
+        this._localStream = tmpStream;
+        this.streamID = data.streamID;
+        this.subscribeLocalStreamEvents();
+        resolve(tmpStream)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 
   createLocalStream(data: AgoraStreamSpec): Promise<any> {

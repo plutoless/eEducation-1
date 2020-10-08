@@ -223,7 +223,7 @@ export class AgoraWebClient {
       }
     }
 
-    await this.rtc.createLocalStream(data);
+    await this.rtc.acquireMediaStream(data);
     await this.rtc.publish();
     this.published = true;
   }

@@ -53,6 +53,10 @@ const setElectronDeps = isProd ? {
   "agora-electron-sdk": "commonjs2 agora-electron-sdk"
 }
 
+const setWebDeps = {
+  "agora-rtc-sdk": "AgoraRTC"
+}
+
 const useOptimizeBabelConfig = () => config => {
   const rule = {
     test: /\.(ts)x?$/i,
@@ -86,6 +90,7 @@ module.exports = override(
     test: /\.worker\.js$/,
     use: { loader: 'worker-loader' },
   }),
+  addWebpackExternals(setWebDeps),
   isElectron && addWebpackExternals(setElectronDeps),
   fixBabelImports("import", [
     {
