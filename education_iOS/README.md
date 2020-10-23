@@ -43,7 +43,9 @@ open AgoraEducation.xcworkspace
 Pass the following parameters in `KeyCenter.m`:
 
 - The Agora App ID that you get.
-- The `Authorization` parameter that you have generated for basic HTTP authentication.
+- The Agora Customer ID that you get.
+- The Agora Customer Certificate that you get.
+- The WhiteBoard AppIdentifier that you get.
 
 For details, see the [prerequisites](https://github.com/AgoraIO-Usecase/eEducation#prerequisites) in Agora E-education Guide.
 
@@ -52,8 +54,16 @@ For details, see the [prerequisites](https://github.com/AgoraIO-Usecase/eEducati
      return <#Your Agora App Id#>;
 }
 
-+ (NSString *)authorization {
-     return <#Your Authorization#>;
++ (NSString *)customerId {
+     return <#Your Agora Customer Id#>;
+}
+
++ (NSString *)customerCertificate {
+     return <#Your Agora Customer Certificate#>;
+}
+
++ (NSString *)boardAppid {
+     return <#Your Board App Id#>;
 }
 
 ```

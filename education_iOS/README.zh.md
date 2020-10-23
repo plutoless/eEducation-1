@@ -42,7 +42,9 @@ open AgoraEducation.xcworkspace
 
 在 `KeyCenter.m` 文件中配置以下参数：
 - 你获取到的声网 App ID。
-- 你生成的 `Authorization` 字段，用于 HTTP 基本认证。
+- 你获取到的声网 Customer ID。
+- 你获取到的声网 Customer Certificate
+- 你获取到的白板 AppIdentifier。
 
 详见 Agora e-Education 项目指南中的[前提条件](https://github.com/AgoraIO-Usecase/eEducation/blob/master/README.zh.md#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6)。
 
@@ -51,8 +53,16 @@ open AgoraEducation.xcworkspace
      return <#Your Agora App Id#>;
 }
 
-+ (NSString *)authorization {
-     return <#Your Authorization#>;
++ (NSString *)customerId {
+     return <#Your Agora Customer Id#>;
+}
+
++ (NSString *)customerCertificate {
+     return <#Your Agora Customer Certificate#>;
+}
+
++ (NSString *)boardAppid {
+     return <#Your Board App Id#>;
 }
 
 ```
