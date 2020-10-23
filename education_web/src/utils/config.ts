@@ -1,6 +1,7 @@
-export const APP_ID = process.env.REACT_APP_AGORA_APP_ID as string;
 export const APP_TOKEN = process.env.REACT_APP_AGORA_APP_TOKEN as string;
 export const ENABLE_LOG = process.env.REACT_APP_AGORA_LOG as string;
+export const APP_ID: string = process.env.REACT_APP_AGORA_APP_ID as string;
+export const AUTHORIZATION: string = process.env.REACT_APP_AGORA_RESTFULL_TOKEN as string;
 
 export const RoomKeyIdentifier = 'agora_meeting_room'
 export const GlobalKeyIdentifier = 'global_identifier'

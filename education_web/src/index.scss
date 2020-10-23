@@ -22,7 +22,7 @@ html, body, #root {
   z-index: 10000;
   -webkit-app-region: drag;
   -webkit-user-select: none;
-  .card-menu, .position-content {
+  .device-page-container {
     -webkit-app-region: no-drag;
   }
 }
@@ -87,6 +87,8 @@ body {
     justify-content: space-between;
     max-width: 291px;
     min-height: 28px;
+    -webkit-app-region: no-drag !important;
+    user-select: inherit !important;
   }
 }
 
@@ -223,6 +225,7 @@ body {
   flex-direction: row;
   box-sizing: border-box;
 }
+
 .position-content {
   top: 45px;
   bottom: 53px;
@@ -235,6 +238,8 @@ body {
   box-sizing: content-box;
   display: flex;
   align-items: center;
+  -webkit-app-region: no-drag !important;
+  user-select: inherit !important;
   .MuiButtonBase-root.custom-button {
     width: 250px;
     height: 40px;
@@ -246,20 +251,6 @@ body {
     }
     position: relative;
     bottom: -14px;
-  }
-}
-
-.class-title {
-  font-size: 14px;
-  color: #666;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 10px;
-  width: 100%;
-  .room-name {
-    line-height: 20px;
   }
 }
 
@@ -275,6 +266,7 @@ body {
   min-width: 990px;
   // min-height: 706px;
   .live-container {
+    display: flex;
     flex: 1;
     position: relative;
   }
@@ -370,4 +362,10 @@ body {
       }
     }
   }
+}
+
+.biz-container {
+  display: flex;
+  flex: 1;
+  position: relative;
 }

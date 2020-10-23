@@ -13,3 +13,8 @@ src/assets/.DS_Store
 node_modules
 app/log
 app/*.log
+ng_web_sdk
+*.sh
+back
+mac
+win32

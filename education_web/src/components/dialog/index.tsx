@@ -1,38 +1,49 @@
-import React, {useMemo} from 'react';
-import Button from '../custom-button';
+import React from 'react';
+import {CustomButton} from '../custom-button';
 import {Dialog, DialogContent, DialogContentText} from '@material-ui/core';
 
 import './dialog.scss';
-import { useGlobalState } from '@/containers/root-container';
-import { roomStore } from '@/stores/room';
-import { globalStore } from '@/stores/global';
-import { useHistory } from 'react-router-dom';
-// import { RoomMessage } from '@/utils/agora-rtm-client';
 import { t } from '@/i18n';
-import { isElectron } from '@/utils/platform';
-import { eduApi } from '@/services/edu-api';
+import { observer } from 'mobx-react';
+import { useRoomStore, useUIStore, useBreakoutRoomStore } from '@/hooks';
+import { useHistory, useLocation } from 'react-router-dom';
+
+export interface DialogMessage {
+  type: string
+  userUuid?: any
+  message: string
+}
+
+export type DialogType = {
+  id: number
+  dialog: DialogMessage
+}
 
 interface RoomProps {
   onConfirm: (type: string) => void
   onClose: (type: string) => void
-  desc: string
-  type: string
+  dialogId: number
+  dialogMessage: DialogMessage
 }
 
 function RoomDialog(
 {
   onConfirm,
   onClose,
-  desc,
-  type
+  dialogId,
+  dialogMessage
 }: RoomProps) {
 
-  const handleClose = () => {
-    onClose(type)
+  const uiStore = useUIStore()
+
+  const handleClose = async () => {
+    await onClose(dialogMessage.type)
+    uiStore.removeDialog(dialogId)
   };
 
-  const handleConfirm = () => {
-    onConfirm(type)
+  const handleConfirm = async () => {
+    await onConfirm(dialogMessage.type)
+    uiStore.removeDialog(dialogId)
   }
 
   return (
@@ -48,11 +59,11 @@ function RoomDialog(
           className="modal-container"
         >
           <DialogContentText className="dialog-title">
-            {desc}
+            {dialogMessage.message}
           </DialogContentText>
           <div className="button-group">
-            <Button name={t("toast.confirm")} className="confirm" onClick={handleConfirm} color="primary" />
-            <Button name={t("toast.cancel")} className="cancel" onClick={handleClose} color="primary" />
+            <CustomButton name={t("toast.confirm")} className="confirm" onClick={handleConfirm} color="primary" />
+            <CustomButton name={t("toast.cancel")} className="cancel" onClick={handleClose} color="primary" />
           </div>
         </DialogContent>
       </Dialog>
@@ -60,89 +71,55 @@ function RoomDialog(
   );
 }
 
-const DialogContainer = () => {
+const DialogContainer = observer(() => {
+  const roomStore = useRoomStore()
+  const breakoutRoomStore = useBreakoutRoomStore()
+  const uiStore = useUIStore()
+  const history = useHistory()
 
-  const history = useHistory();
-  const {dialog} = useGlobalState();
+  const location = useLocation()
 
-  const visible = useMemo(() => {
-    if (!dialog.type) return false;
-    return true;
-  }, [dialog]);
-
-  const onClose = (type: string) => {
-    if (type === 'exitRoom') {
-      globalStore.removeDialog();
-    }
-    else if (type === 'apply') {
-      eduApi
-      .teacherRejectApply(
-        roomStore.state.course.roomId,
-        roomStore.state.applyUser.userId,
-      )
-      .then(() => {
-        globalStore.showToast({
-          type: 'peer_hands_up', 
-          message: t('toast.reject_co_video')
-        });
-        globalStore.removeNotice();
-        globalStore.removeDialog();
-      })
-      .catch((err: any) => {
-        console.warn(err)
-      })
-    } else if (type === 'uploadLog') {
-      globalStore.removeDialog()
+  const onClose = async (type: string) => {
+    if (type === 'apply') {
+      await roomStore.teacherRejectApply()
     }
   }
 
-  const onConfirm = (type: string) => {
+  const onConfirm = async (type: string) => {
     if (type === 'exitRoom') {
-      globalStore.showLoading()
-      roomStore.exitRoom().finally(() => {
-        globalStore.removeDialog();
-        globalStore.stopLoading()
-        if (isElectron) {
-          history.push('/')
-        } else {
-          history.goBack()
-        }
-      })
+      if (location.pathname.match(/breakout/)) {
+        await breakoutRoomStore.leave()
+      } else {
+        await roomStore.leave()
+      }
+      history.push('/')
     }
     else if (type === 'apply') {
       // p2p message accept coVideo
       // 老师同意学生连麦申请
-      eduApi.teacherAcceptApply(roomStore.state.course.roomId, roomStore.state.applyUser.userId)
-        .then(() => {
-          globalStore.showToast({
-            type: 'peer_hands_up', 
-            message: t('toast.accept_co_video')
-          });
-          globalStore.removeNotice();
-          globalStore.removeDialog();
-        })
-        .catch((err: any) => {
-          console.warn(err)
-        })
+      await roomStore.teacherAcceptApply()
     }
     else if (type === 'uploadLog') {
-      globalStore.removeDialog()
+      // globalStore.removeDialog()
     }
 
     return;
   }
 
-  return (
-    visible ? 
-      <RoomDialog 
-        type={dialog.type}
-        desc={dialog.message}
+  return <>
+    {
+    uiStore.dialogs.map(dialog => (
+      <RoomDialog
+        key={dialog.id as number}
+        dialogId={dialog.id as number}
+        dialogMessage={dialog.dialog as DialogMessage}
         onClose={onClose}
         onConfirm={onConfirm}
-      /> : 
-      null
-  )
-}
+      />
+    ))
+    }
+    </>
+})
 
 
-export default React.memo(DialogContainer);
+export default DialogContainer;

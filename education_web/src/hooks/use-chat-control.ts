@@ -1,4 +1,3 @@
-import { roomStore } from '@/stores/room';
 import {useEffect, useRef, useMemo} from 'react';
 
 export default function useChatControl () {
@@ -12,8 +11,10 @@ export default function useChatControl () {
     }
   }, []);
 
-  const me = roomStore.state.me;
-  const course = roomStore.state.course;
+  const me: any = {}
+  const course: any = {}
+  // const me = roomStore.state.me;
+  // const course = roomStore.state.course;
 
   const muteControl = me.role === 1;
 
@@ -34,14 +35,14 @@ export default function useChatControl () {
     handleMute (type: string) {
       if (!lock.current) {
         lock.current = true;
-        roomStore.updateCourse({
-          muteChat: type === 'mute' ? 1 : 0
-        }).then(() => {
-          console.log("update success");
-        }).catch(console.warn)
-        .finally(() => {
-          lock.current = false;
-        })
+        // roomStore.updateCourse({
+        //   muteChat: type === 'mute' ? 1 : 0
+        // }).then(() => {
+        //   console.log("update success");
+        // }).catch(console.warn)
+        // .finally(() => {
+        //   lock.current = false;
+        // })
       }
 
     }

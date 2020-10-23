@@ -1,4 +1,3 @@
-import { RoomMessage } from './agora-rtm-client';
 import OSS from 'ali-oss';
 import {get} from 'lodash';
 
@@ -9,52 +8,6 @@ export interface OSSConfig {
   endpoint: string,
   bucket: string,
   folder: string,
-}
-
-export const ossConfig: OSSConfig = {
-  "accessKeyId": get(process.env, 'REACT_APP_YOUR_OWN_OSS_BUCKET_KEY', 'empty-placeholder'),
-  "accessKeySecret": get(process.env, 'REACT_APP_YOUR_OWN_OSS_BUCKET_SECRET', 'empty-placeholder'),
-  "bucket": get(process.env, 'REACT_APP_YOUR_OWN_OSS_BUCKET_NAME', 'empty-placeholder'),
-  // "region": process.env.REACT_APP_YOUR_OWN_OSS_BUCKET_REGION as string,
-  "endpoint": get(process.env, 'REACT_APP_YOUR_OWN_OSS_CDN_ACCELERATE', 'empty-placeholder'),
-  "folder": get(process.env, 'REACT_APP_YOUR_OWN_OSS_BUCKET_FOLDER', 'empty-placeholder'),
-}
-
-// console.log("your oss config ", ossConfig)
-
-export const ossClient = new OSS(ossConfig);
-
-export function resolveMessage(peerId: string, { cmd, text }: { cmd: number, text?: string }) {
-  let type = '';
-  switch (cmd) {
-    case RoomMessage.acceptCoVideo:
-      type = 'accept co-video'
-      break;
-    case RoomMessage.rejectCoVideo:
-      type = 'reject co-video'
-      break;
-    case RoomMessage.cancelCoVideo:
-      type = 'cancel co-video'
-      break;
-    case RoomMessage.applyCoVideo:
-      type = 'apply co-video'
-      break;
-    case RoomMessage.muteVideo:
-      type = 'mute video'
-      break;
-    case RoomMessage.muteAudio:
-      type = 'mute audio'
-      break;
-    case RoomMessage.unmuteAudio:
-      type = 'unmute audio'
-      break;
-    case RoomMessage.unmuteVideo:
-      type = 'unmute video'
-      break;
-    default:
-      return console.warn(`[RoomMessage] unknown type, from peerId: ${peerId}`);
-  }
-  console.log(`[RoomMessage] [${type}] from peerId: ${peerId}`)
 }
 
 export interface UserAttrs {
@@ -69,61 +22,6 @@ export interface UserAttrs {
   shared_uid?: number
   mute_chat?: number
   class_state?: number
-}
-
-export function resolveMediaState(body: any) {
-  const cmd: number = body.cmd;
-  const mediaState = {
-    key: 'unknown',
-    val: -1,
-  }
-  switch (cmd) {
-    case RoomMessage.muteVideo:
-      mediaState.key = 'video'
-      mediaState.val = 0
-      break
-    case RoomMessage.unmuteVideo:
-      mediaState.key = 'video'
-      mediaState.val = 1
-      break
-    case RoomMessage.muteAudio:
-      mediaState.key = 'audio'
-      mediaState.val = 0
-      break
-    case RoomMessage.unmuteAudio:
-      mediaState.key = 'audio'
-      mediaState.val = 1
-      break
-    case RoomMessage.muteChat:
-      mediaState.key = 'chat'
-      mediaState.val = 0
-      break
-    case RoomMessage.unmuteChat:
-      mediaState.key = 'chat'
-      mediaState.val = 1
-      break
-    default:
-      console.warn("[rtm-message] unknown message protocol");
-  }
-  return mediaState;
-}
-
-export function genUid(): string {
-  const id = +Date.now() % 1000000;
-  return id.toString();
-}
-
-export function jsonParse(json: string) {
-  try {
-    return JSON.parse(json);
-  } catch (err) {
-    return {};
-  }
-}
-
-export function resolvePeerMessage(text: string) {
-  const body = jsonParse(text);
-  return body;
 }
 
 export const resolveFileInfo = (file: any) => {

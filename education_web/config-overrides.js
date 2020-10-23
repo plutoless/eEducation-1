@@ -11,7 +11,13 @@ const {
   addBundleVisualizer,
   getBabelLoader,
   addWebpackAlias,
+  // addWebpackTarget,
 } = require('customize-cra')
+const {DefinePlugin} = require('webpack')
+const addWebpackTarget = target => config => {
+  config.target = target
+  return config
+}
 const path = require('path')
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin')
 const SimpleProgressWebpackPlugin = require( 'simple-progress-webpack-plugin' )
@@ -33,7 +39,7 @@ const webWorkerConfig = () => config => {
   }
   config.output = {
     ...config.output,
-    globalObject: 'this'
+    globalObject: 'this',
   }
   return config
 }
@@ -79,6 +85,7 @@ const useOptimizeBabelConfig = () => config => {
 
 module.exports = override(
     //useBabelRc(),
+  isElectron && addWebpackTarget('electron-renderer'),
   disableEsLint(),
   webWorkerConfig(),
   sourceMap(),
@@ -115,16 +122,19 @@ module.exports = override(
       environmentHash: {
         root: process.cwd(),
         directories: [],
-        files: ['package-lock.json', 'yarn.lock', '.env', '.env.local', 'env.local'],
+        files: ['package.json', 'package-lock.json', 'yarn.lock', '.env', '.env.local', 'env.local'],
       }
     })
   ),
-  addBundleVisualizer({
-    // "analyzerMode": "static",
-    // "reportFilename": "report.html"
-  }, true),
+  // addBundleVisualizer({
+  //   // "analyzerMode": "static",
+  //   // "reportFilename": "report.html"
+  // }, true),
   useOptimizeBabelConfig(),
   addWebpackAlias({
     ['@']: path.resolve(__dirname, 'src')
-  })
+  }),
+  addWebpackPlugin(new DefinePlugin({
+    'REACT_APP_AGORA_APP_SDK_DOMAIN': JSON.stringify(process.env.REACT_APP_AGORA_APP_SDK_DOMAIN)
+  }))
 )

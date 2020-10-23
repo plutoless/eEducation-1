@@ -33,7 +33,7 @@ export class CustomStorage {
 
   getLanguage() {
     const language = this.read(this.languageKey) ? this.read(this.languageKey) : navigator.language;
-    return {language};
+    return language;
   }
 
   getRtmMessage (): {count: any, messages: any[]} {
@@ -63,7 +63,6 @@ export class CustomStorage {
   }
 }
 
-const GlobalStorage = new CustomStorage();
+export const GlobalStorage = new CustomStorage();
 // @ts-ignore
 window.GlobalStorage = GlobalStorage;
-export default GlobalStorage;
