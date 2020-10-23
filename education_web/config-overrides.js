@@ -135,6 +135,7 @@ module.exports = override(
     ['@']: path.resolve(__dirname, 'src')
   }),
   addWebpackPlugin(new DefinePlugin({
-    'REACT_APP_AGORA_APP_SDK_DOMAIN': JSON.stringify(process.env.REACT_APP_AGORA_APP_SDK_DOMAIN)
+    'REACT_APP_AGORA_APP_SDK_DOMAIN': JSON.stringify(process.env.REACT_APP_AGORA_APP_SDK_DOMAIN),
+    'REACT_APP_AGORA_APP_SDK_LOG_SECRET': JSON.stringify(process.env.REACT_APP_AGORA_APP_SDK_DOMAIN)
   }))
 )

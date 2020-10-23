@@ -5,8 +5,12 @@ import md5 from "js-md5";
 import { t } from "@/i18n";
 import { get } from "lodash";
 
+const genToken = (): string => {
+  return window.btoa(`${process.env.REACT_APP_AGORA_CUSTOMER_ID}:${process.env.REACT_APP_AGORA_CUSTOMER_CERTIFICATE}`)
+}
+
 const APP_ID: string = process.env.REACT_APP_AGORA_APP_ID as string;
-const AUTHORIZATION: string = process.env.REACT_APP_AGORA_RESTFULL_TOKEN as string;
+const AUTHORIZATION: string = genToken();
 
 const AgoraFetchJson = async ({url, method, data, token, outHeaders}:{url?: string, method: string, data?: any, token?: string, outHeaders?: any}) => {  
   const opts: any = {
@@ -71,7 +75,7 @@ export class logUpload {
     }
 
     let params = JSON.stringify(body)
-    let appSecret = '7AIsPeMJgQAppO0Z'
+    let appSecret = REACT_APP_AGORA_APP_SDK_LOG_SECRET
     let signStr = appSecret + params + timestamp
     let sign =  md5(signStr)
 
@@ -144,7 +148,7 @@ export class logUpload {
     try {
       let res = await ossClient.put(ossKey, file, {
         callback: {
-          url: '${REACT_APP_AGORA_APP_SDK_DOMAIN}/monitor/v1/log/oss/callback',
+          url: `${REACT_APP_AGORA_APP_SDK_DOMAIN}/monitor/v1/log/oss/callback`,
           body: callbackBody,
           contentType: callbackContentType,
         }

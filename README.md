@@ -1,142 +1,122 @@
-_其他语言版本_: [简体中文](https://github.com/AgoraIO-Usecase/eEducation/wiki/eEducation-5.0.0-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)
 
-> This page introduces how to use eEducation 5.0.0. If you use eEducation 6.0.0, please refer to [eEducation 6.0.0 Project Guide](https://github.com/AgoraIO-Usecase/eEducation/wiki/eEducation-6.0.0-Project-Guide).
+> 本文介绍如何使用 eEducation 6.0.0 版本。这是一个不向下兼容的版本。如需使用 eEducation 5.0.0 版本，请查看 [eEducation 5.0.0 使用指南](https://github.com/AgoraIO-Usecase/eEducation/wiki/eEducation-5.0.0-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)。
 
-## <a name="overview"></a>About the project
-eEducation is a sample project provided by Agora for developers in the education industry, which demonstrates how to use **Agora Edu Cloud Service**, **Agora RTC SDK**, **Agora RTM SDK**, **Agora Cloud Recording**, and the third-party **Netless whiteboard SDK** to quickly implement basic online interactive tutoring scenarios.
+## <a name="overview"></a>项目概述  
+Agora eEducation 是声网专为教育行业提供的示例项目，演示了如何通过 [Agora 教育云服务](https://agoradoc.github.io/cn/edu-cloud-service/restfulapi/)，并配合 **Agora RTC SDK**、**Agora RTM SDK**、**Agora 云端录制服务**和**第三方 Netless 白板 SDK**，快速实现基本的在线互动教学场景。
 
-### <a name="scene"></a>Applicable scenarios
-eEducation supports the following scenarios:
+### <a name="scene"></a>支持场景
+eEducation 示例项目支持以下教学场景：
+* 1 对 1 互动教学：1 位老师对 1 名学生进行专属在线辅导教学，老师和学生能够进行实时音视频互动。
+* 1 对 N 在线小班课：1 位教师对 N 名学生（2 ≤ N ≤ 16）进行在线辅导教学，老师和学生能够进行实时音视频互动。
+* 互动直播大班课：一名老师进行教学，多名学生实时观看和收听，学生人数无上限。与此同时，学生可以“举手”请求发言，与老师进行实时音视频互动。
+* 超级小班课：将直播大班课的规模优势和互动小班课的教学体验相结合，支持将一个千人直播大班课里的学生拆分成若干个小班，每个小班最多 4 人。大班中主讲老师进行直播授课，小班中学生进行实时音视频分组讨论。此外，还可为小班配备助教老师。
 
-* One-to-one Classroom: An online teacher gives an exclusive lesson to only one student, and both can interact in real time.
-* Small Classroom: A teacher gives an online lesson to multiple students, and both the teacher and students can interact with each other in real time. The number of students in a small classroom should not exceed 16.
-* Lecture Hall: Thousands of students watch an online lecture together. Students can "raise their hands" to interact with the teacher, and their responses are viewed by all the other students at the same time.
+### <a name="function"></a>功能列表
+eEducation 示例项目支持以下功能：
 
-### <a name="platform"></a>Platform compatibility
-eEducation supports the following platforms and versions:
+| 功能简介                                 | iOS/Android (学生端)                       | Web(教师端) | Web(学生端)                                | Web(助教端，仅超小课有) | 功能描述                                                     |
+| :--------------------------------------- | :----------------------------------------- | :---------- | :----------------------------------------- | :-------------------- | :----------------------------------------------------------- |
+| 实时音视频互动                           | ✅                                          | ✅           | ✅                                          | ✅                     | 助教端仅能实时接收教师和学生的音视频。                       |
+| 文字聊天                                 | ✅                                          | ✅           | ✅                                          | ✅                     | /                                                            |
+| 互动白板                                 | ✅ 1 对 1 互动教学 <br>✅ 小班课 <br>❌ 大班课/超小课 | ✅           | ✅ 1 对 1 互动教学 <br>✅ 小班课 <br>❌ 大班课/超小课 | ❌                     | <li>1 对 1 互动教学中，学生和老师默认都可以操作白板。<li>1 对 N 在线小班课中，学生默认没有权限操作白板，老师可以授权学生操作白板。<li>互动直播大班课和超级小班课中，学生不能操作白板，只能观看。 |
+| 白板跟随                                 | ✅                                          | ✅           | ✅                                          | ✅                     | 老师端点击白板跟随后，学生和助教的白板视野跟随老师的白板。   |
+| 教学文件上传（PPT、Word、PDF、音视频等） | ❌                                          | ✅           | ❌                                          | ❌                     | 老师端上传文件，学生端只能观看。                             |
+| 举手连麦                                 | ✅                                          | ✅           | ✅                                          | ❌                     | 互动直播大班课中，学生“举手”请求发言，老师同意或取消。       |
+| 屏幕共享                                 | ❌                                          | ✅           | ❌                                          | ❌                     | 老师端发起屏幕共享，学生端只能观看。                         |
+| 录制回放                                 | ❌                                          | ✅           | ❌                                          | ❌                     | 老师端开启录制，需要录制至少 15 秒。录制结束后链接会显示在聊天消息里面，点击链接即可跳转到回放页面。 |
 
-* iOS 10 or later. We do not test Agora e-Education on iOS 9 updates.
-* Android 4.4 and later.
-* Web Chrome 72 and later. We do not test Agora e-Education on browsers.
+### <a name="platform"></a>平台兼容
+eEducation 示例项目支持以下平台和版本：
+* iOS 10 及以上。iOS 9 系列版本未经验证。
+* Android 4.4 及以上。
+* Web Chrome 72 及以上，Web 其他浏览器未经验证。
 
-### <a name="function"></a>Functions
-| Function | Web (Teacher) | Web (Student) | iOS and Android (Student) | Note |
-| :------- | :------------ | :------------ | :------------------------ | :--- |
-| Real-time audio and video communication | ✅ | ✅ | ✅ | / |
-| Real-time messaging | ✅ | ✅ | ✅ | / |
-| Interactive Whiteboard | ✅ | ✅ One-to-one Classroom <br> ✅ Small Classroom <br> ❌ Lecture Hall | ✅ One-to-one Classroom <br> ✅ Small Classroom <br> ❌ Lecture Hall | In a one-to-one classroom, both the teacher and students can draw on the whiteboard by default. In a small classroom, students cannot draw on the whiteboard by default, but the teacher can give a student the permission of drawing on the whiteboard. In a lecture hall, students can never draw on the whiteboard. |
-| Whiteboard follow | ✅ | ✅ | ✅ | The teacher can enable "whiteboard follow". When the teacher is moving the whiteboard or turning pages, the whiteboard area that students see will be consistent with the teacher's whiteboard area. |
-| Uploading files (PPT, Word, PDF, audio files or video files) | ✅ | ❌ | ❌ | Only teachers can upload files to the classroom.
-| Students raising hands | ✅ | ✅ | ✅ | In a lecture hall, students do not send their audio and video by default, but they can "raise their hands" to apply for interacting with the teacher. The teacher can approve or decline the application. |
-| Screen sharing | ✅ | ✅ | ✅ | The teacher can share the screen. |
-| Recording and replay | ✅ | ✅ | ✅ | The teacher can start recording and record the class for at least 15 seconds. After the recording finishes, a link for replaying the class will be displayed in the message box.  |
+### <a name="restriction"></a>限制条件
+eEducation 示例项目目前存在以下限制条件。
+1. **需要自行集成云端录制**：该示例项目中，云端录制功能只作为展示。如果你需要正式使用声网云端录制功能，请参考[云端录制快速开始](https://docs.agora.io/cn/cloud-recording/cloud_recording_rest?platform=All%20Platforms)进行集成。
+2. **OSS 只支持阿里云和七牛云**：由于白板课件存储的原因，该示例项目目前只支持阿里云和七牛云的 OSS。详见[阿里云 OSS 配置指南](https://github.com/AgoraIO-Usecase/eEducation/wiki/%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAaliyun-oss)。
+3. **白板课件管理**：该示例项目中，白板课件管理部署在前端。我们建议你实现排课业务后，在课程里预先上传课件，Web 端只读取课件即可。我们不建议使用示例项目中的 `accessKey` 和 `secretKey` 的上传方案集成，可能存在安全隐患。
+4. **教室内用户异常退出，无法及时更新用户信息**：由于该示例项目没有实现排课系统，使用 Agora RTM SDK 查询在线人数。教室内用户异常退出后，RTM 无法及时知晓该用户状态。一般需要等待 30 秒左右，RTM 才能更新当前用户状态。你可以通过自行实现排课系统来规避此问题。
+5. **对接自己的业务**：Agora 教育云服务无法直接扩展业务，但是我们预留了 `userUuid` 和 `roomUuid` 字段用于你对接自己的用户系统和排课系统。比如添加排课系统，你可以传入这 2 个字段用于对接 Agora 教育云服务。
+6. **并发频道限制**：目前每个 AppId 同时最多 200 个频道，如果需要继续更多频道，请联系我们。
+7. **等待 5 分钟**：创建 AppId 后需要等待 5 分钟进行后续操作，这一步是为了等待后台数据同步完成。
 
-### <a name="restriction"></a>Restrictions
-eEducation currently has the following restrictions:
-1. **Integrate Agora Cloud Recording **: The cloud recording in this sample project is only for demonstration. If you need to officially use the cloud recording function in your project, please see [Cloud Recording Quick Start](https://docs.agora.io/en/cloud-recording/cloud_recording_rest?platform=All%20Platforms) to enable Agora Cloud Recording.
-2: **Only supports Alibaba and Qiniu Cloud OSS**: Temporarily, this sample project only supports the Object Storage Service (OSS) of Alibaba Cloud and Qiniu Cloud. For details, see [Alibaba Cloud OSS Configuration Guide](https://github.com/AgoraIO-Usecase/eEducation/wiki/Alibaba-Cloud-OSS-Guide).
-3. **Whiteboard courseware management**: In this sample project, we deploy the courseware management on the front end and upload courseware using `accessKey` and `secretKey`. However, this is not a best practice and may cause security issues. We suggest you implement the course management system on the back end and upload courseware in advance. So the web client only needs to read the courseware before the class.
-4. **Fails to update the user states immediately after a user in the classroom drops offline**: This sample project does not implement a course management system and uses the Agora RTM SDK for querying the number of online users. If a user in the classroom drops offline, RTM cannot get the user states immediately. Generally, it takes about 30 seconds for RTM to update the user states. You can resolve this problem by implementing your own course management system.
-5. **Connect with your own business logic**: The functions of the Agora Edu Cloud Service cannot be directly extended. However, we provide the `userUuid` and `roomUuid` parameters for you to connect the Agora Edu Cloud Service with your own user management system and course management system. 
-6. **Concurrent channel restrictions**: At present, each appid can have up to 200 channels at the same time. If you need to continue more, please contact us.
-7. **Wait 5 minutes**: After the AppId is created, you need to wait for 5 minutes to complete the follow-up process. This step is to wait for the background data synchronization to complete.
+## <a name="strat"></a>快速开始
+  
+### <a name="precondition"></a>前提条件
+在编译及运行 eEducation 示例项目之前，你需要完成以下准备工作。
 
-## <a name="strat"></a>Get started  
-### <a name="prerequisites"></a>Prerequisites  
-Make sure you make the following preparations before compiling and running the sample project.
+#### 获取声网 App ID  
 
-### Get an Agora App ID  
-Follow these steps to get an Agora App ID:  
+1. 在声网[控制台](https://console.agora.io/)创建一个账号。
+2. 登录声网控制台，创建一个项目，鉴权方式选择 **“App ID + App 证书 + Token”**。注意，请确保该项目启用了 [App 证书](https://docs.agora.io/en/Agora%20Platform/token?platform=All%20Platforms#appcertificate)。
+3. 前往**项目管理**页面，获取该项目的 App ID。
 
-1. Create an account in [Agora Console](https://console.agora.io/).  
-2. Log in to Agora Console and create a project. Select **"App ID + App Certificate + Token"** as your authentication mechanism when creating the project. Make sure that you enable the [App Certificate](https://docs.agora.io/en/Agora%20Platform/token?platform=All%20Platforms#appcertificate) of this project.  
-3. Get the App ID of this project in **Project Management page**.  
+#### 获取声网 Customer ID 和 Customer Certificate 
+1. 登录声网[控制台](https://console.agora.io/)，点击页面右上角的用户名，在下拉列表中打开 RESTful API 页面。
+2. 点击下载，即可获取客户 ID（customerId）和客户密钥（customerSecret）。
 
-### Pass the basic HTTP authentication  
-Before using the Agora RESTful APIs, you need to generate the Authorization parameter with the Customer ID and Customer Certificate provided by Agora and pass the Authorization parameter in the HTTP request header for authentication. For details, see the [steps of basic HTTP authentication](https://docs.agora.io/en/faq/restful_authentication).
+#### 获取第三方白板 AppIdentifier 和 sdkToken，并把sdkToken注册到 Agora 云服务
+1. 登录 [Netless 控制台](https://console.herewhite.com/)，点击左侧导航栏应用管理按钮，创建或者直接配置现有应用，获取AppIdentifier，然后点击生成 sdkToken，然后复制此 sdkToken。
+2. 登录 [Agora 控制台](https://console.agora.io/)，点击左侧导航栏项目管理按钮，再点击对应项目的编辑按钮，点击更新 token，然后将上一步复制的白板 sdkToken 粘贴至弹出的对话框中。
 
-### Get a Netless sdkToken and register it in Agora Cloud Service  
-Perform the following steps:
+### 运行示例项目
 
-1. Log in to the [Netless console](https://console.herewhite.com/), click the application management button in the left navigation bar, then click the configuration button, click Generate sdkToken, and then copy this sdkToken.
-2. Log in to the [Agora console](https://console.agora.io/), click the project management button in the left navigation bar, then click the edit button, click updateToken, and then copy the whiteboard sdkToken you get in the previous step into the pop-up dialog box.
+参考以下文档在对应的平台编译及运行示例项目：
+* [Android 运行指南](https://github.com/AgoraIO-Usecase/eEducation/blob/master/education_Android/AgoraEducation/README.zh.md)
+* [iOS 运行指南](https://github.com/AgoraIO-Usecase/eEducation/blob/master/education_iOS/README.zh.md)
+* [Web & Electron 运行指南](https://github.com/AgoraIO-Usecase/eEducation/blob/master/education_web/README.zh.md)
 
-### Run the sample project
-See the following documents to compile and run the sample project:
+## 教育云服务
+教育云服务是 Agora 专为后端开发能力不够的开发者提供的云服务，能够实现房间、用户和流的状态管理以及状态变更的消息通知。详见[教育云服务 RESTful API 文档](https://agoradoc.github.io/cn/edu-cloud-service/restfulapi/)。
 
-* [Run the Android project](https://github.com/AgoraIO-Usecase/eEducation/blob/v5.0.0/education_Android/AgoraEducation/README.md)
-* [Run the iOS project](https://github.com/AgoraIO-Usecase/eEducation/blob/v5.0.0/education_iOS/README.md)
-* [Run Web and Electron project](https://github.com/AgoraIO-Usecase/eEducation/blob/v5.0.0/education_web/README.md)
+## <a name="faq"></a>常见问题
+### 安全相关
 
-## FAQ
-### Security
-1. In this sample project, we use [Basic HTTP Authentication](https://docs.agora.io/en/Real-time-Messaging/rtm_get_event?platform=RESTful#basicauth), which will generate the Authorization parameter. If you need a more secure way, you can use [Token Authentication](https://docs.agora.io/en/Real-time-Messaging/rtm_get_event?platform=RESTful#tokenauth) and pass in a uid to dynamically generate a token. For more information about how to generate an RTM Token, see [Token Security](https://docs.agora.io/en/Real-time-Messaging/rtm_token?platform=All%20Platforms).
-2. If you are worried about the security of the whiteboard sdkToken, you can deploy your own Token generation service. You should store the `sdkToken` on your server, and see the following documents to deploy a service for generating the token of a whiteboard room.
-* JS: [Room Authentication](https://developer-en.netless.link/docs/javascript/quick-start/js-token/)
-* Android: [Create Room](https://developer-en.netless.link/docs/android/quick-start/android-create-room/)
-* iOS：[Create Room](https://developer-en.netless.link/docs/ios/quick-start/ios-create-room/)
-**Example**
-Request
-```
-GET {{tokenServiceUrl}}?channelName={channelName}
-```
-| Request parameter | Type | Description |
-| :---------------- | :--- | :---------- |
-| channelName | String | The channel name|
-Response
+如果你担心白板 sdkToken 安全问题，你可以部署你自己的生成 Token 的服务。你需要将白板的 sdkToken 保存在你自己的服务端，然后参考以下 Netless 相关文档在你的客户端代码中部署一个生成当前白板房间 Token 的服务：
+* JS: [白板鉴权](https://developer.netless.link/document-zh/home/project-and-authority/)
+* Android: [创建白板房间和获取白板房间信息](https://developer.netless.link/android-zh/home/android-create-room/)
+* iOS：[创建白板房间和获取白板房间信息](https://developer.netless.link/ios-zh/home/ios-create-room/)
+
+
+### Web & Electron 项目相关
+#### 1. 中国区安装速度慢
+中国区用户可以通过预设安装变量来提高安装速度。
 ```text
-Content-Type: application/json;charset=UTF-8
-{
-    "msg": "Success",
-    "code": 0,
-    "data": {
-
-        "boardId": "",
-        "boardToken": ""
-
-    }
-}
+# 中国区macOS用户可通过以下命令设置环境变量
+export ELECTRON_MIRROR="https://npm.taobao.org/mirrors/electron/"
+export ELECTRON_CUSTOM_DIR="5.0.8"
+export SASS_BINARY_SITE="https://npm.taobao.org/mirrors/node-sass/"
+# 中国区Windows用户可通过以下命令设置环境变量
+set ELECTRON_MIRROR=https://npm.taobao.org/mirrors/electron/
+set ELECTRON_CUSTOM_DIR=5.0.8
+set SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/
 ```
-
-### Web & Electron
-
-#### 1. Fail to run the Electron demo
-Take these steps to find the root cause:
-
-1. Check whether `localhost:3000` is occupied.
-2. Check whether you have successfully installed Electron. Delete `node_modules/electron`, set up the variables of installment, and run `npm i electron`.
-#### 2. Package the Electron demo on Windows
-When packaging the Electron demo on Windows, please check whether the version of agora-electron-sdk that you installed is consistent with the version of Electron.
-
-#### 3. `window.__netlessJavaScriptLoader was override` error
-Take these steps to find the root cause:
-
-1. Run `npm list | grep 'white-web-sdk'` to check how many whiteboard sdks that you have installed.
-2. Find the latest version of `white-web-sdk` in `node_modules`, and remove other versions.
-#### 4. Use other tools than npm
-If you do not use yarn or cnpm to install, remove `node_modules`, `yarn.lock`, `package-lock.json`.
-
-#### 5. agora_node_ext.node is not a valid Win32 application error
-Take these steps to fix this error:
-
-1. Remove `node_modules/electron`
-2. `npm install electron@7.1.14 --platform=win32 --arch=ia32`
-3. Add the following code snippet in `package.json` and run `npm i agora-electron-sdk` to re-install.
+预设安装变量后，建议中国区用户通过以下方式安装npm依赖包
 ```text
+npm i --registry=https://registry.npm.taobao.org/
+```
+#### 2. 运行 Electron 项目失败
+排查步骤：
+1. 查看当前环境机器是否占用了 localhost:3000 。
+2. 也可能是因为 Electron 没有下载成功。清理 `node_modules/electron`，预设安装变量，然后运行 `npm i electron`。
+#### 3. 如何打包 Windows Electron demo
+Windows 系统上打包 Electron demo 时，注意安装的 `agora-electron-sdk` 版本是否和打包的版本一致。例如安装 win32 agora-electron-sdk 的必须在打包之前 `npm install --arch=ia32 electron@5.0.8`。
+#### 4. 如何打包 macOS Electron demo
+如需在 App Store 发布，请参考 Electron 和 App Store 相关资料。
+#### 5. 运行时遇到 window.__netlessJavaScriptLoader was override 报错
+排查步骤：
+1. 用 `npm list | grep 'white-web-sdk'` 查找当前他安装了几个 SDK。
+2. 在 `node_modules` 里找到 `white-web-sdk` 最新的版本，然后删除其他多余的包。
+#### 6. 使用非 npm 方式安装环境
+如果不是用 npm 安装，建议移除 `node_modules`，`yarn.lock`，`package-lock.json`。
+#### 7. 运行时遇到 agora_node_ext.node is not a valid Win32 application 报错
+排查步骤：
+1. 先删掉 `node_modules/electron`
+2. `npm install electron@<需要的版本> electron --arch=ia32`
+3. 在 `package.json` 里加入以下字段，然后重新安装 `npm i agora-electron-sdk`
 "agora_electron": {
   "electron_version": "7.1.2",
   "prebuilt": true,
   "platform": "win32"
 },
-```
-
-## Recommended versions of the Agora RTC SDK
-Agora provides high-stability versions of the Agora RTC Native SDK for companies in the education industry. The educational special versions are developed based on the Agora RTC SDK v2.9.0.
-
-* [Android](https://docs-preview.agoralab.co/cn/Interactive%20Broadcast/edu_release_note_android?platform=Android)
-* [iOS](https://docs-preview.agoralab.co/cn/Interactive%20Broadcast/edu_release_note_ios?platform=iOS)
-* [macOS](https://docs-preview.agoralab.co/cn/Interactive%20Broadcast/edu_release_note_macos?platform=macOS)
-* [Windows](https://docs-preview.agoralab.co/cn/Interactive%20Broadcast/edu_release_note_windows?platform=Windows)
-* [Electron](https://docs-preview.agoralab.co/cn/Interactive%20Broadcast/edu_release_note_electron?platform=Electron)
-
-For the Agora RTC Web SDK, download the [latest version](https://docs.agora.io/en/Agora%20Platform/downloads) on Agora Developer Portal.

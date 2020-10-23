@@ -43,8 +43,9 @@
   ```
   - **(Required) The Agora HTTP basic authorization**
   ```bash
-  # agora http basic authorization
-  REACT_APP_AGORA_RESTFULL_TOKEN=agora_restful_api_token
+  # agora http basic authorization customer_id, customer_certificate
+  REACT_APP_AGORA_CUSTOMER_ID=customer_id
+  REACT_APP_AGORA_CUSTOMER_CERTIFICATE=customer_certificate
   ```
   - **(Optional) OSS configurations for whiteboard courseware. Ignore these if you do not need this.**
   ```bash
@@ -60,15 +61,6 @@
   REACT_APP_YOUR_OWN_OSS_BUCKET_SECRET=your_bucket_sk
   # your oss bucket endpoint
   REACT_APP_YOUR_OWN_OSS_CDN_ACCELERATE=your_cdn_accelerate_endpoint
-  ```
-  - **(Optional) Configurations for displaying how to replay RTM messages on the front end. Ignore these if you do not need this.**
-  ```bash
-  # agora customer id obtained from agora console
-  REACT_APP_AGORA_CUSTOMER_ID=customer_id
-  # agora customer certificate obtained from agora console
-  REACT_APP_AGORA_CUSTOMER_CERTIFICATE=customer_certificate
-  # agora rtm endpoint obtain from developer documentation center
-  REACT_APP_AGORA_RTM_ENDPOINT=your_server_rtm_endpoint_api
   ```
 
 - Install Node.js LTS
@@ -111,7 +103,8 @@ After running, a `release` folder that contains a dmg file will be generated. Op
    "agora_electron": {
      "electron_version": "7.1.2",
      "prebuilt": true,
-     "platform": "win32"
+     "platform": "win32",
+     "arch": "ia32",
    },
    ```
    Manually install electron 7.1.14

@@ -45,7 +45,9 @@
    - **（必填）声网 HTTP basic 认证 Authorization 字段**
    ```
    # 声网 HTTP basic 认证 Authorization 字段
-   REACT_APP_AGORA_RESTFULL_TOKEN=agora_restful_api_token
+   # 声网 HTTP basic customer_id, customer_certificate
+   REACT_APP_AGORA_CUSTOMER_ID=customer_id
+   REACT_APP_AGORA_CUSTOMER_CERTIFICATE=customer_certificate
    ```
    - **（选填）适用于白板课件服务，如不需要可以直接按照下列配置**
    ```bash
@@ -61,15 +63,6 @@
    REACT_APP_YOUR_OWN_OSS_BUCKET_SECRET=your_bucket_sk
    # 你自己的 OSS bucket access endpoint
    REACT_APP_YOUR_OWN_OSS_CDN_ACCELERATE=your_cdn_accelerate_endpoint
-   ```
-   - **（选填）用于 RTM 前端回放展示能力，不推荐生产上直接使用。如不需要可以直接按照下列配置**
-   ```
-   # 声网开发者 Customer ID
-   REACT_APP_AGORA_CUSTOMER_ID=customer_id
-   # 声网开发者 Customer Certificate
-   REACT_APP_AGORA_CUSTOMER_CERTIFICATE=customer_certificate
-   # 声网开发者 rtm restful api 接口，仅供demo展示（请在自己的服务端接入）
-   REACT_APP_AGORA_RTM_ENDPOINT=your_server_rtm_endpoint_api
    ```
 
 - 中国区客户推荐使用以下方式安装 npm 依赖包和 electron & node-sass 加速
@@ -140,7 +133,8 @@
    "agora_electron": {
      "electron_version": "7.1.2",
      "prebuilt": true,
-     "platform": "win32"
+     "platform": "win32",
+     "arch": "ia32"
    },
    ```
    再手动安装 electron 7.1.14
