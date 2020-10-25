@@ -57,9 +57,8 @@ Follow these steps to get an Agora App ID:
 1. Log in to the [Agora console](https://console.agora.io/), click the username in the upper right corner of the page, and open the RESTful API page in the drop-down list.
 2. Click download to get the customer ID (customerId) and customer secret (customerSecret).
 
-### Get a Netless sdkToken and register it in Agora Edu Cloud Service
-
-1. Log in to the [Netless console](https://console.herewhite.com/), click the application management button in the left navigation bar, then click the configuration button, click Generate sdkToken, and then copy this sdkToken.
+### Get a Netless appidentifier and sdktoken, and register the sdktoken with Agora cloud service and register it in Agora Edu Cloud Service
+1. Log in to the [Netless console](https://console.herewhite.com/), click the application management button on the left navigation bar to create or directly configure existing applications, obtain appidentifier, and then click generate sdktoken, and then copy this sdktoken.
 2. Log in to the [Agora console](https://console.agora.io/), click the project management button in the left navigation bar, then click the edit button, click updateToken, and then copy the whiteboard sdkToken you get in the previous step into the pop-up dialog box.
 
 ### Run the sample project
