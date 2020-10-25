@@ -1,3 +1,5 @@
+_Read this article in another language: [English](README.md)_
+
 
 > 本文介绍如何使用 eEducation 6.0.0 版本。这是一个不向下兼容的版本。如需使用 eEducation 5.0.0 版本，请查看 [eEducation 5.0.0 使用指南](https://github.com/AgoraIO-Usecase/eEducation/wiki/eEducation-5.0.0-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97)。
 
@@ -10,6 +12,12 @@ eEducation 示例项目支持以下教学场景：
 * 1 对 N 在线小班课：1 位教师对 N 名学生（2 ≤ N ≤ 16）进行在线辅导教学，老师和学生能够进行实时音视频互动。
 * 互动直播大班课：一名老师进行教学，多名学生实时观看和收听，学生人数无上限。与此同时，学生可以“举手”请求发言，与老师进行实时音视频互动。
 * 超级小班课：将直播大班课的规模优势和互动小班课的教学体验相结合，支持将一个千人直播大班课里的学生拆分成若干个小班，每个小班最多 4 人。大班中主讲老师进行直播授课，小班中学生进行实时音视频分组讨论。此外，还可为小班配备助教老师。
+
+### <a name="platform"></a>平台兼容
+eEducation 示例项目支持以下平台和版本：
+* iOS 10 及以上。iOS 9 系列版本未经验证。
+* Android 4.4 及以上。
+* Web Chrome 72 及以上，Web 其他浏览器未经验证。
 
 ### <a name="function"></a>功能列表
 eEducation 示例项目支持以下功能：
@@ -24,12 +32,6 @@ eEducation 示例项目支持以下功能：
 | 举手连麦                                 | ✅                                          | ✅           | ✅                                          | ❌                     | 互动直播大班课中，学生“举手”请求发言，老师同意或取消。       |
 | 屏幕共享                                 | ❌                                          | ✅           | ❌                                          | ❌                     | 老师端发起屏幕共享，学生端只能观看。                         |
 | 录制回放                                 | ❌                                          | ✅           | ❌                                          | ❌                     | 老师端开启录制，需要录制至少 15 秒。录制结束后链接会显示在聊天消息里面，点击链接即可跳转到回放页面。 |
-
-### <a name="platform"></a>平台兼容
-eEducation 示例项目支持以下平台和版本：
-* iOS 10 及以上。iOS 9 系列版本未经验证。
-* Android 4.4 及以上。
-* Web Chrome 72 及以上，Web 其他浏览器未经验证。
 
 ### <a name="restriction"></a>限制条件
 eEducation 示例项目目前存在以下限制条件。
@@ -52,7 +54,7 @@ eEducation 示例项目目前存在以下限制条件。
 2. 登录声网控制台，创建一个项目，鉴权方式选择 **“App ID + App 证书 + Token”**。注意，请确保该项目启用了 [App 证书](https://docs.agora.io/en/Agora%20Platform/token?platform=All%20Platforms#appcertificate)。
 3. 前往**项目管理**页面，获取该项目的 App ID。
 
-#### 获取声网 Customer ID 和 Customer Certificate 
+#### 获取声网 Customer ID 和 Customer Secret 
 1. 登录声网[控制台](https://console.agora.io/)，点击页面右上角的用户名，在下拉列表中打开 RESTful API 页面。
 2. 点击下载，即可获取客户 ID（customerId）和客户密钥（customerSecret）。
 
@@ -77,7 +79,6 @@ eEducation 示例项目目前存在以下限制条件。
 * JS: [白板鉴权](https://developer.netless.link/document-zh/home/project-and-authority/)
 * Android: [创建白板房间和获取白板房间信息](https://developer.netless.link/android-zh/home/android-create-room/)
 * iOS：[创建白板房间和获取白板房间信息](https://developer.netless.link/ios-zh/home/ios-create-room/)
-
 
 ### Web & Electron 项目相关
 #### 1. 中国区安装速度慢
