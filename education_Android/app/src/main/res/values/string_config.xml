@@ -3,14 +3,12 @@
 
 
     <string name="agora_app_id_dev" translatable="false">Your AppId with devMode</string>
-    <string name="agora_app_token_dev" translatable="false">Your Token with devMode</string>
 
     <string name="agora_customer_id_dev" translatable="false">Your customerId with devMode</string>
     <string name="agora_customer_cer_dev" translatable="false">Your customerCer with devMode</string>
 
 
     <string name="agora_app_id_prod" translatable="false">Your AppId with prodMode</string>
-    <string name="agora_app_token_prod" translatable="false">Your Token with devMode</string>
 
     <string name="agora_customer_id_prod" translatable="false">Your customerId with devMode</string>
     <string name="agora_customer_cer_prod" translatable="false">Your customerCer with devMode</string>
