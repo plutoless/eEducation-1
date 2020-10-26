@@ -265,6 +265,8 @@ export class BreakoutRoomStore extends SimpleInterval {
     this.joined = false
     this._hasCamera = undefined
     this._hasMicrophone = undefined
+    this.microphoneLock = false
+    this.cameraLock = false
     this.joiningRTC = false
     this.recordState = false
     this._courseList = []
@@ -389,34 +391,26 @@ export class BreakoutRoomStore extends SimpleInterval {
   private _hasCamera?: boolean = undefined
   private _hasMicrophone?: boolean = undefined
 
-  public cameraLock: boolean = false
-
-  lockCamera() {
-    this.cameraLock = true
-  }
-
-  unLockCamera() {
-    this.cameraLock = false
-  }
-
   @action
   async openCamera() {
-    
-    if (this.cameraLock) return console.warn('openCamera locking')
+    if (this._cameraRenderer) {
+      return console.warn('[demo] Camera already exists')
+    }
+    if (this.cameraLock) {
+      return console.warn('[demo] openCamera locking')
+    }
     this.lockCamera()
     try {
-      if (this._cameraRenderer) {
-        this.unLockCamera()
-        return console.warn('Camera already exists')
-      }
       const deviceId = this._cameraId
       await this.mediaService.openCamera({deviceId})
       this._cameraRenderer = this.mediaService.cameraRenderer
       this.cameraLabel = this.mediaService.getCameraLabel()
       this._cameraId = this.cameraId
+      console.log('[demo] action in openCamera >>> openCamera')
       this.unLockCamera()
     } catch (err) {
       this.unLockCamera()
+      console.log('[demo] action in openCamera >>> openCamera')
       console.warn(err)
       throw err
     }
@@ -440,41 +434,92 @@ export class BreakoutRoomStore extends SimpleInterval {
     this._cameraId = deviceId
   }
 
+  public cameraLock: boolean = false
+
+  lockCamera() {
+    this.cameraLock = true
+    console.log('[demo] lockCamera ')
+  }
+
+  unLockCamera() {
+    this.cameraLock = false
+    console.log('[demo] unlockCamera ')
+  }
+
+  @action
+  async muteLocalCamera() {
+    console.log('[demo] [local] muteLocalCamera')
+    if (!this._cameraRenderer) {
+      return console.warn('[demo] [mic lock] muteLocalCamera _cameraRenderer is not exists')
+    }
+    await this.closeCamera()
+    this.unLockCamera()
+    await this.roomManager?.userService.updateMainStreamState({'videoState': false})
+  }
+
+  @action 
+  async unmuteLocalCamera() {
+    console.log('[demo] [local] unmuteLocalCamera')
+    if (this.cameraLock) {
+      return console.warn('[demo] [mic lock] unmuteLocalCamera')
+    }
+    await this.openCamera()
+    await this.roomManager?.userService.updateMainStreamState({'videoState': true})
+  }
+
+  @action
+  async muteLocalMicrophone() {
+    console.log('[demo] [local] muteLocalMicrophone')
+    if (this.microphoneLock) {
+      return console.warn('[demo] [mic lock] muteLocalMicrophone')
+    }
+    await this.closeMicrophone()
+    this.unLockMicrophone()
+    await this.roomManager?.userService.updateMainStreamState({'audioState': false})
+  }
+
+  @action 
+  async unmuteLocalMicrophone() {
+    console.log('[demo] [local] unmuteLocalMicrophone')
+    if (this.microphoneLock) {
+      return console.warn('[demo] [mic lock] unmuteLocalMicrophone')
+    }
+    await this.openMicrophone()
+    await this.roomManager?.userService.updateMainStreamState({'audioState': true})
+  }
+
   public microphoneLock: boolean = false
 
   lockMicrophone() {
     this.microphoneLock = true
+    console.log('[demo] lockMicrophone ')
   }
 
   unLockMicrophone() {
     this.microphoneLock = false
+    console.log('[demo] unLockMicrophone ')
   }
   @action
   async openMicrophone() {
-    if (this.microphoneLock) return console.warn('openMicrophone locking')
+    if (this._microphoneTrack) {
+      return console.warn('[demo] Microphone already exists')
+    }
+
+    if (this.microphoneLock) {
+      return console.warn('[demo] openMicrophone locking 1')
+    }
     this.lockMicrophone()
     try {
-      if (this._microphoneTrack) {
-        this.unLockMicrophone()
-        return console.warn('Microphone already exists')
-      }
       const deviceId = this._microphoneId
       await this.mediaService.openMicrophone({deviceId})
       this._microphoneTrack = this.mediaService.microphoneTrack
       this.microphoneLabel = this.mediaService.getMicrophoneLabel()
-      this.mediaService.on('volume-indication', ({speakers, speakerNumber, totalVolume}: any) => {
-        runInAction(() => {
-          if (this.isElectron) {
-            this.totalVolume = Number((totalVolume / 255).toFixed(3))
-          } else {
-            this.totalVolume = totalVolume;
-          }
-        })
-      })
+      console.log('[breakout-demo] action in openMicrophone >>> openMicrophone')
       this._microphoneId = this.microphoneId
       this.unLockMicrophone()
     } catch (err) {
       this.unLockMicrophone()
+      console.log('[demo] action in openMicrophone >>> openMicrophone')
       console.warn(err)
       throw err
     }
@@ -482,24 +527,9 @@ export class BreakoutRoomStore extends SimpleInterval {
 
   @action
   async closeMicrophone() {
-    try {
-      await this.mediaService?.closeMicrophone()
-      this.mediaService?.off('volume-indication', ({speakers, speakerNumber, totalVolume}: any) => {
-        runInAction(() => {
-          this.totalVolume = 0;
-        })
-      })
-      this.resetMicrophoneTrack()
-    } catch (err) {
-      await this.mediaService?.closeMicrophone()
-      this.mediaService?.off('volume-indication', ({speakers, speakerNumber, totalVolume}: any) => {
-        runInAction(() => {
-          this.totalVolume = 0;
-        })
-      })
-      this.resetMicrophoneTrack()
-      console.log('[breakout-room] err', err)
-    }
+    if (this.microphoneLock) return console.warn('[demo] closeMicrophone microphone is locking')
+    await this.mediaService.closeMicrophone()
+    this.resetMicrophoneTrack()
   }
 
   @action
@@ -835,6 +865,16 @@ export class BreakoutRoomStore extends SimpleInterval {
   @computed
   get cpuRate(): string {
     return `${this._cpuRate}%`
+  }
+
+  get roomManager(): EduClassroomManager | undefined {
+    if (this.roomInfo.userRole === 'teacher') {
+      return this.largeClassroomManager
+    }
+
+    if (this.roomInfo.userRole === 'student') {
+      return this.groupClassroomManager
+    }
   }
 
   // _largeClassroomManager?: EduClassroomManager = undefined;
@@ -2321,8 +2361,9 @@ export class BreakoutRoomStore extends SimpleInterval {
   async muteAudio(userUuid: string, isLocal: boolean, userRole: string) {
     if (userRole === 'teacher') {
       if (isLocal) {
-        await this.closeMicrophone()
-        await this.largeClassroomManager?.userService.updateMainStreamState({'audioState': false})
+        console.log('before muteLocalAudio', this.microphoneLock)
+        await this.muteLocalMicrophone()
+        console.log('after muteLocalAudio', this.microphoneLock)
       } else {
         const targetStream = this.streamList.find((it: EduStream) => it.userInfo.userUuid === userUuid)
         await this.largeClassroomManager?.userService.remoteStopStudentMicrophone(targetStream as EduStream)
@@ -2333,7 +2374,9 @@ export class BreakoutRoomStore extends SimpleInterval {
   async unmuteAudio(userUuid: string, isLocal: boolean, userRole: string) {
     if (userRole === 'teacher') {
       if (isLocal) {
-        await this.largeClassroomManager?.userService.updateMainStreamState({'audioState': true})
+        console.log('before unmuteLocalMicrophone', this.microphoneLock)
+        await this.unmuteLocalMicrophone()
+        console.log('after unmuteLocalMicrophone', this.microphoneLock)
       } else {
         const stream = this.getStreamBy(userUuid)
         const targetStream = this.streamList.find((it: EduStream) => it.userInfo.userUuid === userUuid)
@@ -2344,8 +2387,9 @@ export class BreakoutRoomStore extends SimpleInterval {
 
   async muteVideo(userUuid: string, isLocal: boolean, userRole: string) {
     if (isLocal) {
-      await this.closeCamera()
-      await this.largeClassroomManager?.userService.updateMainStreamState({'videoState': false})
+      console.log('before muteLocalCamera', this.cameraLock)
+      await this.muteLocalCamera()
+      console.log('after muteLocalCamera', this.cameraLock)
     } else {
       const targetStream = this.streamList.find((it: EduStream) => it.userInfo.userUuid === userUuid)
       await this.largeClassroomManager?.userService.remoteStopStudentCamera(targetStream as EduStream)
@@ -2354,7 +2398,9 @@ export class BreakoutRoomStore extends SimpleInterval {
 
   async unmuteVideo(userUuid: string, isLocal: boolean, userRole: string) {
     if (isLocal) {
-      await this.largeClassroomManager?.userService.updateMainStreamState({'videoState': true})
+      console.log('before unmuteLocalCamera', this.cameraLock)
+      await this.unmuteLocalCamera()
+      console.log('after unmuteLocalCamera', this.cameraLock)
     } else {
       const stream = this.getStreamBy(userUuid)
       const targetStream = this.streamList.find((it: EduStream) => it.userInfo.userUuid === userUuid)

@@ -23,7 +23,7 @@
 
 ### 使用的技术
 - typescript 3.8.3
-- react & react hooks & rxjs
+- react & react hooks & mobx
 - electron 7.1.14 & electron-builder
 - material-ui
 - Agora Edu 云服务
