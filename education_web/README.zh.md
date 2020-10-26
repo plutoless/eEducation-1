@@ -30,7 +30,7 @@
 
 ## 准备工作
 
-- 请确保你已经完成 [Agora e-Education 项目指南](../README.zh.md#prerequisites)中的前提条件。
+- 请确保你已经完成 Agora e-Education 项目指南中的[前提条件](../README.zh.md#prerequisites)。
 - 配置阿里云 OSS，详见[阿里云OSS配置指南](https://github.com/AgoraIO-Usecase/eEducation/wiki/%E9%98%BF%E9%87%8C%E4%BA%91OSS%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97)。
 - 重命名 `.env.example` 为 `.env.local`，并配置以下参数：
    - **（必填）你获取到的声网 App ID**
@@ -47,6 +47,7 @@
    REACT_APP_AGORA_CUSTOMER_ID=customer_id
    REACT_APP_AGORA_CUSTOMER_CERTIFICATE=customer_certificate
    ```
+   - **（必填）你获取到的 Netless AppIdentifier**
    - **（选填）适用于白板课件服务，如不需要可以直接按照下列配置**
    ```bash
    # 你自己的 OSS bucket name
