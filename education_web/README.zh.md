@@ -30,11 +30,10 @@
 
 ## 准备工作
 
-- 请确保你已经完成 [Agora e-Education 项目指南](https://github.com/AgoraIO-Usecase/eEducation/blob/master/README.zh.md)中的前提条件。
+- 请确保你已经完成 [Agora e-Education 项目指南](../README.zh.md#prerequisites)中的前提条件。
 - 配置阿里云 OSS，详见[阿里云OSS配置指南](https://github.com/AgoraIO-Usecase/eEducation/wiki/%E9%98%BF%E9%87%8C%E4%BA%91OSS%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97)。
-- 可以从[这里](https://github.com/AgoraIO-Usecase/eEducation/blob/master/README.zh.md#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6)开始配置appId sdkToken restful token 
 - 重命名 `.env.example` 为 `.env.local`，并配置以下参数：
-   - **（必填）声网 App ID**
+   - **（必填）你获取到的声网 App ID**
    ```bash
    # 声网的 App ID
    REACT_APP_AGORA_APP_ID=agora appId
@@ -42,9 +41,8 @@
    REACT_APP_AGORA_LOG=true
    ELECTRON_START_URL=http://localhost:3000
    ```
-   - **（必填）声网 HTTP basic 认证 Authorization 字段**
+   - **（必填）你获取到的声网 Customer ID 和 Customer 密钥**
    ```
-   # 声网 HTTP basic 认证 Authorization 字段
    # 声网 HTTP basic customer_id, customer_certificate
    REACT_APP_AGORA_CUSTOMER_ID=customer_id
    REACT_APP_AGORA_CUSTOMER_CERTIFICATE=customer_certificate
@@ -116,7 +114,7 @@
 2. 本地运行 Electron demo
 
    ```
-   npm run electron  
+   npm run electron
    ```
 
 2. 发布 Electron demo
@@ -149,7 +147,7 @@
 3. 本地运行 Electron demo
 
    ```
-   npm run electron  
+   npm run electron
    ```
 
 4. 发布 Electron demo
