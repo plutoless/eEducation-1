@@ -78,7 +78,7 @@ eEducation 示例项目目前存在以下限制条件。
 ### <a name="run"></a>运行示例项目
 
 参考以下文档在对应的平台编译及运行示例项目：
-* [Android 运行指南](./education_Android/AgoraEducation/README.zh.md)
+* [Android 运行指南](./education_Android/README.zh.md)
 * [iOS 运行指南](./education_iOS/README.zh.md)
 * [Web & Electron 运行指南](./education_web/README.zh.md)
 
