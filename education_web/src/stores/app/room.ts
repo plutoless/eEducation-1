@@ -249,7 +249,6 @@ export class RoomStore extends SimpleInterval {
     this._hasMicrophone = undefined
     this.microphoneLock = false
     this.cameraLock = false
-    this.joiningRTC = false
     this.recordState = false
   }
 
@@ -750,6 +749,7 @@ export class RoomStore extends SimpleInterval {
 
   async leaveRtc() {
     try {
+      this.joiningRTC = false
       await this.closeCamera()
       await this.closeMicrophone()
       // await this.mediaService.closeCamera()
@@ -838,6 +838,9 @@ export class RoomStore extends SimpleInterval {
       // 本地流移除
       roomManager.on('local-stream-removed', async (evt: any) => {
         await this.mutex.dispatch<Promise<void>>(async () => {
+          if (this.joiningRTC) {
+            return 
+          }
           try {
             const tag = uuidv4()
             console.log(`[demo] tag: ${tag}, [${Date.now()}], handle event: local-stream-removed, `, JSON.stringify(evt))
@@ -862,6 +865,9 @@ export class RoomStore extends SimpleInterval {
       // 本地流更新
       roomManager.on('local-stream-updated', async (evt: any) => {
         await this.mutex.dispatch<Promise<void>>(async () => {
+          if (this.joiningRTC) {
+            return 
+          }
           const tag = uuidv4()
           console.log(`[demo] tag: ${tag}, seq[${evt.seqId}] time: ${Date.now()} local-stream-updated, `, JSON.stringify(evt))
           if (evt.type === 'main') {
@@ -993,6 +999,9 @@ export class RoomStore extends SimpleInterval {
       }
       this.eduManager.on('user-message', async (evt: any) => {
         await this.mutex.dispatch<Promise<void>>(async () => {
+          if (this.joiningRTC) {
+            return 
+          }
           try {
             console.log('[rtm] user-message', evt)
             const fromUserUuid = evt.message.fromUser.userUuid
@@ -1357,9 +1366,12 @@ export class RoomStore extends SimpleInterval {
     return streamList
   }
 
+  private _leavingRtc: boolean = false
+
   @action
   async leave() {
     try {
+      this.joiningRTC = true
       await this.leaveRtc()
       await this.appStore.boardStore.leave()
       await this.eduManager.logout()

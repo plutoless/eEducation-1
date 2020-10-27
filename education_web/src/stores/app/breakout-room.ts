@@ -980,6 +980,7 @@ export class BreakoutRoomStore extends SimpleInterval {
   async leaveRtc() {
     try {
       if (!this.joiningRTC) return
+      this.joiningRTC = false
       if (this.mediaGroup) {
         await this.mediaGroup?.leave()
         this.mediaGroup.removeAllListeners()
@@ -992,7 +993,6 @@ export class BreakoutRoomStore extends SimpleInterval {
         await this.mediaService.leave()
         this.appStore.uiStore.addToast(t('toast.leave_rtc_channel'))
       }
-      this.joiningRTC = false
       this.appStore.reset()
     } catch (err) {
       this.appStore.uiStore.addToast(t('toast.failed_to_leave_rtc'))
@@ -1045,6 +1045,9 @@ export class BreakoutRoomStore extends SimpleInterval {
     }
     this.eduManager.on('user-message', async (evt: any) => {
       await this.mutex.dispatch<Promise<void>>(async () => {
+        if (!this.joiningRTC) {
+          return
+        }
         try {
           console.log('[rtm] user-message', evt)
           const fromUserUuid = evt.message.fromUser.userUuid
@@ -1122,6 +1125,9 @@ export class BreakoutRoomStore extends SimpleInterval {
     // 本地流更新
     roomManager.on('local-stream-updated', async (evt: any) => {
       await this.mutex.dispatch<Promise<void>>(async () => {
+        if (!this.joiningRTC) {
+          return
+        }
         try {
           if (this.roomInfo.userRole !== 'teacher') return
           if (evt.type === 'main') {
@@ -1176,6 +1182,9 @@ export class BreakoutRoomStore extends SimpleInterval {
     // 本地流移除
     roomManager.on('local-stream-removed', async (evt: any) => {
       await this.mutex.dispatch<Promise<void>>(async () => {
+        if (!this.joiningRTC) {
+          return
+        }
         try {
           if (this.roomInfo.userRole !== 'teacher') return
           if (evt.type === 'main') {
@@ -1411,6 +1420,9 @@ export class BreakoutRoomStore extends SimpleInterval {
     // 本地流更新
     roomManager.on('local-stream-updated', async (evt: any) => {
       await this.mutex.dispatch<Promise<void>>(async () => {
+        if (!this.joiningRTC) {
+          return
+        }
         try {
           if (this.roomInfo.userRole !== 'student') return
           if (evt.type === 'main') {
@@ -1468,6 +1480,9 @@ export class BreakoutRoomStore extends SimpleInterval {
     // 本地流移除
     roomManager.on('local-stream-removed', async (evt: any) => {
       await this.mutex.dispatch<Promise<void>>(async () => {
+        if (!this.joiningRTC) {
+          return
+        }
         try {
           if (this.roomInfo.userRole !== 'student') return
           if (evt.type === 'main') {
