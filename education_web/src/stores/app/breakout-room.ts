@@ -449,12 +449,14 @@ export class BreakoutRoomStore extends SimpleInterval {
 
   @action
   async muteLocalCamera() {
-    console.log('[demo] [local] muteLocalCamera')
-    if (!this._cameraRenderer) {
-      return console.warn('[demo] [mic lock] muteLocalCamera _cameraRenderer is not exists')
+    if (this.cameraLock) {
+      return console.warn('[demo] openCamera locking')
     }
-    await this.closeCamera()
-    this.unLockCamera()
+    console.log('[demo] [local] muteLocalCamera')
+    if (this._cameraRenderer) {
+      await this.closeCamera()
+      this.unLockCamera()
+    }
     await this.roomManager?.userService.updateMainStreamState({'videoState': false})
   }
 
