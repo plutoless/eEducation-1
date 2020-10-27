@@ -30,9 +30,7 @@
 ## Preparations
 
 - Make sure you have made the preparations mentioned in the [Agora e-Education Guide](../README.md#prerequisites).
-- Set up your Alibaba Cloud OSS Guide. For details, see [Alibaba Cloud OSS Guide
-](https://github.com/AgoraIO-Usecase/eEducation/wiki/Alibaba-Cloud-OSS-Guide).
-- Getting start [here](https://github.com/AgoraIO-Usecase/eEducation#prerequisites) to obtain appId & sdkToken & restful token
+- Set up your Alibaba Cloud OSS Guide. For details, see [Alibaba Cloud OSS Guide](https://github.com/AgoraIO-Usecase/eEducation/wiki/Alibaba-Cloud-OSS-Guide).
 - Rename `.env.example` to `.env.local` and configure the following parameters:
   - **(Required) The Agora App ID that you get**
   ```bash
@@ -48,6 +46,9 @@
   REACT_APP_AGORA_CUSTOMER_CERTIFICATE=customer_certificate
   ```
   - **(Required) The Netless AppIdentifier that you get**
+  ```bash
+  REACT_APP_NETLESS_APP_ID=netless appId
+  ```
   - **(Optional) OSS configurations for whiteboard courseware. Ignore these if you do not need this**
   ```bash
   # your oss bucket name

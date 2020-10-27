@@ -42,12 +42,15 @@
    ELECTRON_START_URL=http://localhost:3000
    ```
    - **（必填）你获取到的声网 Customer ID 和 Customer 密钥**
-   ```
+   ```bash
    # 声网 HTTP basic customer_id, customer_certificate
    REACT_APP_AGORA_CUSTOMER_ID=customer_id
    REACT_APP_AGORA_CUSTOMER_CERTIFICATE=customer_certificate
    ```
    - **（必填）你获取到的 Netless AppIdentifier**
+   ```bash
+   REACT_APP_NETLESS_APP_ID=netless appId
+   ```
    - **（选填）适用于白板课件服务，如不需要可以直接按照下列配置**
    ```bash
    # 你自己的 OSS bucket name
