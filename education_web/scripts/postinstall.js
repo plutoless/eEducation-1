@@ -109,13 +109,14 @@ async function run() {
 
   if (process.platform === 'win32') {
     child_process.execSync(`
-      set ELECTRON_BUILDER_BINARIES_MIRROR=https://npm.taobao.org/mirrors/electron-builder-binaries/
+      set SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/
     `)
   }
 
 
   if (builder.type === true) {
     const installSteps = getInstallCommand(packageJson.agora_electron.platform)
+    console.log("builder.useTaoBaoCdn", builder.useTaoBaoCdn)
     if (builder.useTaoBaoCdn) {
       if (packageJson.agora_electron.platform === 'darwin') {
         child_process.execSync(`

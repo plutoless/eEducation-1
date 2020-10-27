@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MessageModel.h"
+#import "EEMessageViewCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EEMessageView : UIView
 
-- (void)addMessageModel:(MessageInfoModel *)model;
+- (void)addMessageModel:(EETextMessage *)model;
 - (void)updateTableView;
 @end
 

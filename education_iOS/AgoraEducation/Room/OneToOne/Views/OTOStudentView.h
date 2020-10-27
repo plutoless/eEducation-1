@@ -20,6 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateUserName:(NSString *)name;
 - (void)updateVideoImageWithMuted:(BOOL)muted;
 - (void)updateAudioImageWithMuted:(BOOL)muted;
+
+- (BOOL)hasVideo;
+- (BOOL)hasAudio;
+
 @end
 
 NS_ASSUME_NONNULL_END

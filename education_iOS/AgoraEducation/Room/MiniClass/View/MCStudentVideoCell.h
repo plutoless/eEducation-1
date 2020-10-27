@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RoomAllModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MCStudentVideoCell : UICollectionViewCell
 @property (nonatomic, weak) UIView *videoCanvasView;
-@property (nonatomic, strong) UserModel *userModel;
+@property (nonatomic, strong) EduStream *userModel;
 
 @end
 

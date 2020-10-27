@@ -7,7 +7,7 @@
 //
 
 #import "UIView+EEBadge.h"
-
+#import <objc/runtime.h>
 
 static char badgeViewKey;
 

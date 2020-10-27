@@ -1,10 +1,9 @@
 > *其他语言版本：[简体中文](README.zh.md)*
 
 This page introduces how to run the iOS sample project.
-
 ## Prerequisites 
 
-- Make sure you have made the preparations mentioned in the  [Agora e-Education Guide](https://github.com/AgoraIO-Usecase/eEducation).
+- Make sure you have made the preparations mentioned in the  [Agora e-Education Guide](../README.md#prerequisites).
 - Prepare the development environment:
   - Xcode 10.0 or later
   - CocoaPods
@@ -33,7 +32,7 @@ cd eEducation/education_iOS
 pod install
 ```
 
-4.Open the iOS project 
+4.Open the iOS project
 
 ```
 open AgoraEducation.xcworkspace
@@ -44,17 +43,27 @@ open AgoraEducation.xcworkspace
 Pass the following parameters in `KeyCenter.m`:
 
 - The Agora App ID that you get.
-- The `Authorization` parameter that you have generated for basic HTTP authentication.
+- The Agora Customer ID that you get.
+- The Agora Customer Secret that you get.
+- The WhiteBoard AppIdentifier that you get.
 
-For details, see the [prerequisites](https://github.com/AgoraIO-Usecase/eEducation#prerequisites) in Agora E-education Guide.
+For details, see the [prerequisites](../README.md#prerequisites) in Agora E-education Guide.
 
 ```
 + (NSString *)agoraAppid {
      return <#Your Agora App Id#>;
 }
 
-+ (NSString *)authorization {
-     return <#Your Authorization#>;
++ (NSString *)customerId {
+     return <#Your Agora Customer Id#>;
+}
+
++ (NSString *)customerCertificate {
+     return <#Your Agora Customer Certificate#>;
+}
+
++ (NSString *)boardAppid {
+     return <#Your Board App Id#>;
 }
 
 ```

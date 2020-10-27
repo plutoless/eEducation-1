@@ -1,8 +1,8 @@
 {
   "name": "Agora-Edu-Web",
-  "version": "5.4.0",
+  "version": "6.0.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "./",
   "main": "./src/index.tsx",
   "agora_electron": {
     "platform": "darwin",
@@ -36,7 +36,7 @@
     "files": [
       "build/**/*"
     ],
-    "artifactName": "${productName}-${version}.${ext}",
+    "artifactName": "${productName}-${version}-new.${ext}",
     "mac": {
       "target": [
         "dmg",
@@ -77,11 +77,8 @@
       "output": "release"
     }
   },
-  "dependencies": {
-    "adm-zip": "^0.4.14",
-    "agora-electron-sdk": "education290"
-  },
   "scripts": {
+    "install_electron": "node ./scripts/postinstall.js",
     "electron": "cross-env REACT_APP_RUNTIME_PLATFORM=electron ELECTRON_START_URL=http://localhost:3000 concurrently \"npm run electron:web\" \"wait-on http://localhost:3000 && npm run electron:client\"",
     "electron:client": "cross-env electron ./app/",
     "electron:web": "cross-env BROWSER=none react-app-rewired start",
@@ -113,14 +110,15 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
-    "@juggle/resize-observer": "^3.2.0",
-    "@material-ui/core": "4.9.1",
+    "@material-ui/core": "4.9.9",
     "@material-ui/icons": "4.9.1",
+    "@material-ui/lab": "4.0.0-alpha.56",
     "@netless/react-seek-slider": "^1.0.4",
-    "@netless/white-audio-plugin": "^1.1.10",
-    "@netless/white-video-plugin": "^1.1.17",
+    "@netless/white-audio-plugin": "^1.2.16",
+    "@netless/white-video-plugin": "^1.2.15",
     "@types/ali-oss": "^6.0.4",
     "@types/axios": "^0.14.0",
+    "@types/deep-diff": "^1.0.0",
     "@types/jest": "^24.0.19",
     "@types/lodash": "^4.14.145",
     "@types/node": "^12.12.47",
@@ -132,7 +130,7 @@
     "@types/ua-parser-js": "^0.7.33",
     "@types/uuid": "^3.4.6",
     "@types/video.js": "^7.3.4",
-    "agora-rtc-sdk": "3.0.0",
+    "agora-rtc-sdk-ng": "^4.0.1",
     "agora-rtm-sdk": "1.2.2",
     "ali-oss": "^6.3.1",
     "axios": "^0.19.2",
@@ -144,9 +142,10 @@
     "cpx": "^1.5.0",
     "cross-env": "^6.0.3",
     "customize-cra": "^0.8.0",
+    "deep-diff": "^1.0.2",
     "devtron": "^1.4.0",
     "dexie": "^2.0.4",
-    "electron": "^7.1.14",
+    "electron": "7.1.14",
     "electron-builder": "22.5.1",
     "eruda": "^2.2.1",
     "eslint-plugin-react": "^7.20.0",
@@ -154,9 +153,12 @@
     "immutable": "^4.0.0-rc.12",
     "js-md5": "^0.7.3",
     "lodash": "^4.17.15",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.2",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
     "progress-bar-webpack-plugin": "^2.1.0",
+    "promise-polyfill": "^8.2.0",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.4",
     "react-color": "2.17.3",
@@ -177,8 +179,12 @@
     "video.js": "^7.7.5",
     "wait-on": "^3.3.0",
     "webpack-bundle-analyzer": "^3.8.0",
-    "white-web-sdk": "2.7.5",
+    "white-web-sdk": "^2.9.17",
     "worker-loader": "^2.0.0",
     "zlib": "^1.0.5"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.14",
+    "agora-electron-sdk": "education290"
   }
 }

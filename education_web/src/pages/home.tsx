@@ -1,22 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { Theme, FormControl, Tooltip } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
-import Button from '../components/custom-button';
-import RoleRadio from '../components/role-radio';
-import Icon from '../components/icon';
-import FormInput from '../components/form-input';
-import FormSelect from '../components/form-select';
-import LangSelect from '../components/lang-select';
-import { isElectron } from '../utils/platform';
-import { usePlatform } from '../containers/platform-container';
+import {CustomButton} from '@/components/custom-button';
+import { RoleRadio } from '@/components/role-radio';
+import {CustomIcon} from '@/components/icon';
+import {FormInput} from '@/components/form-input';
+import {FormSelect} from '@/components/form-select';
+import {LangSelect} from '@/components/lang-select';
 import {useHistory} from 'react-router-dom';
-import { roomStore } from '../stores/room';
-import {GithubIcon} from '../components/github-icon';
-import { globalStore, roomTypes } from '../stores/global';
+import {GithubIcon} from '@/components/github-icon';
 import { t } from '../i18n';
-import GlobalStorage from '../utils/custom-storage';
-import { genUUID } from '../utils/api';
-import Log from '../utils/LogUploader';
+import { useUIStore, useRoomStore, useAppStore } from '@/hooks';
+import { UIStore } from '@/stores/app';
+import { GlobalStorage } from '@/utils/custom-storage';
+import { EduManager } from '@/sdk/education/manager';
+import {isElectron} from '@/utils/platform';
 
 const useStyles = makeStyles ((theme: Theme) => ({
   formControl: {
@@ -28,7 +26,7 @@ const useStyles = makeStyles ((theme: Theme) => ({
 type SessionInfo = {
   roomName: string
   roomType: number
-  yourName: string
+  userName: string
   role: string
 }
 
@@ -36,8 +34,11 @@ const defaultState: SessionInfo = {
   roomName: '',
   roomType: 0,
   role: '',
-  yourName: '',
+  userName: '',
 }
+
+const roomTypes = isElectron ?  UIStore.roomTypes.filter((it: any) => it.value !== 3) : UIStore.roomTypes
+
 
 function HomePage() {
   document.title = t(`home.short_title.title`)
@@ -46,35 +47,30 @@ function HomePage() {
 
   const history = useHistory();
 
+  const uiStore = useUIStore();
+
+  const appStore = useAppStore();
+
   const handleSetting = (evt: any) => {
-    history.push({pathname: `/device_test`});
+    history.push({pathname: '/setting'})
   }
 
   const [lock, setLock] = useState<boolean>(false);
 
-  const handleUpload = (evt: any) => {
-    setLock(true)
-    Log.doUpload().then((resultCode: any) => {
-      globalStore.showDialog({
-        type: 'uploadLog',
-        message: t('toast.show_log_id', {reason: `${resultCode}`})
-      });
-    }).finally(() => {
+  const handleUpload = async (evt: any) => {
+    try {
+      setLock(true)
+      const id = await EduManager.uploadLog('0')
+      uiStore.showDialog({
+        type: 'feedLog',
+        message: `id: ${id}`
+      })
       setLock(false)
-    })
-  }
-
-  const {
-    HomeBtn
-  } = usePlatform();
-
-  const ref = useRef<boolean>(false);
-
-  useEffect(() => {
-    return () => {
-      ref.current = true;
+    } catch (err) {
+      uiStore.addToast(t('upload_log_failed'))
+      setLock(false)
     }
-  }, []);
+  }
 
   const [session, setSessionInfo] = useState<SessionInfo>(defaultState);
 
@@ -86,8 +82,8 @@ function HomePage() {
       return;
     }
 
-    if (!session.yourName) {
-      setRequired({...required, yourName: t('home.missing_your_name')});
+    if (!session.userName) {
+      setRequired({...required, userName: t('home.missing_your_name')});
       return;
     }
 
@@ -97,40 +93,23 @@ function HomePage() {
     }
     
     if (!roomTypes[session.roomType]) return;
-    const path = roomTypes[session.roomType].path
-    globalStore.showLoading()
-    roomStore.LoginToRoom({
-      userName: session.yourName,
-      roomName: session.roomName,
-      role: session.role === 'teacher' ? 1 : 2,
-      type: session.roomType,
-      uuid: genUUID()
-    }).then(() => {
-      history.push(`/classroom/${path}`)
-    }).catch((err: any) => {
-      if (err.hasOwnProperty('api_error')) {
-        return
-      }
-      if (err.reason) {
-        globalStore.showToast({
-          type: 'rtmClient',
-          message: t('toast.rtm_login_failed_reason', {reason: err.reason}),
-        })
-      } else {
-        globalStore.showToast({
-          type: 'rtmClient',
-          message: t('toast.rtm_login_failed'),
-        })
-      }
-      console.warn(err)
-    }).finally(() => {
-      globalStore.stopLoading();
+    appStore.setRoomInfo({
+      ...session,
+      roomType: roomTypes[session.roomType].value
     })
+    const path = roomTypes[session.roomType].path
+
+    if (session.role === 'assistant') {
+      history.push(`/breakout-class/assistant/courses`)
+    } else {
+      history.push(`/classroom/${path}`)
+    }
+      // history.push(`/classroom/${path}`)
   }
 
   return (
-    <div className={`flex-container ${isElectron ? 'draggable' : 'home-cover-web' }`}>
-      {isElectron ? null : 
+    <div className={`flex-container ${uiStore.isElectron ? 'draggable' : 'home-cover-web' }`}>
+      {uiStore.isElectron ? null : 
       <div className="web-menu">
         <div className="web-menu-container">
           <div className="short-title">
@@ -142,43 +121,38 @@ function HomePage() {
             <div className="flex-row">
               <Tooltip title={t("icon.upload-log")} placement="top">
                 <span>
-                  <Icon className={lock ? "icon-loading" : "icon-upload"} onClick={handleUpload}></Icon>
+                  <CustomIcon className={lock ? "icon-loading" : "icon-upload"} onClick={handleUpload}></CustomIcon>
                 </span>
               </Tooltip>
               <Tooltip title={t("icon.setting")} placement="top">
                 <span>
-                  <Icon className="icon-setting" onClick={handleSetting}/>
+                  <CustomIcon className="icon-setting" onClick={handleSetting}/>
                 </span>
               </Tooltip>
             </div>
-            <Tooltip title={t("icon.lang-select")} placement="top">
-              <span>
-                <LangSelect
-                value={GlobalStorage.getLanguage().language.match(/^zh/) ? 0 : 1}
+              <LangSelect
+                value={uiStore.language.match(/^zh/) ? 0 : 1}
                 onChange={(evt: any) => {
                   const value = evt.target.value;
+                  window.location.reload()
                   if (value === 0) {
-                    globalStore.setLanguage('zh-CN');
+                    uiStore.setLanguage('zh-CN');
                   } else {
-                    globalStore.setLanguage('en');
+                    uiStore.setLanguage('en');
                   }
                 }}
-                items={[
-                  {text: '中文', name: 'zh-CN'},
-                  {text: 'En', name: 'en'}
-                ]}></LangSelect>
-              </span>
-            </Tooltip>
+                items={UIStore.languages}>
+              </LangSelect>
           </div>
         </div>
       </div>
       }
       <div className="custom-card">
-        {!isElectron ? <GithubIcon /> : null}
+        {!uiStore.isElectron ? <GithubIcon /> : null}
         <div className="flex-item cover">
-          {isElectron ? 
+          {uiStore.isElectron ? 
           <>
-          <div className={`short-title ${globalStore.state.language}`}>
+          <div className={`short-title ${GlobalStorage.getLanguage()}`}>
             <span className="title">{t('home.short_title.title')}</span>
             <span className="subtitle">{t('home.short_title.subtitle')}</span>
           </div>
@@ -190,29 +164,53 @@ function HomePage() {
         </div>
         <div className="flex-item card">
           <div className="position-top card-menu">
-            <HomeBtn handleSetting={handleSetting}/>
+            {uiStore.isElectron && 
+            <>
+                <Tooltip title={t("icon.setting")} placement="bottom">
+                  <span>
+                    <CustomIcon className="icon-setting" onClick={handleSetting}/>
+                  </span>
+                </Tooltip>
+                <div className="icon-container">
+                  <CustomIcon className="icon-minimum" onClick={() => {
+                    uiStore.windowMinimum()
+                  }}/>
+                  <CustomIcon className="icon-close" onClick={() => {
+                    uiStore.windowClose()
+                  }}/>
+                </div>
+            </>
+            }
           </div>
           <div className="position-content flex-direction-column">
             <FormControl className={classes.formControl}>
-              <FormInput Label={t('home.room_name')} value={session.roomName} onChange={
-                (val: string) => {
-                  setSessionInfo({
-                    ...session,
-                    roomName: val
-                  });
-                }}
+              <FormInput
+                alphabetical={true}
+                Label={t('home.room_name')}
+                value={session.roomName}
+                onChange={
+                  (val: string) => {
+                    setSessionInfo({
+                      ...session,
+                      roomName: val
+                    });
+                  }
+                }
                 requiredText={required.roomName}
               />
             </FormControl>
             <FormControl className={classes.formControl}>
-              <FormInput Label={t('home.nickname')} value={session.yourName} onChange={
-                (val: string) => {
+              <FormInput
+                alphabetical={true}
+                Label={t('home.nickname')}
+                value={session.userName}
+                onChange={(val: string) => {
                   setSessionInfo({
                     ...session,
-                    yourName: val
+                    userName: val
                   });
                 }}
-                requiredText={required.yourName}
+                requiredText={required.userName}
               />
             </FormControl>
             <FormControl className={classes.formControl}>
@@ -225,7 +223,8 @@ function HomePage() {
                     roomType: evt.target.value
                   });
                 }}
-                items={roomTypes.map((it: any) => ({
+                items={roomTypes
+                  .map((it: any) => ({
                   value: it.value,
                   text: t(`${it.text}`),
                   path: it.path
@@ -233,14 +232,14 @@ function HomePage() {
               />
             </FormControl>
             <FormControl className={classes.formControl}>
-              <RoleRadio value={session.role} onChange={(evt: any) => {
+              <RoleRadio value={session.role} type={session.roomType} onChange={(evt: any) => {
                  setSessionInfo({
                    ...session,
                    role: evt.target.value
                  });
               }} requiredText={required.role}></RoleRadio>
             </FormControl>
-            <Button name={t('home.room_join')} onClick={handleSubmit}/>
+            <CustomButton name={t('home.room_join')} onClick={handleSubmit}/>
           </div>
         </div>
       </div>

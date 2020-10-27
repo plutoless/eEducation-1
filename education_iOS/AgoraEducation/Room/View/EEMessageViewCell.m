@@ -7,6 +7,7 @@
 //
 
 #import "EEMessageViewCell.h"
+#import "UIView+Toast.h"
 
 @interface EEMessageViewCell ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftViewWidthCon;
@@ -50,39 +51,59 @@
     [super setSelected:selected animated:animated];
 }
 
-- (void)setMessageModel:(MessageInfoModel *)messageModel {
+- (void)setMessageModel:(EETextMessage *)messageModel {
     _messageModel = messageModel;
 
     NSMutableAttributedString *contentString;
 
-    if(messageModel.recordId != nil && messageModel.recordId.length > 0) {
+    if(messageModel.recordRoomUuid != nil) {
         contentString = [[NSMutableAttributedString alloc] initWithString:messageModel.message attributes:@{NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle)}];
        
     } else {
         contentString = [[NSMutableAttributedString alloc] initWithString:messageModel.message];
     }
 
-    if (messageModel.isSelfSend) {
-        CGSize size =  [self sizeWithContent:messageModel.message];
-        self.rightViewWidthCon.constant = (size.width + 25) > self.cellWidth ? self.cellWidth : size.width + 25;
-        [self.rightContentLabel setAttributedText:contentString];
-        self.rightView.hidden = NO;
-        self.rightContentLabel.hidden = NO;
-        self.leftView.hidden = YES;
-        self.leftContentLabel.hidden = YES;
-        self.nameLabel.textAlignment = NSTextAlignmentRight;
-    } else {
-        CGSize size =  [self sizeWithContent: messageModel.message];
-        self.leftViewWidthCon.constant = size.width + 25 > self.cellWidth ? self.cellWidth : size.width +25;
-        [self.leftContentLabel setAttributedText:contentString];
-        self.rightView.hidden = YES;
-        self.rightContentLabel.hidden = YES;
-        self.leftView.hidden = NO;
-        self.leftContentLabel.hidden = NO;
-        self.nameLabel.textAlignment = NSTextAlignmentLeft;
+    WEAK(self);
+    [AgoraEduManager.shareManager.roomManager getLocalUserWithSuccess:^(EduUser * _Nonnull user) {
+        
+        if([messageModel.fromUser.userUuid isEqualToString:user.userUuid]){
+            CGSize size =  [weakself sizeWithContent:messageModel.message];
+            weakself.rightViewWidthCon.constant = (size.width + 25) > weakself.cellWidth ? weakself.cellWidth : size.width + 25;
+            [weakself.rightContentLabel setAttributedText:contentString];
+            weakself.rightView.hidden = NO;
+            weakself.rightContentLabel.hidden = NO;
+            weakself.leftView.hidden = YES;
+            weakself.leftContentLabel.hidden = YES;
+            weakself.nameLabel.textAlignment = NSTextAlignmentRight;
+        } else {
+            CGSize size =  [weakself sizeWithContent: messageModel.message];
+            weakself.leftViewWidthCon.constant = size.width + 25 > weakself.cellWidth ? weakself.cellWidth : size.width +25;
+            [weakself.leftContentLabel setAttributedText:contentString];
+            weakself.rightView.hidden = YES;
+            weakself.rightContentLabel.hidden = YES;
+            weakself.leftView.hidden = NO;
+            weakself.leftContentLabel.hidden = NO;
+            weakself.nameLabel.textAlignment = NSTextAlignmentLeft;
+        }
+        
+    } failure:^(NSError * error) {
+        [UIApplication.sharedApplication.keyWindow makeToast:error.description];
+    }];
+    
+    NSString *roleString = @"";
+    switch (messageModel.fromUser.role) {
+        case EduRoleTypeTeacher:
+            roleString = [NSString stringWithFormat:@"[%@]:", NSLocalizedString(@"TeacherText", nil)];
+            break;
+        case EduRoleTypeAssistant:
+            roleString = [NSString stringWithFormat:@"[%@]:", NSLocalizedString(@"AssistantText", nil)];
+            break;
+        default:
+            break;
     }
     
-    [self.nameLabel setText:messageModel.userName];
+    NSString *nameString = [NSString stringWithFormat:@"%@%@", roleString, messageModel.fromUser.userName];
+    [self.nameLabel setText:nameString];
 }
 
 - (CGSize)sizeWithContent:(NSString *)string {

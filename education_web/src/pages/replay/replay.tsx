@@ -1,307 +1,126 @@
-import React, { useEffect, useMemo, useRef, useCallback, useState } from 'react';
-import '../replay.scss';
+import React, { useEffect, useRef } from 'react'
+import './replay.scss'
 import Slider from '@material-ui/core/Slider';
-import { Player, PlayerPhase } from 'white-web-sdk';
-import { useParams, useLocation } from 'react-router';
-import moment from 'moment';
-import { Progress } from '@/components/progress/progress';
-import { globalStore } from '@/stores/global';
-import { replayStore, useObserver, IPlayerState } from './model';
-import { WhiteboardAPI } from '@/utils/api';
-import { whiteboard } from '@/stores/whiteboard';
+import { useReplayStore } from '@/hooks'
+import { useLocation, useParams } from 'react-router-dom'
+import { useMounted } from '../../components/toast'
+import { PlayerPhase } from 'white-web-sdk'
+import { Progress } from '@/components/progress/progress'
+import { t } from '@/i18n'
+import { observer } from 'mobx-react'
 import "video.js/dist/video-js.css";
-import { RTMReplayer, RtmPlayerState } from '@/components/whiteboard/agora/rtm-player';
-import { useInterval } from 'react-use';
-import { isElectron } from '@/utils/platform';
-import { t } from '@/i18n';
+import moment from 'moment';
 
-const delay = 5000
+const PlayerCover = observer(() => {
+  const replayStore = useReplayStore()
 
+  return (
+    replayStore.player && replayStore.firstFrame ?
+      (replayStore.phase !== PlayerPhase.Playing ?
+        <div className="player-cover">
+          {replayStore.phase === PlayerPhase.Buffering ? <Progress title={t("replay.loading")} />: null}
+          {replayStore.phase === PlayerPhase.Pause ||
+          replayStore.phase === PlayerPhase.Ended ||
+          replayStore.phase === PlayerPhase.WaitingFirstFrame ? 
+          <div className="play-btn" onClick={() => replayStore.handlePlayerClick()}></div> : null}
+        </div> : null
+      ):
+      <Progress title={t("replay.loading")} />
+  )
+})
 
-const ReplayContext = React.createContext({} as IPlayerState);
+const useInterval = (fn: CallableFunction, delay: number) => {
+  const mounted = useMounted()
 
-const useReplayContext = () => React.useContext(ReplayContext);
+  const interval = useRef<any>(null)
 
-const ReplayContainer: React.FC<{}> = () => {
-  const replayState = useObserver<IPlayerState>(replayStore)
+  useEffect(() => {
+    interval.current = setInterval(() => {
+      fn && mounted && fn()
+    }, delay)
 
-  const {recordId} = useParams();
-  const location = useLocation();
+    return () => {
+      if (interval.current) {
+        clearInterval(interval.current)
+      }
+    }
+  },[interval])
+}
+
+export const ReplayController: React.FC<any> = observer(() => {
+
+  const location = useLocation()
+
+  const {roomUuid} = useParams()
+
   const searchParams = new URLSearchParams(location.search);
-  const roomId: string = searchParams.get('roomId') as string;
-  const userToken: string = searchParams.get('token') as string;
-  const senderId: string = searchParams.get('senderId') as string;
-  const channelName: string = searchParams.get('channelName') as string;
+
+  const replayStore = useReplayStore()
+
+  const replayRef = useRef<HTMLDivElement | null>(null)
 
   useInterval(() => {
-    replayStore.getCourseRecordBy(recordId as string, roomId as string, userToken)
-  }, delay)
+    replayStore.getCourseRecordBy(roomUuid as string)
+  }, 2500)
 
-  const value = replayState;
-
-  const result = value.courseRecordData;
-
-  return (
-    <ReplayContext.Provider value={value}>
-      {result?.status !== 2 ?
-        <Progress title={t(`replay.${result?.statusText ? result?.statusText : 'loading'}`)} /> : 
-        <NetlessAgoraReplay
-          roomId={roomId}
-          senderId={senderId}
-          channelName={channelName}
-          whiteboardUUID={result?.boardId as string}
-          startTime={result?.startTime as number}
-          endTime={result?.endTime as number}
-          mediaUrl={result?.url as string} />
-      }
-    </ReplayContext.Provider>
-  )
-}
-
-export default ReplayContainer;
-
-export type NetlessAgoraReplayProps = {
-  whiteboardUUID: string
-  startTime: number
-  endTime: number
-  mediaUrl: string
-  senderId: string
-  channelName: string
-  roomId: string
-}
-
-export const NetlessAgoraReplay: React.FC<NetlessAgoraReplayProps> = ({
-  whiteboardUUID: uuid,
-  startTime,
-  endTime,
-  mediaUrl,
-  senderId,
-  channelName,
-  roomId
-}) => {
-  const state = useReplayContext();
-
-  const player = useMemo(() => {
-    if (!replayStore.state || !replayStore.state.player) return null;
-    return replayStore.state.player as Player;
-  }, [replayStore.state]);
+  useEffect(() => {
+    if (replayRef.current && replayStore.recordStatus === 2 && replayStore.mediaUrl) {
+      replayStore.replay(replayRef.current)
+    }
+  }, [replayStore.recordStatus, replayRef.current, replayStore.mediaUrl])
 
   const handlePlayerClick = () => {
-    if (!replayStore.state || !player) return;
-
-    if (player.phase === PlayerPhase.Playing) {
-      player.pause();
-      return;
-    }
-    if (player.phase === PlayerPhase.WaitingFirstFrame || player.phase === PlayerPhase.Pause) {
-      player.play();
-      return;
-    }
-
-    if (player.phase === PlayerPhase.Ended) {
-      player.seekToScheduleTime(0);
-      player.play();
-      return;
-    }
+    replayStore.handlePlayerClick()
   }
 
-  const handleChange = (event: any, newValue: any) => {
-    replayStore.setCurrentTime(newValue);
-    replayStore.updateProgress(newValue);
+  const handleSliderMouseDown = () => {
+    replayStore.pauseCurrentTime()
   }
 
-  const onWindowResize = () => {
-    if (state.player) {
-      state.player.refreshViewSize();
-    }
+  const handleSliderMouseUp = () => {
+    replayStore.seekToCurrentTime()
   }
 
-  const handleSpaceKey = (evt: any) => {
-    if (evt.code === 'Space') {
-      if (state.player) {
-        handleOperationClick(state.player);
-      }
-    }
+  const handleSliderChange = (event: any, newValue: any) => {
+    replayStore.updateProgress(newValue)
+  }
+  
+  const handleTouchStart = () => {
+    replayStore.pauseCurrentTime()
   }
 
-  const handleOperationClick = (player: Player) => {
-    switch (player.phase) {
-      case PlayerPhase.WaitingFirstFrame:
-      case PlayerPhase.Pause: {
-        player.play();
-        break;
-      }
-      case PlayerPhase.Playing: {
-        player.pause();
-        break;
-      }
-      case PlayerPhase.Ended: {
-        player.seekToScheduleTime(0);
-        break;
-      }
-    }
+  const handleTouchEnd = () => {
+    replayStore.seekToCurrentTime()
   }
-
-  const duration = useMemo(() => {
-    if (!startTime || !endTime) return 0;
-    const _duration = Math.abs(+startTime - +endTime);
-    return _duration;
-  }, [startTime, endTime]);
-
-  const lock = useRef<boolean>(false);
-
-  useEffect(() => {
-    return () => {
-      lock.current = true;
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('resize', onWindowResize);
-    window.addEventListener('keydown', handleSpaceKey);
-    if (roomId && startTime && endTime) {
-        replayStore.joinRoom(roomId).then(({roomToken, uuid}) => {
-          WhiteboardAPI.replayRoom(whiteboard.client,
-          {
-            beginTimestamp: +startTime,
-            duration: duration,
-            room: uuid,
-            mediaURL: mediaUrl,
-            roomToken: roomToken,
-          }, {
-            onCatchErrorWhenRender: error => {
-              error && console.warn(error);
-              globalStore.showToast({
-                message: t('toast.replay_failed'),
-                type: 'notice'
-              });
-            },
-            onCatchErrorWhenAppendFrame: error => {
-              error && console.warn(error);
-              globalStore.showToast({
-                message: t('toast.replay_failed'),
-                type: 'notice'
-              });
-            },
-            onPhaseChanged: phase => {
-              replayStore.updateWhiteboardPhase(phase);
-            },
-            onLoadFirstFrame: () => {
-              replayStore.loadFirstFrame();
-            },
-            onSliceChanged: () => {
-            },
-            onPlayerStateChanged: (error) => {
-            },
-            onStoppedWithError: (error) => {
-              error && console.warn(error);
-              globalStore.showToast({
-                message: t('toast.replay_failed'),
-                type: 'notice'
-              });
-              replayStore.setReplayFail(true);
-            },
-            onScheduleTimeChanged: (scheduleTime) => {
-              if (lock.current) return;
-              replayStore.setCurrentTime(scheduleTime);
-            }
-          }).then((player: Player | undefined) => {
-            if (player) {
-              replayStore.setPlayer(player);
-              player.seekToScheduleTime(0);
-              player.bindHtmlElement(document.getElementById("whiteboard") as HTMLDivElement);
-            }
-          })
-        });
-    }
-    return () => {
-      window.removeEventListener('resize', onWindowResize);
-      window.removeEventListener('keydown', onWindowResize);
-    }
-  }, []);
-
-  const totalTime = useMemo(() => {
-    return moment(duration).format("mm:ss");
-  }, [duration]);
-
-  const time = useMemo(() => {
-    return moment(state.currentTime).format("mm:ss");
-  }, [state.currentTime]);
-
-  const PlayerCover = useCallback(() => {
-    if (!player) {
-      return (<Progress title={t("replay.loading")} />)
-    }
-
-    if (!state.isFirstScreenReady) return null
-
-    if (player.phase === PlayerPhase.Playing) return null;
-
-    return (
-      <div className="player-cover">
-        {player.phase === PlayerPhase.Buffering ? <Progress title={t("replay.loading")} />: null}
-        {player.phase === PlayerPhase.Pause || player.phase === PlayerPhase.Ended || player.phase === PlayerPhase.WaitingFirstFrame ? 
-          <div className="play-btn" onClick={handlePlayerClick}></div> : null}
-      </div>
-    )
-  }, [player, state]);
 
   return (
-    <div className={`replay`}>
-      <div className={`player-container`} >
+    <div className="replay">
+      <div className="player-container">
         <PlayerCover />
         <div className="player">
-          <div className="agora-logo"></div>
-          <div id="whiteboard" className="whiteboard"></div>
+          <div className="agora-log"></div>
+          <div ref={replayRef} id="whiteboard" className="whiteboard"></div>
           <div className="video-menu">
             <div className="control-btn">
-              <div className={`btn ${player && player.phase === PlayerPhase.Playing ? 'paused' : 'play'}`} onClick={handlePlayerClick}></div>
+              <div className={`btn ${replayStore.player && replayStore.phase === PlayerPhase.Playing ? 'paused' : 'play'}`} onClick={handlePlayerClick}></div>
             </div>
             <div className="progress">
               <Slider
                 className='custom-video-progress'
-                value={state.currentTime}
-                onMouseDown={() => {
-                  if (replayStore.state && replayStore.state.player) {
-                    const player = replayStore.state.player as Player;
-                    player.pause();
-                    lock.current = true;
-                  }
-                }}
-                onMouseUp={() => {
-                  if (replayStore.state && replayStore.state.player) {
-                    const player = replayStore.state.player as Player;
-                    player.seekToScheduleTime(state.currentTime);
-                    player.play();
-                    lock.current = false;
-                  }
-                }}
-                onTouchStart={() => {
-                  console.log('onTouchEnd')
-                  if (replayStore.state && replayStore.state.player) {
-                    const player = replayStore.state.player as Player;
-                    player.pause();
-                    lock.current = true;
-                  }
-                }}
-                onTouchEnd={() => {
-                  console.log('onTouchStart')
-                  if (replayStore.state && replayStore.state.player) {
-                    const player = replayStore.state.player as Player;
-                    player.seekToScheduleTime(state.currentTime);
-                    player.play();
-                    lock.current = false;
-                  }
-                }}
-                onChange={handleChange}
+                value={replayStore.currentTime}
+                onMouseDown={handleSliderMouseDown}
+                onMouseUp={handleSliderMouseUp}
+                onChange={handleSliderChange}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
                 min={0}
-                max={duration}
+                max={replayStore.duration}
                 aria-labelledby="continuous-slider"
               />
               <div className="time">
-                <div className="current_duration">{time}</div>
+                <div className="current_duration">{moment(replayStore.currentTime).format("mm:ss")}</div>
                   /
-                <div className="video_duration">{totalTime}</div>
+                <div className="video_duration">{moment(replayStore.totalTime).format("mm:ss")}</div>
               </div>
             </div>
           </div>
@@ -309,23 +128,10 @@ export const NetlessAgoraReplay: React.FC<NetlessAgoraReplayProps> = ({
       </div>
       <div className="video-container">
         <div className="video-player">
-          <video playsInline={true} id="white-sdk-video-js" className="video-js video-layout" style={{width: "100%", height: "100%", objectFit: "cover"}}></video>
+          <video id="white-sdk-video-js" className="video-js video-layout" style={{width: "100%", height: "100%", objectFit: "cover"}}></video>
         </div>
-        <div className="chat-holder chat-board chat-messages-container">
-          <RTMReplayer
-            senderId={senderId}
-            channelName={channelName}
-            startTime={startTime}
-            endTime={endTime}
-            currentSeekTime={state.currentTime}
-            onPhaseChanged={(e: RtmPlayerState) => {
-              if (e !== RtmPlayerState.load) {
-                player?.stop();
-              }
-            }}
-          ></RTMReplayer>
-        </div>
+        <div className="chat-holder chat-board chat-messages-container"></div>
       </div>
     </div>
   )
-}
+})

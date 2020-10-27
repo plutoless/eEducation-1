@@ -7,7 +7,6 @@
 //
 
 #import "EENavigationView.h"
-#import "LogManager.h"
 #import "UIView+Toast.h"
 #import "AlertViewUtil.h"
 
@@ -97,29 +96,22 @@
     [self.loadingView startAnimating];
     
     WEAK(self);
-    [LogManager uploadLogWithCompleteSuccessBlock:^(NSString * _Nonnull uploadSerialNumber) {
+    [AgoraEduManager.shareManager uploadDebugItemSuccess:^(NSString * _Nonnull serialNumber) {
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            weakself.uploadLogBtn.hidden = NO;
-            weakself.loadingView.hidden = YES;
-            [weakself.loadingView stopAnimating];
+        weakself.uploadLogBtn.hidden = NO;
+        weakself.loadingView.hidden = YES;
+        [weakself.loadingView stopAnimating];
 
-            UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-            UINavigationController *nvc = (UINavigationController*)window.rootViewController;
-            if (nvc != nil) {
-                 [AlertViewUtil showAlertWithController:nvc.visibleViewController title:NSLocalizedString(@"UploadLogSuccessText", nil) message:uploadSerialNumber cancelText:nil sureText:NSLocalizedString(@"OKText", nil) cancelHandler:nil sureHandler:nil];
-            }
-        });
-        
-    } completeFailBlock:^(NSString * _Nonnull errMessage) {
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            weakself.uploadLogBtn.hidden = NO;
-            weakself.loadingView.hidden = YES;
-            [weakself.loadingView stopAnimating];
-            [UIApplication.sharedApplication.keyWindow makeToast:errMessage];
-            
-        });
+        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+        UINavigationController *nvc = (UINavigationController*)window.rootViewController;
+        if (nvc != nil) {
+             [AlertViewUtil showAlertWithController:nvc.visibleViewController title:NSLocalizedString(@"UploadLogSuccessText", nil) message:serialNumber cancelText:nil sureText:NSLocalizedString(@"OKText", nil) cancelHandler:nil sureHandler:nil];
+        }
+    } failure:^(NSError * error) {
+        weakself.uploadLogBtn.hidden = NO;
+        weakself.loadingView.hidden = YES;
+        [weakself.loadingView stopAnimating];
+        [UIApplication.sharedApplication.keyWindow makeToast:error.description];
     }];
 }
 

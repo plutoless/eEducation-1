@@ -7,7 +7,6 @@
 //
 
 #import "KeyCenter.h"
-#import "URL.h"
 
 @implementation KeyCenter
 
@@ -15,12 +14,16 @@
     return <#Your Agora App Id#>;
 }
 
-+ (NSString *)authorization {
-     return <#Your Authorization#>;
++ (NSString *)customerId {
+    return <#Your Agora Customer Id#>;
 }
 
-+ (NSString *)boardInfoApiURL {
-    return HTTP_WHITE_ROOM_INFO;
++ (NSString *)customerCertificate {
+    return <#Your Agora Customer Certificate#>;
+}
+
++ (NSString *)boardAppid {
+    return <#Your Board App Id#>;
 }
 
 @end

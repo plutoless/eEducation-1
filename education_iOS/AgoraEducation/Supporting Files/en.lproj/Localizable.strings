@@ -24,13 +24,19 @@ TeaCloseCoVideoText = "teacher close your interactive!";
 
 MaterialsAreaText = "Materials area";
 ChatroomText = "Chatroom";
+StudentListText = "Student List";
+
 StudentText = "Student";
+TeacherText = "Teacher";
+AssistantText = "Assistant";
 
 OneToOneText = "One to One Classroom";
 SmallClassText = "Small Classroom";
 LargeClassText = "Lecture Hall";
+BreakOutClassText = "Break Out Classroom";
 
 UserNameVerifyText = "class name and user name must be within 20 characters";
+UserNameFormatVerifyText = "class name and user name can only be letters and numbers";
 
 RoomTypeVerifyText = "please select a room type";
 RoomCountVerifyText = "Room is full, please change another room";
@@ -47,7 +53,8 @@ SendMessageFailedText = "send message failed";
 SendPeerMessageFailedText = "send peer message failed";
 InitSignalFailedText = "init signal failed";
 JoinSignalFailedText = "join signal failed";
-QuaryReplayFailedText = "Generated playback is not complete yet. Check back later!";
+QuaryReplayFailedText = "generated playback is not complete yet. Check back later!";
+ReplayListFailedText = "cannot find replay data!";
 
 MuteBoardText = "teacher has revoked your whiteboard permissions";
 UnMuteBoardText = "teacher has authorized your whiteboard permissions";

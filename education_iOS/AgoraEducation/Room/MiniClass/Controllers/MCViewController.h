@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MinEducationManager.h"
+#import "BaseViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MCViewController : UIViewController
-
-@property (nonatomic, strong) MinEducationManager *educationManager;
+@interface MCViewController : BaseViewController
 
 @end
 

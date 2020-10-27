@@ -11,7 +11,8 @@
 
 @interface MCStudentListView ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) UITableView *studentTableView;
-@property (nonatomic, strong) NSArray<UserModel*> *studentArray;
+@property (nonatomic, strong) NSArray<EduStream*> *studentArray;
+@property (nonatomic, strong) NSArray<NSString*> *grantUserArray;
 
 @end
 
@@ -40,9 +41,13 @@
     self.studentTableView.frame = self.bounds;
 }
 
-- (void)updateStudentArray:(NSArray<UserModel*> *)array {
-    
+- (void)updateStudentArray:(NSArray<EduStream*> *)array {
     self.studentArray = [NSArray arrayWithArray:array];
+    [self.studentTableView reloadData];
+}
+
+- (void)updateGrantStudentArray:(NSArray<NSString*> *)grantUsers {
+    self.grantUserArray = [NSArray arrayWithArray:grantUsers];
     [self.studentTableView reloadData];
 }
 
@@ -59,9 +64,13 @@
         [cell.muteVideoButton addTarget:self action:@selector(muteVideo:) forControlEvents:(UIControlEventTouchUpInside)];
     }
 
-    UserModel *infoModel = self.studentArray[indexPath.row];
-    cell.uid = self.uid;
-    cell.studentModel = infoModel;
+    EduStream *infoModel = self.studentArray[indexPath.row];
+    cell.uuid = self.uuid;
+    cell.stream = infoModel;
+    cell.muteWhiteButton.selected = NO;
+    if(self.grantUserArray != nil && [self.grantUserArray containsObject:infoModel.userInfo.userUuid]) {
+        cell.muteWhiteButton.selected = YES;
+    }
     return cell;
 }
 
@@ -70,10 +79,12 @@
 }
 
 - (void)muteAudio:(UIButton *)sender {
+
     if (self.delegate && [self.delegate respondsToSelector:@selector(muteAudioStream:)]) {
         [self.delegate muteAudioStream:sender.selected];
     }
     sender.selected = !sender.selected;
+    
     NSString *imageName = sender.selected ? @"icon-speaker3-max":@"speaker-close";
     [sender setImage:[UIImage imageNamed:imageName] forState:(UIControlStateNormal)];
 }
@@ -87,9 +98,9 @@
     [sender setImage:[UIImage imageNamed:imageName] forState:(UIControlStateNormal)];
 }
 
-
-- (void)setUid:(NSInteger)uid {
-    _uid = uid;
+-(void)setUuid:(NSString *)uuid {
+    _uuid = uuid;
     [self.studentTableView reloadData];
 }
+
 @end

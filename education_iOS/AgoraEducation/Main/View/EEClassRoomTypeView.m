@@ -26,7 +26,11 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.roomNameArray = [NSMutableArray arrayWithObjects:NSLocalizedString(@"OneToOneText", nil), NSLocalizedString(@"SmallClassText", nil), NSLocalizedString(@"LargeClassText", nil), nil];
+    self.roomNameArray = [NSMutableArray arrayWithObjects:NSLocalizedString(@"OneToOneText", nil),
+                          NSLocalizedString(@"SmallClassText", nil),
+                          NSLocalizedString(@"LargeClassText", nil),
+                          NSLocalizedString(@"BreakOutClassText", nil),
+                          nil];
 
     [self addSubview:self.typeTableView];
     self.typeTableView.layer.borderWidth = 1.f;
@@ -49,7 +53,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return self.roomNameArray.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -60,7 +64,7 @@
 
 - (UITableView *)typeTableView {
     if (!_typeTableView) {
-        _typeTableView =  [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth - 60, 150) style:(UITableViewStylePlain)];
+        _typeTableView =  [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth - 60, 190) style:(UITableViewStylePlain)];
         _typeTableView.delegate = self;
         _typeTableView.dataSource = self;
         _typeTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 9.f)];

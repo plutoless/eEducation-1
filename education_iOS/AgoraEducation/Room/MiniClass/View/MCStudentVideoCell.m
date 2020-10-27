@@ -24,11 +24,11 @@
     return self;
 }
 
-- (void)setUserModel:(UserModel *)userModel {
+- (void)setUserModel:(EduStream *)userModel {
     _userModel = userModel;
-    self.nameLable.text = userModel.userName;
-    self.backImageView.hidden = userModel.enableVideo ? YES : NO;
-    NSString *audioImageName = userModel.enableAudio ? @"icon-speaker3-min" : @"icon-speaker-off-min";
+    self.nameLable.text = userModel.userInfo.userName;
+    self.backImageView.hidden = userModel.hasVideo ? YES : NO;
+    NSString *audioImageName = userModel.hasAudio ? @"icon-speaker3-min" : @"icon-speaker-off-min";
     [self.volumeImageView setImage:[UIImage imageNamed:audioImageName]];
 }
 

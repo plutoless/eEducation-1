@@ -7,13 +7,11 @@
 //
 
 #import "EEMessageView.h"
-#import "EEMessageViewCell.h"
-#import "ReplayViewController.h"
+#import "ReplayModuleManager.h"
 
 @interface EEMessageView ()<UITableViewDelegate,UITableViewDataSource>
 @property (weak, nonatomic) UITableView *messageTableView;
 @property (nonatomic, strong) NSMutableArray *messageArray;
-
 @end
 
 @implementation EEMessageView
@@ -46,7 +44,7 @@
     [self.messageTableView reloadData];
 }
 
-- (void)addMessageModel:(MessageInfoModel *)model {
+- (void)addMessageModel:(EETextMessage *)model {
 
     [self.messageArray addObject:model];
 
@@ -72,7 +70,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MessageInfoModel *messageModel = self.messageArray[indexPath.row];
+    EETextMessage *messageModel = self.messageArray[indexPath.row];
     if(messageModel.cellHeight > 0){
         return messageModel.cellHeight;
     }
@@ -88,11 +86,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    MessageInfoModel *messageModel = self.messageArray[indexPath.row];
-    if(messageModel.recordId == nil || messageModel.recordId.length == 0){
+    EETextMessage *message = self.messageArray[indexPath.row];
+    if(message.recordRoomUuid == nil){
         return;
     }
-    
-    [ReplayViewController enterReplayViewController:messageModel.recordId];
+
+    [ReplayModuleManager enterReplayViewControllerWithRoomId:message.recordRoomUuid];
 }
 @end

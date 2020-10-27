@@ -18,7 +18,7 @@
 {
     self = [super initWithCoder:coder];
     if (self) {
-        self.items = [NSArray arrayWithObjects:NSLocalizedString(@"ChatroomText", nil), NSLocalizedString(@"StudentText", nil), nil];
+        self.items = [NSArray arrayWithObjects:NSLocalizedString(@"ChatroomText", nil), NSLocalizedString(@"StudentListText", nil), nil];
     }
     return self;
 }

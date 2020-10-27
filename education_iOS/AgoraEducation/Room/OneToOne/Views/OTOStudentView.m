@@ -67,4 +67,11 @@
     [self.micButton setImage:[UIImage imageNamed:imageName] forState:(UIControlStateNormal)];
 }
 
+- (BOOL)hasVideo {
+    return !self.cameraButton.selected;
+}
+- (BOOL)hasAudio {
+    return !self.micButton.selected;
+}
+
 @end

@@ -1,4 +1,23 @@
 /// <reference types="react-scripts" />
+/// <reference types="./sdk/education/interfaces" />
+
+declare const REACT_APP_AGORA_APP_SDK_DOMAIN: string;
+declare const REACT_APP_AGORA_APP_SDK_LOG_SECRET: string;
+interface RtmTextMessage {
+  text: string;
+  messageType?: 'TEXT';
+  rawMessage?: never;
+  description?: never;
+}
+
+interface RtmRawMessage {
+  rawMessage: Uint8Array;
+  description?: string;
+  messageType?: 'RAW';
+  text?: never;
+}
+
+type RtmMessage = RtmTextMessage | RtmRawMessage;
 
 declare interface RecordState {
   roomId: string
@@ -36,16 +55,6 @@ declare interface RecordingConfig {
 declare module 'react-gtm-module'
 declare module 'eruda'
 
-declare module 'agora-rtc-sdk' {
-  const AgoraRTC: any;
-  export default AgoraRTC;
-}
-
-declare module 'agora-rtm-sdk' {
-  const AgoraRTM: any;
-  export default AgoraRTM;
-}
-
 declare module 'js-md5' {
   const MD5: any;
   export default MD5;
@@ -69,5 +78,9 @@ declare module "worker-loader!*" {
 
   export default WebpackWorker;
 }
+
+// declare global {
+//   export const REACT_APP_AGORA_APP_SDK_DOMAIN: string;
+// }
 
 declare module '*.scss';

@@ -5,7 +5,7 @@ IPAName="IPADEV"
 xcodebuild clean -workspace "AgoraEducation.xcworkspace" -scheme "AgoraEducation" -configuration DevRelease
 xcodebuild archive -workspace "AgoraEducation.xcworkspace" -scheme "AgoraEducation"  -configuration DevRelease -archivePath ${ArchivePath} -quiet || exit
 xcodebuild -exportArchive -exportOptionsPlist exportPlist.plist -archivePath ${ArchivePath} -exportPath ${IPAName} -quiet || exit
-cp ${IPAName}/AgoraEducation.ipa AgoraEducationDev.ipa
+cp ${IPAName}/AgoraCloudClass.ipa AgoraEducationDev.ipa
 
 curl -X POST \
 https://upload.pgyer.com/apiv1/app/upload \

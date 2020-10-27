@@ -15,9 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) id<RoomProtocol> delegate;
 @property (weak, nonatomic) IBOutlet UIImageView *defaultImageView;
 @property (weak, nonatomic) IBOutlet UIView *studentRenderView;
+
+@property (assign, nonatomic) BOOL hasVideo;
+@property (assign, nonatomic) BOOL hasAudio;
+
 - (void)setButtonEnabled:(BOOL)enabled;
 - (void)updateVideoImageWithMuted:(BOOL)muted;
 - (void)updateAudioImageWithMuted:(BOOL)muted;
+
 @end
 
 NS_ASSUME_NONNULL_END

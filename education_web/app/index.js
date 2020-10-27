@@ -8,7 +8,10 @@ const { crashReporter } = require('electron');
 // const bt = require('backtrace-node');
 
 // workaround for resizable issue in mac os
-const platform = require('os').platform();
+const os = require('os')
+const platform = os.platform()
+const release = os.release()
+const type = os.type() 
 
 const process = require('process');
 // Module to control application life.

@@ -29,7 +29,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.studentVideoView.frame = self.bounds;
-
+    self.hasVideo = YES;
+    self.hasAudio = YES;
 }
 
 - (IBAction)muteAudio:(UIButton *)sender {
@@ -37,7 +38,7 @@
     sender.selected = !sender.selected;
     
     [self updateAudioImageWithMuted:sender.selected];
-
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(muteAudioStream:)]) {
         [self.delegate muteAudioStream:sender.selected];
     }
@@ -48,19 +49,23 @@
     sender.selected = !sender.selected;
     
     [self updateVideoImageWithMuted:sender.selected];
-
+ 
     if (self.delegate && [self.delegate respondsToSelector:@selector(muteVideoStream:)]) {
         [self.delegate muteVideoStream:sender.selected];
     }
 }
 
 - (void)updateVideoImageWithMuted:(BOOL)muted {
+    self.hasVideo = !muted;
+    
     NSString *imageName = muted ? @"icon-video-off-min" : @"icon-video-on-min";
     self.defaultImageView.hidden = !muted;
     [self.videoMuteButton setImage:[UIImage imageNamed:imageName] forState:(UIControlStateNormal)];
 }
 
 - (void)updateAudioImageWithMuted:(BOOL)muted {
+    self.hasAudio = !muted;
+    
     NSString *imageName = muted ? @"icon-speakeroff-dark" : @"icon-speaker3";
     [self.audioMuteButton setImage:[UIImage imageNamed:imageName] forState:(UIControlStateNormal)];
 }
@@ -69,4 +74,5 @@
     [self.videoMuteButton setEnabled:enabled];
     [self.audioMuteButton setEnabled:enabled];
 }
+
 @end

@@ -9,9 +9,9 @@
 	<key>provisioningProfiles</key>
 	<dict>
 		<key>io.agora.AgoraEducation</key>
-		<string>AgoraAppsDevProfile</string>
+		<string>App</string>
 		<key>io.agora.AgoraEducationQA</key>
-		<string>AgoraIOTest2019</string>
+		<string>AgoraLab2020</string>
 	</dict>
 </dict>
 </plist>

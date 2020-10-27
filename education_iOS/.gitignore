@@ -64,3 +64,4 @@ IPAQA/
 IPA/
 *.ipa
 *.xcarchive
+*.framework

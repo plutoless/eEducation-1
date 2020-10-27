@@ -32,13 +32,13 @@
     UILabel *contentLabel = [[UILabel alloc] init];
     contentLabel.frame = CGRectMake(15, 16, 150, 24);
     contentLabel.textAlignment = NSTextAlignmentLeft;
-    [self addSubview:contentLabel];
+    [self.contentView addSubview:contentLabel];
     self.contentLabel = contentLabel;
     contentLabel.text = NSLocalizedString(@"EyeProtectionText", nil);
 
     UISwitch *switchButton = [[UISwitch alloc] init];
     switchButton.frame = CGRectMake(kScreenWidth - 65, 13, 50, 32);
-    [self addSubview:switchButton];
+    [self.contentView addSubview:switchButton];
     self.switchButton = switchButton;
     [switchButton addTarget:self action:@selector(switchClick:) forControlEvents:(UIControlEventTouchUpInside)];
 }
@@ -51,10 +51,6 @@
 
 - (void)switchOn:(BOOL)on {
     [self.switchButton setOn:on animated:YES];
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
 }
 
 @end

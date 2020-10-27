@@ -13,7 +13,7 @@
 @interface MCStudentVideoListView ()<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (nonatomic, strong) UICollectionView *videoListView;
 @property (nonatomic, strong) NSLayoutConstraint *collectionViewLeftCon;
-@property (nonatomic, strong) NSArray<UserModel*> *studentArray;
+@property (nonatomic, strong) NSArray<EduStream*> *studentArray;
 @end
 
 @implementation MCStudentVideoListView
@@ -60,15 +60,14 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     MCStudentVideoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"VideoCell" forIndexPath:indexPath];
     
-    UserModel *currentModel = self.studentArray[indexPath.row];
+    EduStream *currentModel = self.studentArray[indexPath.row];
     cell.userModel = currentModel;
     if (self.studentVideoList) {
-        self.studentVideoList(cell, currentModel.uid);
+        self.studentVideoList(cell, currentModel);
     }
 
     return cell;
 }
-
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.studentArray.count;
@@ -81,8 +80,8 @@
     return CGSizeMake(95, 70);
 }
 
-- (void)updateStudentArray:(NSArray<UserModel*> *)studentArray {
-    
+- (void)updateStudentArray:(NSArray<EduStream*> *)studentArray {
+
     if(studentArray.count == 0 || self.studentArray.count != studentArray.count) {
         self.studentArray = [studentArray deepCopy];
         [self.videoListView reloadData];
@@ -91,9 +90,10 @@
 
         NSInteger count = studentArray.count;
         for(NSInteger i = 0; i < count; i++) {
-            UserModel *sourceModel = [self.studentArray objectAtIndex:i];
-            UserModel *currentModel = [studentArray objectAtIndex:i];
-            if(![sourceModel yy_modelIsEqual:currentModel]) {
+            EduStream *sourceModel = [self.studentArray objectAtIndex:i];
+            EduStream *currentModel = [studentArray objectAtIndex:i];
+            if (sourceModel.hasAudio != currentModel.hasAudio ||
+               sourceModel.hasVideo != currentModel.hasVideo) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
                 [indexPaths addObject:indexPath];
             }

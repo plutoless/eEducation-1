@@ -7,6 +7,7 @@
 //
 
 #import "NSArray+Copy.h"
+#import <YYModel/YYModel.h>
 
 @implementation NSArray (Copy)
 - (NSArray *)deepCopy {

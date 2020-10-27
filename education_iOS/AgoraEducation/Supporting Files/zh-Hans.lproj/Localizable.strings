@@ -12,7 +12,7 @@ OKText = "确定";
 CancelText = "取消";
 EyeProtectionText = "护眼模式";
 SettingText = "设置";
-ReplayRecordingText = "回放";
+ReplayRecordingText = "录制回放";
 
 ProhibitedPostText = " 禁言中";
 InputMessageText = " 说点什么";
@@ -23,14 +23,20 @@ RejectRequestText = "老师拒绝了你的连麦申请!";
 TeaCloseCoVideoText = "老师关闭了你的连麦!";
 
 MaterialsAreaText = "教材区";
-ChatroomText = "聊天室";
+ChatroomText = "消息";
+StudentListText = "学生列表";
+
 StudentText = "学生";
+TeacherText = "老师";
+AssistantText = "助教";
 
 OneToOneText = "一对一";
 SmallClassText = "小班课";
 LargeClassText = "大班课";
+BreakOutClassText = "超级小班课";
 
 UserNameVerifyText = "教室名、用户名最多为20个字符";
+UserNameFormatVerifyText = "教室名、用户名只能是字母、数字";
 RoomTypeVerifyText = "请选择房间类型";
 RoomCountVerifyText = "人数已满,请换个房间";
 RequestFailedText = "请求失败";
@@ -47,6 +53,7 @@ SendPeerMessageFailedText = "点对点消息发送失败";
 InitSignalFailedText = "初始化信令失败";
 JoinSignalFailedText = "加入信令失败";
 QuaryReplayFailedText = "生成回放还没有完成，过会儿再来看下";
+ReplayListFailedText = "没有找到回放数据!";
 
 MuteBoardText = "老师已回收了你的白板权限";
 UnMuteBoardText = "老师已授权了你的白板权限";

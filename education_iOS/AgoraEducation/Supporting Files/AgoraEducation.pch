@@ -11,10 +11,10 @@
 
 #ifdef __OBJC__
 
-#import <YYModel.h>
+#import "AgoraEduManager.h"
 #import "UIColor+Addition.h"
+#import "UIView+Constraint.h"
 #import "AlertViewUtil.h"
-#import "LogManager.h"
 
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width

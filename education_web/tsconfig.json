@@ -2,7 +2,7 @@
   "extends": "./edu-demo-tsconfig.json",
   "compilerOptions": {
     "target": "es6",
-    "experimentalDecorators": false,
+    "experimentalDecorators": true,
     "module": "esnext",
     "lib": [
       "dom",

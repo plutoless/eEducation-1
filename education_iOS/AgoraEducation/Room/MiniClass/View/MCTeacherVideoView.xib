@@ -50,7 +50,7 @@
                     <nil key="highlightedColor"/>
                     <size key="shadowOffset" width="0.0" height="0.0"/>
                 </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-speaker3-max" translatesAutoresizingMaskIntoConstraints="NO" id="Ykn-aa-LPz">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-speakeroff-dark" translatesAutoresizingMaskIntoConstraints="NO" id="Ykn-aa-LPz">
                     <rect key="frame" x="408" y="837" width="20" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="COa-gf-Wic"/>
@@ -83,7 +83,7 @@
         </view>
     </objects>
     <resources>
-        <image name="icon-speaker3-max" width="30" height="30"/>
+        <image name="icon-speakeroff-dark" width="30" height="30"/>
         <image name="icon-teacher" width="80" height="80"/>
     </resources>
 </document>

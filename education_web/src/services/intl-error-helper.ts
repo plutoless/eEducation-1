@@ -1,5 +1,4 @@
-import {globalStore} from '../stores/global'
-import GlobalStorage from '../utils/custom-storage';
+import {GlobalStorage} from '../utils/custom-storage';
 
 const key = 'demo-i18n-error'
 
@@ -11,7 +10,7 @@ export function setIntlError (payload: any) {
 
 function _getIntlError (error: string) {
   try {
-    const locale = globalStore.getLanguage().match(/^zh/) ? 'zh-cn' : 'en-us';
+    const locale = GlobalStorage.getLanguage().match(/^zh/) ? 'zh-cn' : 'en-us';
     const rawData: any = GlobalStorage.read(key)
     const json = rawData || {}
     return json[locale][error]
