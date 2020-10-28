@@ -13,6 +13,13 @@ if (AgoraRtcEngine) {
   AgoraRtcEngine.enableAudio();
   AgoraRtcEngine.enableWebSdkInteroperability(true);
   AgoraRtcEngine.setVideoProfile(43, false);
+  const beauty = AgoraRtcEngine.setBeautyEffectOptions(true, {
+    lighteningContrastLevel: 2,
+    lighteningLevel: 1,
+    smoothnessLevel: 1,
+    rednessLevel: 0
+  })
+  console.warn(beauty < 0 ? 'beauty is not support' : 'beauty is support')
   //@ts-ignore
   window.ipc && window.ipc.once("initialize", (events: any, args: any) => {
     const logPath = args[0]
@@ -269,7 +276,7 @@ export class AgoraElectronClient {
           shareClient.subscribeVideoSource = false;
           console.log("[electron-debug] videoSource Joined", uid);
           // shareClient.startScreenCapture2(windowId, 15, rect, 0);
-          shareClient.videoSourceStartScreenCaptureByWindow(windowId, {x: 0, y: 0, width: 0, height: 0}, {width: 0, height: 0, bitrate: 500, frameRate: 15});
+          shareClient.videoSourceStartScreenCaptureByWindow(windowId, {x: 0, y: 0, width: 0, height: 0}, {width: 0, height: 0, bitrate: 500, frameRate: 15, captureMouseCursor: true, windowFocus: true});
           shareClient.startScreenCapturePreview();
           // shareClient.videoSourceSetVideoProfile(43, false);
           // shareClient.startScreenCapture2(windowId, 15, rect, 0);
