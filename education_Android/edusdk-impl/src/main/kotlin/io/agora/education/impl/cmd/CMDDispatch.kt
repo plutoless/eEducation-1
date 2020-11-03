@@ -178,17 +178,21 @@ internal class CMDDispatch(private val eduRoom: EduRoom) {
                         TypeToken<CMDResponseBody<CMDUserStateMsg>>() {}.type).data
                 val changeEvents = CMDDataMergeProcessor.updateUserWithUserStateChange(cmdUserStateMsg,
                         (eduRoom as EduRoomImpl).getCurUserList(), eduRoom.getCurRoomType())
-                changeEvents?.forEach {
-                    cmdCallbackManager.onRemoteUserUpdated(it.event, Chat, eduRoom)
-                }
                 /**判断有效的数据中是否有本地用户的数据,有则处理并回调*/
-                for (element in changeEvents) {
+                val iterable = changeEvents.iterator()
+                while (iterable.hasNext()) {
+                    val element = iterable.next()
                     val event = element.event
                     if (event.modifiedUser.userUuid == eduRoom.getLocalUser().userInfo.userUuid) {
-                        Log.e(TAG, "onLocalUserUpdated")
+                        Log.e(TAG, "onLocalUserUpdated:${event.modifiedUser.userUuid}")
                         cmdCallbackManager.onLocalUserUpdated(EduUserEvent(event.modifiedUser,
                                 event.operatorUser), element.type, eduRoom.getLocalUser())
+                        iterable.remove()
                     }
+                }
+                /**把剩余的远端数据回调出去*/
+                changeEvents?.forEach {
+                    cmdCallbackManager.onRemoteUserUpdated(it.event, it.type, eduRoom)
                 }
             }
             CMDId.UserPropertiedChanged.value -> {
