@@ -31,7 +31,7 @@ eEducation supports the following platforms and versions:
 
 * iOS 10 or later. We do not test Agora e-Education on iOS 9 updates.
 * Android 4.4 and later.
-* Web Chrome 72 and later. We do not test Agora e-Education on browsers.
+* Web Chrome 72 and later. We do not test Agora e-Education on other browsers.
 
 ### <a name="function"></a>Functions
 | Function                                                     | iOS and Android (Student)                                    | Web (Teacher) | Web (Student)                                                | Web (TA) | Note                                                         |
@@ -48,8 +48,8 @@ eEducation supports the following platforms and versions:
 ### <a name="restriction"></a>Restrictions
 eEducation currently has the following restrictions:
 1. **Integrate Agora Cloud Recording**: The cloud recording in this sample project is only for demonstration. If you need to officially use the cloud recording function in your project, please see [Cloud Recording Quick Start](https://docs.agora.io/en/cloud-recording/cloud_recording_rest?platform=All%20Platforms) to enable Agora Cloud Recording.
-2: **Only supports Alibaba and Qiniu Cloud OSS**: Temporarily, this sample project only supports the Object Storage Service (OSS) of Alibaba Cloud and Qiniu Cloud. For details, see [Alibaba Cloud OSS Configuration Guide](https://github.com/AgoraIO-Usecase/eEducation/wiki/Alibaba-Cloud-OSS-Guide).
-3. **Whiteboard courseware management**: In this sample project, we deploy the courseware management on the front end and upload courseware using `accessKey` and `secretKey`. However, this is not a best practice and may cause security issues. We suggest you implement the course management system on the back end and upload courseware in advance. So the web client only needs to read the courseware before the class.
+2. **Only supports Alibaba and Qiniu Cloud OSS**: Temporarily, this sample project only supports the Object Storage Service (OSS) of Alibaba Cloud and Qiniu Cloud. For details, see [Alibaba Cloud OSS Configuration Guide](https://github.com/AgoraIO-Usecase/eEducation/wiki/Alibaba-Cloud-OSS-Guide).
+3. **Whiteboard courseware management**: In this sample project, we deploy the courseware management on the front end and upload courseware using `accessKey` and `secretKey`. However, this is not a best practice and may cause security issues. We suggest you implement the course management system on the back end and upload courseware in advance, so the web client only needs to read the courseware before the class.
 4. **Fails to update the user states immediately after a user in the classroom drops offline**: This sample project does not implement a course management system and uses the Agora RTM SDK for querying the number of online users. If a user in the classroom drops offline, RTM cannot get the user states immediately. Generally, it takes about 30 seconds for RTM to update the user states. You can resolve this problem by implementing your own course management system.
 5. **Connect with your own business logic**: The functions of the Agora Edu Cloud Service cannot be directly extended. However, we provide the `userUuid` and `roomUuid` parameters for you to connect the Agora Edu Cloud Service with your own user management system and course management system.
 6. **Concurrent channel restrictions**: At present, each appid can have up to 200 channels at the same time. If you need to continue more, please contact us.
@@ -82,7 +82,7 @@ See the following documents to compile and run the sample project:
 * [Run Web and Electron project](./education_web/README.md)
 
 ## <a name="edu-cloud-service"></a>Agora Edu Cloud Service
-Designed for developers who are not good at back end development, Agora Edu Cloud Service enables managing the states of rooms, users and streams, and notifying all the users in the classroom of state changes. For details, see [Edu Cloud Service RESTful API](https://agoradoc.github.io/en/edu-cloud-service/restfulapi/).
+Designed for developers who are not familiar with back end development, Agora Edu Cloud Service enables managing the states of rooms, users and streams, and notifying all the users in the classroom of state changes. For details, see [Edu Cloud Service RESTful API](https://agoradoc.github.io/en/edu-cloud-service/restfulapi/).
 
 ## <a name="faq"></a>FAQ
 ### Security
