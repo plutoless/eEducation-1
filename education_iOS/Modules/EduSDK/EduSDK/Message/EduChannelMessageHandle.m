@@ -158,13 +158,16 @@
         EduSyncUserModel *user = [EduSyncUserModel new];
         [user yy_modelSetWithJSON:model.fromUser];
         user.userProperties = model.changeProperties;
+        user.cause = model.cause;
         user.state = 1;
         [self.syncRoomSession updateUser:@[user] sequence:channelMsgModel.sequence];
         return;
     }
 
     EduSyncUserModel *user = [EduSyncUserModel new];
-    [user yy_modelSetWithJSON:userFilters.firstObject];
+    id obj = [userFilters.firstObject yy_modelToJSONObject];
+    [user yy_modelSetWithJSON:obj];
+    user.cause = model.cause;
     for (NSString *key in model.changeProperties.allKeys) {
         //1 upsert 2.delete
         if (model.action == 1) {
@@ -301,7 +304,7 @@
         }
     }
     
-    if([originalUser.userProperties yy_modelIsEqual: currentUser.userProperties]) {
+    if(![originalUser.userProperties yy_modelIsEqual: currentUser.userProperties]) {
         NSArray<EduUser *> *events = [self eduUsers:@[currentUser]];
         if ([self.roomDelegate respondsToSelector:@selector(classroom:remoteUserPropertyUpdated:cause:)]) {
             [self.roomDelegate classroom:room remoteUserPropertyUpdated:events.firstObject cause:currentUser.cause];
@@ -332,7 +335,7 @@
         }
     }
     
-    if([originalUser.userProperties yy_modelIsEqual: currentUser.userProperties]) {
+    if(![originalUser.userProperties yy_modelIsEqual: currentUser.userProperties]) {
         NSArray<EduUser *> *events = [self eduUsers:@[currentUser]];
         if ([self.userDelegate respondsToSelector:@selector(localUserPropertyUpdated:cause:)]) {
             [self.userDelegate localUserPropertyUpdated:events.firstObject cause:currentUser.cause];
