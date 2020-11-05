@@ -158,6 +158,7 @@
         EduSyncUserModel *user = [EduSyncUserModel new];
         [user yy_modelSetWithJSON:model.fromUser];
         user.userProperties = model.changeProperties;
+        user.cause = model.cause;
         user.state = 1;
         [self.syncRoomSession updateUser:@[user] sequence:channelMsgModel.sequence];
         return;
