@@ -40,18 +40,25 @@ export const FormInput = (props: any) => {
   }
 
   const onCompositionEnd = (evt: any) => {
+    if (!props.alphabetical) {
+      return
+    }
     imeLock.current = false
     updateValue(props.value.replace(/[^0-9a-zA-Z$]/g, '').slice(0, LIMIT_LENGTH))
   }
 
   const onChange = (evt: any) => {
-    const val = evt.target.value.replace(/[^0-9a-zA-Z$]/g, '').slice(0, LIMIT_LENGTH)
-    if (imeLock.current) {
-    } else {
-      evt.target.value = val
+    if (!props.alphabetical) {
       updateValue(evt.target.value)
+    } else {
+      const val = evt.target.value.replace(/[^0-9a-zA-Z$]/g, '').slice(0, LIMIT_LENGTH)
+      if (imeLock.current) {
+      } else {
+        evt.target.value = val
+        updateValue(evt.target.value)
+      }
+      imeLock.current = false
     }
-    imeLock.current = false
   }
   return (
     <>

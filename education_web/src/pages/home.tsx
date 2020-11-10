@@ -201,7 +201,7 @@ function HomePage() {
             </FormControl>
             <FormControl className={classes.formControl}>
               <FormInput
-                alphabetical={true}
+                alphabetical={false}
                 Label={t('home.nickname')}
                 value={session.userName}
                 onChange={(val: string) => {

@@ -22,6 +22,7 @@ import { LocalUserRenderer } from '@/sdk/education/core/media-service/renderer';
 import { PrepareScreenShareParams } from '@/sdk/education/core/media-service/interfaces';
 import { AgoraWebRtcWrapper } from '@/sdk/education/core/media-service/web';
 import { AgoraElectronRTCWrapper } from '@/sdk/education/core/media-service/electron';
+import md5 from "js-md5";
 
 // AgoraRTC.setLogLevel(4)
 
@@ -140,7 +141,7 @@ export class AppStore {
   }
 
   get userUuid(): string {
-    return `${this.roomInfo.userName}${this.roomInfo.userRole}`
+    return md5(`${this.roomInfo.userName}${this.roomInfo.userRole}`)
   }
 
   roomManager?: EduClassroomManager = undefined
@@ -283,7 +284,8 @@ export class AppStore {
       } else {
         this.uiStore.addToast(t('toast.failed_to_enable_screen_sharing') + `${err.msg}`)
       }
-      console.warn(err)
+      console.log('SCREEN-SHARE ERROR ', err)
+      console.error(err)
     } finally {
       this.waitingShare = false
     }
