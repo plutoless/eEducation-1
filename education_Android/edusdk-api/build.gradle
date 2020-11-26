@@ -25,6 +25,7 @@ android {
         consumerProguardFiles 'consumer-rules.pro'
 
         /**可配置项*/
+        buildConfigField 'String', 'SDK_VERSION', '"101"'
         buildConfigField 'String', 'API_BASE_URL', '"https://api.agora.io"'
     }
 

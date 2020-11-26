@@ -8,6 +8,8 @@ import io.agora.education.api.manager.listener.EduManagerEventListener
 import io.agora.education.api.room.EduRoom
 import io.agora.education.api.room.data.EduError
 import io.agora.education.api.room.data.RoomCreateOptions
+import io.agora.rtc.RtcEngine
+import io.agora.rte.RteEngineImpl
 import java.util.*
 import kotlin.reflect.typeOf
 
@@ -40,7 +42,7 @@ abstract class EduManager(
         }
 
         fun version(): String {
-            return BuildConfig.VERSION_NAME
+            return RtcEngine.getSdkVersion().plus(".").plus(BuildConfig.SDK_VERSION)
         }
     }
 
