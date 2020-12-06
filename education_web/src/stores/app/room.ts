@@ -1125,7 +1125,6 @@ export class RoomStore extends SimpleInterval {
           userName: `${this.roomInfo.userName}`,
           userUuid: `${this.userUuid}`,
           autoPublish: true,
-          sceneType,
         })
       }
       this._roomManager = roomManager;

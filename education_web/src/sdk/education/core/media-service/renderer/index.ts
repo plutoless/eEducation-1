@@ -69,12 +69,21 @@ export abstract class UserRenderer implements IMediaRenderer {
   }
 }
 
+/**
+ * This class is provide renderer ability to local media.
+ * e.g. screen sharing or camera renderer ability.
+ */
 export class LocalUserRenderer extends UserRenderer {
   constructor(config: UserRendererInit) {
     super(config)
     this.local = true
   }
 
+  /**
+   * This method is used to play video with exists valid dom element
+   * @param dom 
+   * @param fit 
+   */
   play(dom: HTMLElement, fit?: boolean): void {
     if (this.isWeb) {
       if (this.videoTrack) {
@@ -99,6 +108,10 @@ export class LocalUserRenderer extends UserRenderer {
     this._playing = true
   }
 
+  /**
+   * This method is used to stop video renderer
+   * @param isPreview : true is preview | false is not preview, for living scenario
+   */
   stop(isPreview?: boolean) {
     if (this.isWeb) {
       if (this.videoTrack) {
@@ -116,11 +129,18 @@ export class LocalUserRenderer extends UserRenderer {
   }
 
 
+  /**
+   * get LocalUserRenderer's uuid
+   */
   getUuid() {
     return this.uuid
   }
 }
 
+/**
+ * This class is provide renderer ability to remote media.
+ * e.g. screen sharing or camera renderer ability.
+ */
 export class RemoteUserRenderer extends UserRenderer {
   constructor(config: UserRendererInit) {
     super(config)
@@ -128,6 +148,11 @@ export class RemoteUserRenderer extends UserRenderer {
     this.uid = config.uid
   }
 
+  /**
+   * This method is used to play video with exists valid dom element
+   * @param dom 
+   * @param fit 
+   */
   play(dom: HTMLElement, fit?: boolean) {
     if (this.isWeb) {
       if (this.videoTrack) {
@@ -147,6 +172,9 @@ export class RemoteUserRenderer extends UserRenderer {
     this._playing = true
   }
 
+  /**
+   * This method is used to stop video renderer
+   */
   stop() {
     if (this.isWeb) {
       if (this.videoTrack) {
@@ -158,7 +186,9 @@ export class RemoteUserRenderer extends UserRenderer {
     this._playing = false
   }
 
-
+  /**
+   * get LocalUserRenderer's uuid
+   */
   getUuid() {
     return this.uuid
   }

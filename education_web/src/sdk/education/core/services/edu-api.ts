@@ -58,7 +58,7 @@ type RemoteMediaParams = {
   // audioState: number
   // videoState: number
 }
-
+/** @internal */
 export class AgoraEduApi {
 
   roomUuid: string = '';

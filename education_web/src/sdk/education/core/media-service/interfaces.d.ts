@@ -2,7 +2,9 @@ import { ElectronRTCWrapper } from './../media-manager/electron/index';
 import { IAgoraRTC, IAgoraRTCClient } from 'agora-rtc-sdk-ng';
 import AgoraRtcEngine from './electron/types'
 
+/** @internal */
 declare function event_device_changed (evt: any): void;
+/** @internal */
 declare function event_media_state_changed (evt: any): void;
 
 type Option = any;
@@ -89,17 +91,65 @@ declare interface IAgoraRTCModule {
 
   changePlaybackVolume(volume: number): void;
 
+  /**
+   * @event 'error'
+   * @param  "err message"
+   */
   on(event: 'error', listener: (err: any) => void);
+  /**
+   * @event 'audio-device-changed'
+   * @param  "audio device changed"
+   */
   on(event: 'audio-device-changed', listener: typeof event_device_changed): void
+  /**
+   * @event 'video-device-changed'
+   * @param  "video device changed"
+   */
   on(event: 'video-device-changed', listener: typeof event_device_changed): void
+  /**
+   * @event 'user-joined'
+   * @param  "user joined"
+   */
   on(event: 'user-joined', listener: (evt: any) => void);
+  /**
+   * @event 'user-left'
+   * @param  "user left"
+   */
   on(event: 'user-left', listener: (evt: any) => void);
+  /**
+   * @event 'user-info-updated'
+   * @param  "user-info-updated"
+   */
   on(event: 'user-info-updated', listener: (evt: any) => void);
+  /**
+   * @event 'token-privilege-will-expire'
+   * @param  "token-privilege-will-expire"
+   */
   on(event: 'token-privilege-will-expire', listener: (evt: any) => void);
+  /**
+   * @event 'token-privilege-did-expire'
+   * @param  "token-privilege-did-expire"
+   */
   on(event: 'token-privilege-did-expire', listener: (evt: any) => void);
+  /**
+   * @event 'connection-state-change'
+   * @param  "connection-state-change"
+   */
   on(event: 'connection-state-change', listener: (state: any, reason: any) => void);
+  /**
+   * @event 'stream-fallback'
+   * @param  "stream-fallback"
+   */
   on(event: 'stream-fallback', listener: (state: any, reason: any) => void);
+  /**
+   * @event 'network-quality'
+   * @param  "network-quality"
+   */
   on(event: 'network-quality', listener: (stats: any) => void);
+  /**
+   * @event 'volume-indicator'
+   * @param  "volume-indicator"
+   */
   on(event: 'volume-indicator', listener: (result: any[]) => void);
 }
 

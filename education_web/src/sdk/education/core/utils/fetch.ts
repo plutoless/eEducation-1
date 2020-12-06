@@ -1,9 +1,9 @@
 import { EduLogger } from "../logger"
 
-// @internal
+/** @hidden */
 const FETCH_TIMEOUT = 10000
 
-// @internal
+/** @hidden */
 export async function Fetch (input: RequestInfo, init?: RequestInit, retryCount: number = 0): Promise<any> {
   return new Promise((resolve, reject) => {
     const onResponse = (response: Response) => {
@@ -46,7 +46,7 @@ export async function Fetch (input: RequestInfo, init?: RequestInit, retryCount:
   })
 }
 
-// @internal
+/** @hidden */
 export async function AgoraFetch(input: RequestInfo, init?: RequestInit, retryCount: number = 0) {
   try {
     return await Fetch(input, init, retryCount);

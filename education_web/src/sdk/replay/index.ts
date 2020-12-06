@@ -6,6 +6,7 @@ export interface ReplayParams {
   boardToken: string
 }
 
+/** @internal */
 export class ReplayBoardManager<T> {
   nativeView?: HTMLElement
   readonly board!: T

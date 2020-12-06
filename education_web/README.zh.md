@@ -1,5 +1,3 @@
-> *Read this in another language: [English](README.md)*
-
 ## 概览
 
 |支持场景|代码入口|功能描述|
@@ -10,7 +8,7 @@
 
 ### 在线体验
 
-[web demo](https://solutions.agora.io/education/web_v2/)
+[web demo](https://solutions.agora.io/education/web/)
 
 ### 使用的 SDK
 

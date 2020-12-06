@@ -46,23 +46,40 @@ export interface IEduUserService {
   sendUserChatMessage(message: string, remoteUser: EduUser): Promise<any>;
 }
 
+/**
+ * This class is provided user service ability.
+ * It supposed used in EduClassroomManager.
+ * It is bridge to backend room manager for most edu scenario.
+ * You can use this class to interactive with the same room participants.
+ */
 export class EduUserService extends EventEmitter implements IEduUserService {
 
+  /** @internal */
   roomManager!: EduClassroomManager;
 
+  /** @internal */
   constructor(roomManager: EduClassroomManager) {
     super();
     this.roomManager = roomManager;
   }
 
+  /**
+   * roomUuid
+   */
   get roomUuid(): string {
     return this.roomManager.roomUuid
   }
 
+  /**
+   * apiService only used internal
+   */
   get apiService(): AgoraEduApi {
     return this.roomManager.apiService;
   }
 
+  /**
+   * localUser info
+   */
   get localUser(): EduUser {
     if (this.roomManager.data.localUser) {
       return this.roomManager.data.localUser.user
@@ -70,22 +87,39 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     return {} as EduUser
   }
 
+  /**
+   * localUserUuid
+   */
   get localUserUuid(): string {
     return this.localUser.userUuid
   }
 
+  /**
+   * local stream data
+   */
   get localStream(): EduStreamData {
     return this.roomManager.data.localStreamData
   }
 
+  /**
+   * local screen stream data
+   */
   get screenStream(): EduStreamData {
     return this.roomManager.data.localScreenShareStream
   }
 
+  /**
+   * data controller
+   */
   get data(): EduClassroomDataController {
     return this.roomManager.data
   }
 
+  /**
+   * publish stream in channel
+   * @param eduStream 
+   * @returns Promise<any>
+   */
   public async publishStream(stream: EduStream) {
     let res = await this.apiService.upsertBizStream({
       roomUuid: this.roomUuid,
@@ -120,6 +154,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     }
   }
 
+  /**
+   * unpublish stream in channel
+   * @param stream 
+   * @returns Promise<any>
+   */
   public async unpublishStream(stream: Pick<EduStream, 'streamUuid'>) {
     let res = await this.apiService.deleteBizStream({
       roomUuid: this.roomUuid,
@@ -130,6 +169,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     this.data.removeLocalStream(stream.streamUuid)
   }
 
+  /**
+   * send room message in channel
+   * @param message 
+   * @returns Promise<any>
+   */
   async sendRoomMessage(message: string) {
     await this.apiService.sendChannelMessage({
       roomUuid: this.roomUuid,
@@ -137,6 +181,12 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * send user message in peer
+   * @param message 
+   * @param remoteUser
+   * @returns Promise<any>
+   */
   async sendUserMessage(message: string, remoteUser: EduUser) {
     await this.apiService.sendPeerMessage({
       roomUuid: this.roomUuid,
@@ -145,13 +195,24 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * send room chat message
+   * @param message 
+   * @returns Promise<any>
+   */
   async sendRoomChatMessage(message: string): Promise<any> {
     await this.apiService.sendRoomChatMessage({
       message,
       roomUuid: this.roomUuid,
     })
   }
-  
+
+  /**
+   * send user chat message
+   * @param message 
+   * @param remoteUser
+   * @returns Promise<any>
+   */
   async sendUserChatMessage(message: string, remoteUser: EduUser): Promise<any> {
     await this.apiService.sendUserChatMessage({
       message,
@@ -160,6 +221,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * update room properties in channel
+   * @param record 
+   * @returns Promise<any>
+   */
   public async updateRoomProperties(record: Record<string, any>) {
     await this.apiService.updateRoomProperties({
       roomUuid: this.roomUuid,
@@ -169,6 +235,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * update course state in channel
+   * @param courseState 
+   * @returns Promise<any>
+   */
   public async updateCourseState(courseState: EduCourseState) {
     await this.apiService.updateCourseState({
       roomUuid: this.roomUuid,
@@ -176,6 +247,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * update kick user in channel
+   * @param userUuid 
+   * @returns Promise<any>
+   */
   public async kickUser(userUuid: string) {
     await this.apiService.kickUser({
       roomUuid: this.roomUuid,
@@ -183,6 +259,12 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * mute/unmute in channel student's by role type
+   * @param enable true is mean unmute false is mute
+   * @param roles 
+   * @returns Promise<any>
+   */
   public async allowStudentChatByRole(enable: boolean, roles: string[]) {
     await this.apiService.allowStudentChatByRole({
       roomUuid: this.roomUuid,
@@ -191,6 +273,12 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * mute/unmute in channel with one student
+   * @param enable true is mean unmute false is mute
+   * @param roles 
+   * @returns Promise<any>
+   */
   public async allowRemoteStudentChat(enable: boolean, user: EduUser) {
     await this.apiService.allowRemoteStudentChat({
       roomUuid: this.roomUuid,
@@ -199,6 +287,10 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method will publish a share screen stream in channel
+   * @returns Promise<any>
+   */
   public async startShareScreen() {
     if (this.screenStream && this.screenStream.stream && this.screenStream.stream.streamUuid) {  
       const { rtcToken, streamUuid, ts } = await this.apiService.upsertBizStream({
@@ -262,6 +354,10 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     }
   }
 
+  /**
+   * This method will unpublish a share screen stream in channel
+   * @returns Promise<any>
+   */
   public async stopShareScreen() {
     if (this.screenStream) {
       await this.apiService.stopShareScreen(this.roomUuid, this.screenStream.stream.streamUuid, this.data.localUser.user.userUuid)
@@ -270,6 +366,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     }
   }
 
+  /**
+   * This method will start student camera
+   * @param stream
+   * @returns Promise<any>
+   */
   public async remoteStartStudentCamera(stream: EduStream) {
     await this.apiService.remoteStartStudentCamera({
       roomUuid: this.roomUuid,
@@ -278,6 +379,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method will stop student camera
+   * @param stream
+   * @returns Promise<any>
+   */
   public async remoteStopStudentCamera(stream: EduStream) {
     await this.apiService.remoteStopStudentCamera({
       roomUuid: this.roomUuid,
@@ -286,6 +392,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method will start student microphone
+   * @param stream
+   * @returns Promise<any>
+   */
   public async remoteStartStudentMicrophone(stream: EduStream) {
     await this.apiService.remoteStartStudentMicrophone({
       roomUuid: this.roomUuid,
@@ -294,6 +405,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method will stop student microphone
+   * @param stream
+   * @returns Promise<any>
+   */
   public async remoteStopStudentMicrophone(stream: EduStream) {
     await this.apiService.remoteStopStudentMicrophone({
       roomUuid: this.roomUuid,
@@ -302,6 +418,12 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+
+  /**
+   * This method will close student microphone
+   * @param stream
+   * @returns Promise<any>
+   */
   public async remoteCloseStudentStream(stream: EduStream) {
     await this.apiService.remoteCloseStudentStream({
       roomUuid: this.roomUuid,
@@ -310,6 +432,11 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method will update local main stream state
+   * @param args
+   * @returns Promise<any>
+   */
   public async updateMainStreamState(args: Record<string, boolean>) {
     const prevAudioState = +this.localStream.stream.hasAudio
     const prevVideoState = +this.localStream.stream.hasVideo
@@ -332,14 +459,31 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     // })
   }
 
+  /**
+   * This method will mute student by roles
+   * @param roles
+   * @returns Promise<any>
+   */
   public async muteStudentChatByRoles(roles: string[]) {
     await this.apiService.allowStudentChatByRole({enable: true, roomUuid: this.roomUuid, roles})
   }
 
+
+  /**
+   * This method will unmute student by roles
+   * @param roles
+   * @returns Promise<any>
+   */
   public async unmuteStudentChatByRoles(roles: string[]) {
     await this.apiService.allowStudentChatByRole({enable: false, roomUuid: this.roomUuid, roles})
   }
 
+  /**
+   * This method will send co video apply to the specified user in the same room.
+   * It is generally used in co-video apply scenario.
+   * @param teacher
+   * @returns Promise<any>
+   */
   public async sendCoVideoApply(teacher: EduUser) {
     const msg = JSON.stringify({
       cmd: 1,
@@ -356,6 +500,12 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method will accept co-video apply from the other participants in the same room.
+   * It is generally used in co-video apply scenario.
+   * @param student
+   * @returns Promise<any>
+   */
   public async acceptCoVideoApply(student: EduUser) {
     const msg = JSON.stringify({
       cmd: 1,
@@ -372,6 +522,12 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method will reject co-video apply from the other participants in the same room.
+   * It is generally used in co-video apply scenario.
+   * @param student
+   * @returns Promise<any>
+   */
   public async rejectCoVideoApply(student: EduUser) {
     const msg = JSON.stringify({
       cmd: 1,
@@ -388,10 +544,21 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })  
   }
 
+  /**
+   * This method will launch invitation for publish stream.
+   * @param args
+   * @returns Promise<any>
+   */
   public async inviteStreamBy(args: any) {
     await this.apiService.inviteUserPublishStream(args)
   }
 
+  /**
+   * This method will reject co-video apply from the other participants in the same room.
+   * It is generally used in co-video apply scenario.
+   * @param teacher
+   * @returns Promise<any>
+   */
   public async studentCancelApply(teacher: EduUser) {
     const msg = JSON.stringify({
       cmd: 1,
@@ -408,6 +575,12 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method is used for sender's close the its published stream
+   * It is generally used in co-video apply scenario.
+   * @param me
+   * @returns Promise<any>
+   */
   public async studentCloseStream(me: EduUser) {
     const msg = JSON.stringify({
       cmd: 1,
@@ -424,6 +597,12 @@ export class EduUserService extends EventEmitter implements IEduUserService {
     })
   }
 
+  /**
+   * This method is used for teacher close the student's published stream
+   * It is generally used in co-video apply scenario.
+   * @param student
+   * @returns Promise<any>
+   */
   public async teacherCloseStream(student: EduUser) {
     const msg = JSON.stringify({
       cmd: 1,

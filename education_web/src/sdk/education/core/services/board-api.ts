@@ -4,6 +4,7 @@ import { BoardInfoResponse } from "./interface";
 import { APP_ID, AUTHORIZATION } from "@/utils/config";
 import { HttpClient } from "../utils/http-client";
 
+/** @internal */
 export class AgoraBoardApi {
 
   private _board_prefix: string = `${REACT_APP_AGORA_APP_SDK_DOMAIN}/board/apps/%app_id`.replace('%app_id', APP_ID)

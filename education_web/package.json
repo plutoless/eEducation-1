@@ -92,7 +92,10 @@
     "eject": "react-scripts eject",
     "pack:mac": "npm run electron:build && electron-builder --mac",
     "pack:win": "npm run electron:build && electron-builder --win",
-    "gen:doc": "cross-env NODE_OPTIONS=--max-old-space-size=8196 typedoc --tsconfig ./sdk.doc.json --moduleResolution node"
+    "gen:doc": "cross-env NODE_OPTIONS=--max-old-space-size=8196 typedoc --options typedoc.json",
+    "gen:en_docs": "cross-env NODE_OPTIONS=--max-old-space-size=8196 typedoc --options typedoc.json --generate-json en_docs",
+    "gen:i18n_en": "cross-env NODE_OPTIONS=--max-old-space-size=8196 typedoc --options typedoc.json --generate-from-json ./en_docs --out web_docs_en --readme README.md",
+    "gen:i18n_cn": "cross-env NODE_OPTIONS=--max-old-space-size=8196 typedoc --options typedoc.json --generate-from-json ./zh_docs --out web_docs_zh --readme README.zh.md"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -175,6 +178,7 @@
     "speed-measure-webpack-plugin": "^1.3.3",
     "thread-loader": "^2.1.3",
     "typedoc": "^0.19.2",
+    "typedoc-plugin-localization": "^2.2.1",
     "typescript": "4.0.5",
     "ua-parser-js": "^0.7.21",
     "uuid": "^3.3.3",

@@ -2,6 +2,7 @@ import { AgoraFetchParams } from "../../interfaces";
 import { APP_ID, AUTHORIZATION } from "@/utils/config";
 import { HttpClient } from "../utils/http-client";
 
+/** @internal */
 export class AgoraRecordApi {
 
   private userToken: string;

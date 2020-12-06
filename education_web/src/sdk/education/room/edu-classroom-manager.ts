@@ -10,6 +10,14 @@ import { get } from 'lodash';
 import { RTMWrapper } from '../core/rtm';
 import { MessageSerializer } from '../core/rtm/message-serializer';
 
+export type ClassroomJoinOption = {
+  userRole: string
+  roomUuid: string
+  userName: string
+  userUuid: string
+  autoPublish?: boolean
+}
+
 export type EduClassroomInitParams = {
   eduManager: EduManager
   roomUuid: string
@@ -18,18 +26,106 @@ export type EduClassroomInitParams = {
   // rtcProvider: any
 }
 
+export declare interface EduClassroomManager {
+  //@internal
+  on(event: 'seqIdChanged', listener: (evt: any) => void): this
+  /**
+   * This is local user updated event
+   * @param event 'local-user-updated'
+   * @param listener 
+   */
+  on(event: 'local-user-updated', listener: (evt: any) => void): this
+    /**
+   * This is local user removed event
+   * @param event 'local-user-removed'
+   * @param listener 
+   */
+  on(event: 'local-user-removed', listener: (evt: any) => void): this
+    /**
+   * This is local stream removed event
+   * @param event 'local-stream-removed'
+   * @param listener 
+   */
+  on(event: 'local-stream-removed', listener: (evt: any) => void): this
+    /**
+   * This is local stream updated event
+   * @param event 'local-stream-updated'
+   * @param listener 
+   */
+  on(event: 'local-stream-updated', listener: (evt: any) => void): this
+    /**
+   * This is remote user added event
+   * @param event 'remote-user-added'
+   * @param listener 
+   */
+  on(event: 'remote-user-added', listener: (evt: any) => void): this
+  /**
+   * This is remote user updated event
+   * @param event 'remote-user-updated'
+   * @param listener 
+   */
+  on(event: 'remote-user-updated', listener: (evt: any) => void): this
+  /**
+   * This is local user updated event
+   * @param event 'local-user-updated
+   * @param listener 
+   */
+  on(event: 'remote-user-removed', listener: (evt: any) => void): this
+    /**
+   * This is local user updated event
+   * @param event 'local-user-updated
+   * @param listener 
+   */
+  on(event: 'remote-stream-added', listener: (evt: any) => void): this
+  /**
+   * This is remote stream removed
+   * @param event 'remote-stream-removed'
+   * @param listener 
+   */
+  on(event: 'remote-stream-removed', listener: (evt: any) => void): this
+  /**
+   * This is remote stream updated
+   * @param event 'remote-stream-updated'
+   * @param listener 
+   */
+  on(event: 'remote-stream-updated', listener: (evt: any) => void): this
+    /**
+   * This is classroom property updated
+   * @param event 'classroom-property-updated'
+   * @param listener 
+   */
+  on(event: 'classroom-property-updated', listener: (evt: any) => void): this
+    /**
+   * This is room chat message
+   * @param event 'room-chat-message'
+   * @param listener 
+   */
+  on(event: 'room-chat-message', listener: (evt: any) => void): this
+}
+
+/**
+ * This class is used to connect with agora.io edu backend service.
+ * There is a userService, which provide the sender responsibility to interactive with other classroom user participants.
+ * It is only provide the message-passing and message receiving in the edu scenarios.
+ * @class EduClassroomManager
+ */
 export class EduClassroomManager extends EventEmitter {
 
+  /** @internal */
   private _roomUuid: string
 
+  /** @internal */
   private rawRoomUuid: string = ''
+  
+  /** @internal */
   private _roomName: string
-  // @internal
+  /** @internal */
   private eduManager: EduManager
-  // @internal
+  /** @internal */
   private _apiService?: AgoraEduApi
+  /** @internal */
   private _userService?: EduUserService
-  // @internal
+  /** @internal */
   private _rtmObserver?: EventEmitter
   // private _mediaService?: MediaService
 
@@ -45,6 +141,7 @@ export class EduClassroomManager extends EventEmitter {
     // this._mediaService = new MediaService(payload.rtcProvider)
   }
 
+  /** @internal */
   public get syncingData(): boolean {
     const states = ['DISCONNECTED', 'RECONNECTING']
     if (states.includes(this.eduManager.rtmConnectionState)) {
@@ -55,30 +152,56 @@ export class EduClassroomManager extends EventEmitter {
     return true
   }
 
+  /**
+   * Get current roomName
+   * @returns roomName
+   */
   public get roomName(): string {
     return this._roomName as string
   }
 
+  /**
+   * Get current roomUuid
+   * @returns roomUuid
+   */
   public get roomUuid(): string {
     return this._roomUuid as string
   }
 
+  /**
+   * Get current apiService
+   * @returns apiService
+   */
   public get apiService(): AgoraEduApi {
     return this._apiService as AgoraEduApi
   }
 
+  /**
+   * Get current local user info
+   * @returns localUser
+   */
   public get localUser(): EduUserData {
     return this.data.localUser
   }
 
+  /**
+   * Get current local user service
+   * @returns userService
+   */
   get userService(): EduUserService {
     return this._userService as EduUserService
   }
 
+  /**
+   * Get current internal data controller,
+   * It contains the room manager living data from {@link agora.io education backend service}.
+   * @returns edu classroom data
+   */
   get data(): EduClassroomDataController {
     return this.eduManager._dataBuffer[this.rawRoomUuid] as EduClassroomDataController
   }
 
+  /** @internal */
   private async prepareRoomJoin(args: any) {
     console.log('[breakout] params ', args.userRole)
     let joinRoomData = await this.apiService.joinRoom({
@@ -94,11 +217,17 @@ export class EduClassroomManager extends EventEmitter {
     // this.eduManager._dataBuffer[this.roomUuid] = this.data
   }
 
+  /** @internal */
   private get rtmWrapper(): RTMWrapper {
     return this.eduManager._rtmWrapper as RTMWrapper;
   }
 
-  async join(params: any) {
+  /**
+   * Run the join for start live room lifecycle
+   * @param params is a object of {@link ClassroomJoinOption}
+   * @returns join result
+   */
+  async join(params: ClassroomJoinOption) {
     EduLogger.debug(`join classroom ${this.roomUuid}`)
     const roomParams = {
       ...params,
@@ -184,10 +313,14 @@ export class EduClassroomManager extends EventEmitter {
     }
   }
 
+  /**
+   * @returns user token
+   */
   get userToken() {
     return this.data.userToken
   }
 
+  /** @internal */
   async joinRTC(params: any) {
     // EduLogger.debug(`joinRTC ${this.roomUuid}`)
     // if (this._mediaService) {
@@ -196,6 +329,7 @@ export class EduClassroomManager extends EventEmitter {
     // }
   }
 
+  /** @internal */
   async leaveRTC() {
     // EduLogger.debug(`leaveRTC ${this.roomUuid}`)
     // if (this._mediaService) {
@@ -204,26 +338,42 @@ export class EduClassroomManager extends EventEmitter {
     // }
   }
 
+  /**
+   * @returns local stream data
+   */
   getLocalStreamData(): EduStreamData {
     return this.data.localStreamData
   }
 
+  /**
+   * @returns local screen data
+   */
   getLocalScreenData(): EduStreamData {
     return this.data.localScreenShareStream
   }
 
+  /**
+   * @returns local user data
+   */
   getLocalUser(): EduUserData {
     return this.data.localUser
   }
 
+  /**
+   * @returns full users list
+   */
   getFullUserList(): EduUser[] {
     return this.data.userList.map((t: EduUserData) => t.user);
   }
 
+  /**
+   * @returns full stream list
+   */
   getFullStreamList(): EduStream[] {
     return this.data.streamList.map((t: EduStreamData) => t.stream);
   }
 
+  /** @internal */
   private get classroom(): EduClassroom {
     return {
       roomInfo: this.data.roomInfo,
@@ -232,36 +382,62 @@ export class EduClassroomManager extends EventEmitter {
     }
   }
 
+  /**
+   * @returns edu classroom
+   */
   getClassroomInfo(): EduClassroom {
     return this.classroom;
   }
 
+  /**
+   * @returns students count
+   */
   getStudentCount(): number {
     return this.data.userList
       .filter((it: EduUserData) => it.user.role === EduRoleType.student).length
   }
 
+  /**
+   * @returns teachers count @type number
+   */
   getTeacherCount(): number {
     return this.data.userList
       .filter((it: EduUserData) => it.user.role === EduRoleType.teacher).length
   }
 
+
+  /**
+   * Run studentList getter method return students list
+   * @returns students list @type EduUser[]
+   */
   get studentList(): EduUser[] {
     return this.data.userList
       .filter((it: EduUserData) => it.user.role === EduRoleType.student)
       .map((it: EduUserData) => it.user)
   }
 
+  /**
+   * Run teacherList getter method return teachers list
+   * @returns teachers list
+   */
   get teacherList(): EduUser[] {
     return this.data.userList
       .filter((it: EduUserData) => it.user.role === EduRoleType.teacher)
       .map((it: EduUserData) => it.user)
   }
 
+  /**
+   * alias method for {@link teacherList}
+   * @returns teachers list
+   */
   getTeacherList(): EduUser[] {
     return this.teacherList;
   }
 
+  /**
+   * alias method for {@link studentList}
+   * @returns students list
+   */
   getStudentList(): EduUser[] {
     return this.studentList;
   }

@@ -62,19 +62,22 @@ export enum EduVideoSourceType {
   screen = 2
 }
 
+/** @hidden */
 export enum ConnectionState {
 
 }
 
+/** @hidden */
 export enum NetworkQuality {
 
 }
 
+/** @hidden */
 export enum ConnectionChangeReason {
 
 }
 
-
+/** @hidden */
 export enum LogLevel {
 
 }
@@ -188,6 +191,7 @@ export interface StreamQueryParams {
   includeOffline?: number
 }
 
+/** @hidden */
 export interface AgoraFetchParams {
   url?: string
   method: string
@@ -667,30 +671,43 @@ export class EduStreamData {
   }
 }
 
+/** @internal */
 declare function event_user_init_online(user: EduUser, count: number, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_remote_user_joined (user: EduUser, count: number, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_remote_user_left (user: EduUser, count: number, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_update_classroom (reason: EduClassroomStateType, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_user_message (textMessage: EduTextMessage, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_room_message (textMessage: EduTextMessage, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_connection_state_changed (state: ConnectionState, reason: ConnectionChangeReason, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_network_quality(quality: NetworkQuality): void;
 
+/** @internal */
 declare function event_remote_stream_init_online(remoteStream: EduStream, count: number, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_remote_stream_added(remoteStream: EduStream, count: number, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_remote_stream_updated(remoteStream: EduStream, count: number, fromClassroom: EduClassroom): void;
 
+/** @internal */
 declare function event_remote_stream_removed(remoteStream: EduStream, count: number, fromClassroom: EduClassroom): void;
 
+/** @internal */
 export interface IEduClassroomManager {
 
   // emit once

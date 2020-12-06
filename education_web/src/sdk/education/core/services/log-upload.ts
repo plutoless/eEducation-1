@@ -6,6 +6,7 @@ import { t } from "@/i18n";
 import { get } from "lodash";
 import { AUTHORIZATION, APP_ID } from "@/utils/config";
 
+/** @internal */
 const AgoraFetchJson = async ({url, method, data, token, outHeaders}:{url?: string, method: string, data?: any, token?: string, outHeaders?: any}) => {  
   const opts: any = {
     method,
@@ -51,6 +52,7 @@ export class logUpload {
   roomId: string = '';
   public _userToken: string = '';
   
+  /** @internal */
   async fetchStsToken(roomId: string, fileExt: string) {
 
     const _roomId = roomId ? roomId : 0
@@ -110,6 +112,7 @@ export class logUpload {
     return res;
   }
 
+  /** @internal */
   async uploadToOss(roomId: string, file: any, ext: string) {
     let {
       bucketName,
@@ -155,4 +158,5 @@ export class logUpload {
 
 }
 
+/** @internal */
 export const logApi = new logUpload();

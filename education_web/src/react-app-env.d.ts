@@ -1,36 +1,31 @@
 /// <reference types="react-scripts" />
-/// <reference types="./sdk/education/interfaces" />
 
-// @internal
-declare const REACT_APP_AGORA_APP_SDK_DOMAIN: string;
-// @internal
-declare const REACT_APP_AGORA_APP_SDK_LOG_SECRET: string;
-// @internal
+/** @internal */
 interface RtmTextMessage {
   text: string;
   messageType?: 'TEXT';
   rawMessage?: never;
   description?: never;
 }
-// @internal
+/** @internal */
 interface RtmRawMessage {
   rawMessage: Uint8Array;
   description?: string;
   messageType?: 'RAW';
   text?: never;
 }
-// @internal
+/** @internal */
 type RtmMessage = RtmTextMessage | RtmRawMessage;
-// @internal
+/** @internal */
 declare interface RecordState {
   roomId: string
   recordId: string
   isRecording: number
   recordingTime: number
 }
-// @internal
+/** @internal */
 type RecordStateParams = RecordState
-// @internal
+/** @internal */
 declare interface RecordingConfigParams {
   maxIdleTime: number, // seconds
   streamTypes: number,
@@ -40,7 +35,7 @@ declare interface RecordingConfigParams {
   subscribeAUdioUids: Array<string>,
   subscribeUidGroup: number,
 }
-// @internal
+/** @internal */
 declare interface StorageConfigParams {
   vendor: number
   region: number
@@ -49,43 +44,34 @@ declare interface StorageConfigParams {
   secretKey: string
   fileNamePrefix: Array<string>
 }
-
+/** @internal */
 declare interface RecordingConfig {
   recordingConfig: Partial<RecordingConfigParams>
   storageConfig?: Partial<StorageConfigParams>
 }
 
-// @internal
+/** @hidden */
 declare module 'react-gtm-module'
-// @internal
+/** @hidden */
 declare module 'eruda'
 
-// @internal
+/** @internal */
 declare module 'js-md5' {
   const MD5: any;
   export default MD5;
 }
 
-// @internal
+/** @internal */
 declare module 'ua-parser-js' {
   const UAParserJs: any;
   export default UAParserJs;
 }
-// @internal
+/** @internal */
 declare interface Device {
   deviceId: string
   label: string
   kind: string
 }
 
-// @internal
-declare module "worker-loader!*" {
-  class WebpackWorker extends Worker {
-    constructor();
-  }
-
-  export default WebpackWorker;
-}
-
-// @internal
+/** @hidden */
 declare module '*.scss';

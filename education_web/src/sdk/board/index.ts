@@ -1,3 +1,4 @@
+/** @internal */
 export class WhiteBoardManager<T> {
   nativeView?: HTMLElement
   readonly board!: T

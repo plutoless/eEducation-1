@@ -1,5 +1,6 @@
 import { AgoraRecordApi } from './../education/core/services/record-api';
 
+/** @internal */
 export class EduRecordService {
 
   apiService: AgoraRecordApi;

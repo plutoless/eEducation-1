@@ -9,6 +9,9 @@ import { AgoraEduApi } from '../core/services/edu-api';
 import { EduConfiguration, EduUser, EduStream } from '../interfaces';
 import { EduClassroomDataController } from '../room/edu-classroom-data-controller';
 
+/**
+ * @referer ClassroomInitParams
+ */
 export type ClassroomInitParams = {
   roomUuid: string
   roomName: string
@@ -16,23 +19,47 @@ export type ClassroomInitParams = {
 
 export type ClassRoomAuthorization = string
 
+export declare interface EduManager {
+  /**
+   * This is peer user message
+   * @param event 'user-message'
+   * @param listener 
+   */
+  on(event: 'user-message', listener: (evt: any) => void): this
+}
+
+/**
+ * This class is agora edu sdk entry class
+ * @class EduClassroomManager
+ */
 export class EduManager extends EventEmitter {
+  /** @internal */
   private static enable: boolean = true
 
+  /** @internal */
   private apiService!: AgoraEduApi;
 
+  /** @internal */
   public _rtmWrapper?: RTMWrapper;
 
+  /** @internal */
   public readonly config: EduConfiguration;
 
+  /** @internal */
   private _classroomMap: Record<string, EduClassroomManager> = {}
 
+  /** @internal */
   public _ended: boolean = false;
 
+  /** @internal */
   public _dataBuffer: Record<string, EduClassroomDataController> = {}
 
   public readonly _mediaService: MediaService;
 
+  /**
+   * This is EduManager's constructor method
+   * @param config @paramType {@link EduConfiguration}
+   */
   constructor(
     config: EduConfiguration
   ) {
@@ -56,6 +83,7 @@ export class EduManager extends EventEmitter {
     this.apiService = new AgoraEduApi(this.config.appId, this.authorization)
   }
 
+  /** @internal */
   private get rtmWrapper(): RTMWrapper {
     return this._rtmWrapper as RTMWrapper;
   }
@@ -64,10 +92,23 @@ export class EduManager extends EventEmitter {
     return this._mediaService;
   }
 
+  /**
+   * This method is will create and init EduManager.
+   * @param config
+   * @paramType {@link EduConfiguration}
+   * @returns EduManager
+   */
   static init(config: EduConfiguration): EduManager {
     return new EduManager(config);
   }
 
+
+  /**
+   * This method is will setup debug log flag
+   * @param enable: true is start debug log, instead is not
+   * @paramType {@link EduConfiguration}
+   * @returns void
+   */
   static enableDebugLog(enable: boolean) {
     this.enable = enable
     if (this.enable) {
@@ -75,29 +116,51 @@ export class EduManager extends EventEmitter {
     }
   }
   
+  /**
+   * This method is will upload log with roomUuid
+   * @param roomUuid is present current roomUuid.
+   * @paramType string
+   * @returns Promise<any>
+   */
   static async uploadLog(roomUuid: string): Promise<any> {
     return await EduLogger.enableUpload(roomUuid)
   }
 
+  /**
+   * This getter method will return agora.io restful authorization token.
+   * @returns string
+   */
   get authorization(): string {
     return window.btoa(`${this.config.customerId}:${this.config.customerCertificate}`)
   }
 
+  /** @internal */
   private async prepareLogin(userUuid: string) {
     let res = await this.apiService.login(userUuid)
     return res
   }
 
+  /** @internal */
   private fire(evtName: string, ...args: any[]) {
     this.emit(evtName, ...args)
   }
 
+  /** @internal */
   private _rtmConnectionState = 'DISCONNECTED'
 
+  /**
+   * rtmConnectionState is current rtm connection state
+   */
   get rtmConnectionState(): string {
     return this._rtmConnectionState
   }
 
+  /**
+   * This method is used to login edu manager with userUuid
+   * @param userUuid is present current userUuid.
+   * @paramType string
+   * @returns Promise<any>
+   */
   async login(userUuid: string) {
     EduLogger.debug(`login userUuid: ${userUuid}`)
     try {
@@ -165,6 +228,11 @@ export class EduManager extends EventEmitter {
     }
   }
 
+  
+  /**
+   * This method is used to logout
+   * @returns Promise<any>
+   */
   async logout() {
     if (this.rtmWrapper) {
       this._ended = true
@@ -174,6 +242,11 @@ export class EduManager extends EventEmitter {
     }
   }
 
+  /**
+   * This method is used to create class room object
+   * @param params
+   * @paramType {@link ClassroomInitParams}
+   */
   createClassroom(params: ClassroomInitParams): EduClassroomManager {
 
     const roomUuid = params.roomUuid

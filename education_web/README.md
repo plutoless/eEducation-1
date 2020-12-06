@@ -1,5 +1,3 @@
-> *其他语言版本：[简体中文](README.zh.md)*
-
 ## Overview
 
 |Scenario|Code entry|Description|
@@ -10,7 +8,7 @@
 
 ### Online preview
 
-[web demo](https://solutions.agora.io/education/web_v2/)
+[web demo](https://solutions.agora.io/education/web/)
 
 ### Core SDKs
 - agora-rtc-sdk (agora rtc web sdk)

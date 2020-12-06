@@ -2,7 +2,7 @@ import { ReplayParams } from './../replay/index';
 import { Room, WhiteWebSdk, DeviceType, createPlugins, Plugins, JoinRoomParams, Player, ReplayRoomParams, ViewMode } from 'white-web-sdk';
 import { EventEmitter } from 'events';
 import { AgoraBoardApi } from "../education/core/services/board-api";
-
+/** @internal */
 export class EduBoardService {
   apiService: AgoraBoardApi;
 

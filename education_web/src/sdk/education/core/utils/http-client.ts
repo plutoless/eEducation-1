@@ -1,3 +1,5 @@
+
+/** @internal */
 export const HttpClient = async (url: string, opts: any): Promise<any> => {
   let fetchResponse: any = {}
   try {
