@@ -52,14 +52,18 @@ declare interface RecordingConfig {
   storageConfig?: Partial<StorageConfigParams>
 }
 
+/** @ignore */
 declare module 'react-gtm-module'
+/** @ignore */
 declare module 'eruda'
 
+/** @ignore */
 declare module 'js-md5' {
   const MD5: any;
   export default MD5;
 }
 
+/** @ignore */
 declare module 'ua-parser-js' {
   const UAParserJs: any;
   export default UAParserJs;
@@ -71,6 +75,7 @@ declare interface Device {
   kind: string
 }
 
+/** @ignore */
 declare module "worker-loader!*" {
   class WebpackWorker extends Worker {
     constructor();
@@ -79,8 +84,5 @@ declare module "worker-loader!*" {
   export default WebpackWorker;
 }
 
-// declare global {
-//   export const REACT_APP_AGORA_APP_SDK_DOMAIN: string;
-// }
-
+/** @ignore */
 declare module '*.scss';

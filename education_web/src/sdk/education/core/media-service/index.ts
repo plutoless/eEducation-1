@@ -124,10 +124,10 @@ export class MediaService extends EventEmitter implements IMediaService {
     this.cameraRenderer = undefined
     this.screenRenderer = undefined
     this.remoteUsersRenderer = []
-    AgoraRTC.onCameraChanged = (info) => {
+    AgoraRTC.onCameraChanged = (info: unknown) => {
       this.fire('video-device-changed', (info))
     }
-    AgoraRTC.onMicrophoneChanged = (info) => {
+    AgoraRTC.onMicrophoneChanged = (info: unknown) => {
       this.fire('audio-device-changed', (info))
     }
     AgoraRTC.onAudioAutoplayFailed = () => {

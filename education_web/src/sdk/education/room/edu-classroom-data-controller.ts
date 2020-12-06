@@ -133,7 +133,7 @@ export class EduClassroomDataController {
 
   public BatchUpdateData() {
     const bufferMap = this._bufferMap
-    const taskBuffer = []
+    const taskBuffer: any[] = []
     for (let seqId of Object.keys(bufferMap)) {
       const buffer = bufferMap[`${seqId}`]
       if (buffer) {
@@ -144,7 +144,7 @@ export class EduClassroomDataController {
           } else {
             if (+seqId === this._curSeqId+1) {
               taskBuffer.push({
-                seqId: +seqId,
+                seqId: +seqId as number,
                 ...buffer
               })
               this.setCurrentSeqId(+seqId)
@@ -168,7 +168,7 @@ export class EduClassroomDataController {
           }
         } else {
           taskBuffer.push({
-            seqId: +seqId,
+            seqId: +seqId as number,
             ...buffer
           })
           this.setCurrentSeqId(+seqId)

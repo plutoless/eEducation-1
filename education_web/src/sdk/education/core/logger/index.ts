@@ -127,7 +127,7 @@ export class EduLogger {
   }
 
   static async enableUpload(roomUuid: string) {
-    const ids = [];
+    const ids: any[] = [];
     // Upload Electron log
     if (isElectron) {
       ids.push(await this.uploadElectronLog(roomUuid))
