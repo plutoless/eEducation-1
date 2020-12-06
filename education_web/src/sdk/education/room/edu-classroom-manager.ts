@@ -24,9 +24,12 @@ export class EduClassroomManager extends EventEmitter {
 
   private rawRoomUuid: string = ''
   private _roomName: string
+  // @internal
   private eduManager: EduManager
+  // @internal
   private _apiService?: AgoraEduApi
   private _userService?: EduUserService
+  // @internal
   private _rtmObserver?: EventEmitter
   // private _mediaService?: MediaService
 

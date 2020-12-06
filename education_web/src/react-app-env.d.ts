@@ -1,33 +1,36 @@
 /// <reference types="react-scripts" />
 /// <reference types="./sdk/education/interfaces" />
 
+// @internal
 declare const REACT_APP_AGORA_APP_SDK_DOMAIN: string;
+// @internal
 declare const REACT_APP_AGORA_APP_SDK_LOG_SECRET: string;
+// @internal
 interface RtmTextMessage {
   text: string;
   messageType?: 'TEXT';
   rawMessage?: never;
   description?: never;
 }
-
+// @internal
 interface RtmRawMessage {
   rawMessage: Uint8Array;
   description?: string;
   messageType?: 'RAW';
   text?: never;
 }
-
+// @internal
 type RtmMessage = RtmTextMessage | RtmRawMessage;
-
+// @internal
 declare interface RecordState {
   roomId: string
   recordId: string
   isRecording: number
   recordingTime: number
 }
-
+// @internal
 type RecordStateParams = RecordState
-
+// @internal
 declare interface RecordingConfigParams {
   maxIdleTime: number, // seconds
   streamTypes: number,
@@ -37,7 +40,7 @@ declare interface RecordingConfigParams {
   subscribeAUdioUids: Array<string>,
   subscribeUidGroup: number,
 }
-
+// @internal
 declare interface StorageConfigParams {
   vendor: number
   region: number
@@ -52,30 +55,30 @@ declare interface RecordingConfig {
   storageConfig?: Partial<StorageConfigParams>
 }
 
-/** @ignore */
+// @internal
 declare module 'react-gtm-module'
-/** @ignore */
+// @internal
 declare module 'eruda'
 
-/** @ignore */
+// @internal
 declare module 'js-md5' {
   const MD5: any;
   export default MD5;
 }
 
-/** @ignore */
+// @internal
 declare module 'ua-parser-js' {
   const UAParserJs: any;
   export default UAParserJs;
 }
-
+// @internal
 declare interface Device {
   deviceId: string
   label: string
   kind: string
 }
 
-/** @ignore */
+// @internal
 declare module "worker-loader!*" {
   class WebpackWorker extends Worker {
     constructor();
@@ -84,5 +87,5 @@ declare module "worker-loader!*" {
   export default WebpackWorker;
 }
 
-/** @ignore */
+// @internal
 declare module '*.scss';

@@ -2,6 +2,7 @@ import { get } from "lodash"
 import { EduStreamData, EduCustomMessage, EduTextMessage, EduUserData } from "../../interfaces"
 import { EduLogger } from "../logger"
 
+// @internal
 export class MessageSerializer {
 
   static readMessage(message: string) {

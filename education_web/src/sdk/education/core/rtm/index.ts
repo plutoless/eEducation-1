@@ -20,7 +20,9 @@ interface RTMWrapperInitConfig {
   uid: string
   token: string
 }
-
+/**
+ * @internal
+ */
 export class RTMWrapper extends EventEmitter {
 
   public localUid?: string
