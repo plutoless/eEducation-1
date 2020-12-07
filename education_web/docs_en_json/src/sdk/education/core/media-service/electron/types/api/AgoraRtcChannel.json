@@ -1,0 +1,11 @@
+{
+    "AgoraRtcChannel": {
+        "properties": {},
+        "methods": {
+            "listenerCount": {
+                "comment": {}
+            }
+        },
+        "accessors": {}
+    }
+}

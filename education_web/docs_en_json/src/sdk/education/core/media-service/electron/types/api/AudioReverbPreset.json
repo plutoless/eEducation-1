@@ -1,0 +1,49 @@
+{
+    "AudioReverbPreset": {
+        "comment": {
+            "shortText": "Sets the local voice changer option."
+        },
+        "members": {
+            "AUDIO_REVERB_OFF": {
+                "comment": {
+                    "shortText": "0: The original voice (no local voice reverberation)."
+                }
+            },
+            "AUDIO_REVERB_POPULAR": {
+                "comment": {
+                    "shortText": "1: Pop music."
+                }
+            },
+            "AUDIO_REVERB_RNB": {
+                "comment": {
+                    "shortText": "2: R&B."
+                }
+            },
+            "AUDIO_REVERB_ROCK": {
+                "comment": {
+                    "shortText": "3: Rock music."
+                }
+            },
+            "AUDIO_REVERB_HIPHOP": {
+                "comment": {
+                    "shortText": "4: Hip-hop."
+                }
+            },
+            "AUDIO_REVERB_VOCAL_CONCERT": {
+                "comment": {
+                    "shortText": "5: Pop concert."
+                }
+            },
+            "AUDIO_REVERB_KTV": {
+                "comment": {
+                    "shortText": "6: Karaoke."
+                }
+            },
+            "AUDIO_REVERB_STUDIO": {
+                "comment": {
+                    "shortText": "7: Recording studio."
+                }
+            }
+        }
+    }
+}

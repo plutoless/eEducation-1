@@ -1,0 +1,11 @@
+{
+    "AgoraWebRtcWrapper": {
+        "properties": {},
+        "methods": {
+            "listenerCount": {
+                "comment": {}
+            }
+        },
+        "accessors": {}
+    }
+}

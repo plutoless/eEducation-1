@@ -1,0 +1,25 @@
+{
+    "LocalAudioStats": {
+        "comment": {
+            "shortText": "The statistics of the local audio stream."
+        },
+        "properties": {
+            "numChannels": {
+                "comment": {
+                    "shortText": "The number of channels."
+                }
+            },
+            "sentSampleRate": {
+                "comment": {
+                    "shortText": "The sample rate (Hz)."
+                }
+            },
+            "sentBitrate": {
+                "comment": {
+                    "shortText": "The average sending bitrate (Kbps)."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

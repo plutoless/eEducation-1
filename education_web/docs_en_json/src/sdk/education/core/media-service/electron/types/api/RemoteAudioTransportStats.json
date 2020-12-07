@@ -1,0 +1,31 @@
+{
+    "RemoteAudioTransportStats": {
+        "comment": {},
+        "properties": {
+            "uid": {
+                "comment": {
+                    "shortText": "User ID of the remote user sending the audio packet."
+                }
+            },
+            "delay": {
+                "comment": {
+                    "shortText": [
+                        "Network time delay (ms) from the remote user sending the audio packet to",
+                        "the local user."
+                    ]
+                }
+            },
+            "lost": {
+                "comment": {
+                    "shortText": "Packet loss rate (%) of the audio packet sent from the remote user."
+                }
+            },
+            "rxKBitRate": {
+                "comment": {
+                    "shortText": "Received bitrate (Kbps) of the audio packet sent from the remote user."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

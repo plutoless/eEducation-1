@@ -1,0 +1,86 @@
+{
+    "RemoteVideoStats": {
+        "comment": {
+            "shortText": "Video statistics of the remote stream."
+        },
+        "properties": {
+            "uid": {
+                "comment": {
+                    "shortText": "User ID of the user sending the video streams."
+                }
+            },
+            "delay": {
+                "comment": {}
+            },
+            "width": {
+                "comment": {
+                    "shortText": "Width (pixels) of the remote video."
+                }
+            },
+            "height": {
+                "comment": {
+                    "shortText": "Height (pixels) of the remote video."
+                }
+            },
+            "receivedBitrate": {
+                "comment": {
+                    "shortText": "Bitrate (Kbps) received in the reported interval."
+                }
+            },
+            "decoderOutputFrameRate": {
+                "comment": {
+                    "shortText": "The decoder output frame rate (fps) of the remote video."
+                }
+            },
+            "rendererOutputFrameRate": {
+                "comment": {
+                    "shortText": "The renderer output frame rate (fps) of the remote video."
+                }
+            },
+            "rxStreamType": {
+                "comment": {
+                    "shortText": [
+                        "Video stream type:",
+                        "- 0: High-stream",
+                        "- 1: Low-stream"
+                    ]
+                }
+            },
+            "totalFrozenTime": {
+                "comment": {
+                    "text": [
+                        "In a video session where the frame rate is set to no less than 5 fps,",
+                        "video freeze occurs when the time interval between two adjacent renderable",
+                        "video frames is more than 500 ms."
+                    ],
+                    "shortText": [
+                        "The total freeze time (ms) of the remote video stream after the",
+                        "remote user joins the channel."
+                    ]
+                }
+            },
+            "frozenRate": {
+                "comment": {
+                    "shortText": [
+                        "The total video freeze time as a percentage (%) of the total time when",
+                        "the video is available."
+                    ]
+                }
+            },
+            "packetLossRate": {
+                "comment": {}
+            },
+            "totalActiveTime": {
+                "comment": {
+                    "shortText": "The total active time (ms) of the remote video stream after the remote user joins the channel."
+                }
+            },
+            "publishDuration": {
+                "comment": {
+                    "shortText": "The total active time (ms) of the remote video stream after the remote user publish the video stream."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

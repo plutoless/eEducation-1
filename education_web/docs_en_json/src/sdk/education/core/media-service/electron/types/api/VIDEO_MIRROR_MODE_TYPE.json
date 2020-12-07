@@ -1,0 +1,24 @@
+{
+    "VIDEO_MIRROR_MODE_TYPE": {
+        "comment": {
+            "shortText": "Video mirror modes."
+        },
+        "members": {
+            "VIDEO_MIRROR_MODE_AUTO": {
+                "comment": {
+                    "shortText": "0: The default mirror mode is determined by the SDK."
+                }
+            },
+            "VIDEO_MIRROR_MODE_ENABLED": {
+                "comment": {
+                    "shortText": "1: Enable mirror mode."
+                }
+            },
+            "VIDEO_MIRROR_MODE_DISABLED": {
+                "comment": {
+                    "shortText": "2: Disable mirror mode."
+                }
+            }
+        }
+    }
+}

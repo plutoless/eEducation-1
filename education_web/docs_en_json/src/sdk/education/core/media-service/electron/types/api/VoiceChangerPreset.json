@@ -1,0 +1,44 @@
+{
+    "VoiceChangerPreset": {
+        "comment": {
+            "shortText": "Sets the local voice changer option."
+        },
+        "members": {
+            "VOICE_CHANGER_OFF": {
+                "comment": {
+                    "shortText": "0: The original voice (no local voice change)."
+                }
+            },
+            "VOICE_CHANGER_OLDMAN": {
+                "comment": {
+                    "shortText": "1: An old man's voice."
+                }
+            },
+            "VOICE_CHANGER_BABYBOY": {
+                "comment": {
+                    "shortText": "2: A little boy's voice."
+                }
+            },
+            "VOICE_CHANGER_BABYGIRL": {
+                "comment": {
+                    "shortText": "3: A little girl's voice."
+                }
+            },
+            "VOICE_CHANGER_ZHUBAJIE": {
+                "comment": {
+                    "shortText": "4: The voice of a growling bear."
+                }
+            },
+            "VOICE_CHANGER_ETHEREAL": {
+                "comment": {
+                    "shortText": "5: Ethereal vocal effects."
+                }
+            },
+            "VOICE_CHANGER_HULK": {
+                "comment": {
+                    "shortText": "6: Hulk's voice."
+                }
+            }
+        }
+    }
+}

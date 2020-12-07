@@ -1,0 +1,45 @@
+{
+    "ConnectionState": {
+        "comment": {
+            "shortText": [
+                "Connection states.",
+                "- 1: The SDK is disconnected from Agora's edge server.",
+                " - This is the initial state before calling the",
+                "{@link AgoraRtcEngine.joinChannel} method.",
+                " - The SDK also enters this state when the application calls the",
+                "{@link AgoraRtcEngine.leaveChannel} method.",
+                "- 2: The SDK is connecting to Agora's edge server. When the application",
+                "calls the {@link AgoraRtcEngine.joinChannel} method, the SDK starts to",
+                "establish a connection to the specified channel.",
+                " - When the SDK successfully joins the channel, it triggers the",
+                "connectionStateChanged callback and switches to the 3 state.",
+                " - After the SDK joins the channel and when it finishes initializing the",
+                "media engine, the SDK triggers the joinedChannel callback.",
+                "- 3: The SDK is connected to Agora's edge server and has joined a channel.",
+                "You can now publish or subscribe to a media stream in the channel.If the",
+                "connection to the channel is lost because, for example,",
+                "if the network is down or switched, the SDK automatically tries to reconnect",
+                "and triggers:",
+                " - The connectionStateChanged callback and switches to the 4 state.",
+                "- 4: The SDK keeps rejoining the channel after being disconnected from a",
+                "joined channel because of network issues.",
+                " - If the SDK cannot rejoin the channel within 10 seconds after being",
+                "disconnected from Agora's edge server, the SDK triggers the connectionLost",
+                "callback, stays in this state, and keeps rejoining the channel.",
+                " - If the SDK fails to rejoin the channel 20 minutes after being",
+                "disconnected from Agora's edge server, the SDK triggers the",
+                "connectionStateChanged callback, switches to the 5 state, and stops",
+                "rejoining the channel.",
+                "- 5: The SDK fails to connect to Agora's edge server or join the channel.",
+                "You must call the {@link AgoraRtcEngine.leaveChannel leaveChannel} method",
+                "to leave this state.",
+                " - Calls the {@link AgoraRtcEngine.joinChannel joinChannel} method again to",
+                "rejoin the channel.",
+                " - If the SDK is banned from joining the channel by Agora's edge server",
+                "(through the RESTful API), the SDK triggers connectionStateChanged",
+                "callbacks."
+            ]
+        },
+        "members": {}
+    }
+}

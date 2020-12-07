@@ -1,0 +1,28 @@
+{
+    "ChannelMediaRelayConfiguration": {
+        "comment": {
+            "text": [
+                "- srcInfo: The information of the destination channel:",
+                "{@link ChannelMediaInfo}.",
+                "**Note**:",
+                "- `uid`: ID of the user whose media stream you want to relay.",
+                "We recommend setting it as 0, which means that the SDK relays the media",
+                "stream of the current broadcaster.",
+                "- If you do not use a token, we recommend using the default values of the",
+                "parameters in {@link ChannelMediaInfo}.",
+                "- If you use a token, set uid as 0, and ensure that the token is generated",
+                "with the `uid` set as 0.",
+                "- destInfos: The information of the destination channel:",
+                "{@link ChannelMediaInfo}.",
+                "**Warning**:",
+                "- If you want to relay the media stream to multiple channels, define as",
+                "many {@link ChannelMediaInfo} interface (at most four).",
+                "**Note**:",
+                "- `uid`: The user ID in the destination channel."
+            ],
+            "shortText": "The configuration of the media stream relay."
+        },
+        "properties": {},
+        "methods": {}
+    }
+}

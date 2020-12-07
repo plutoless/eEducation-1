@@ -1,0 +1,31 @@
+{
+    "Metadata": {
+        "properties": {
+            "uid": {
+                "comment": {
+                    "shortText": [
+                        "The User ID.",
+                        "- For the receiver: the ID of the user who sent the metadata.",
+                        "- For the sender: ignore it."
+                    ]
+                }
+            },
+            "size": {
+                "comment": {
+                    "shortText": "Buffer size of the sent or received Metadata."
+                }
+            },
+            "buffer": {
+                "comment": {
+                    "shortText": "Buffer address of the sent or received Metadata."
+                }
+            },
+            "timeStampMs": {
+                "comment": {
+                    "shortText": "Time statmp of the frame following the metadata."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

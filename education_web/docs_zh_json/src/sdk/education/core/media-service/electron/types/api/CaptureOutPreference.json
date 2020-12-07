@@ -1,0 +1,38 @@
+{
+    "CaptureOutPreference": {
+        "comment": {
+            "shortText": "Sets the camera capturer configuration."
+        },
+        "members": {
+            "CAPTURER_OUTPUT_PREFERENCE_AUTO": {
+                "comment": {
+                    "shortText": [
+                        "0: (Default) self-adapts the camera output parameters to the system",
+                        "performance and network conditions to balance CPU consumption and video",
+                        "preview quality."
+                    ]
+                }
+            },
+            "CAPTURER_OUTPUT_PREFERENCE_PERFORMANCE": {
+                "comment": {
+                    "text": [
+                        "The SDK chooses the dimension",
+                        "and frame rate of the local camera capture closest to those set",
+                        "by the {@link setVideoEncoderConfiguration} method."
+                    ],
+                    "shortText": "1: Prioritizes the system performance."
+                }
+            },
+            "CAPTURER_OUTPUT_PREFERENCE_PREVIEW": {
+                "comment": {
+                    "text": [
+                        "The SDK chooses higher camera output parameters to improve the local",
+                        "video preview quality. This option requires extra CPU and RAM usage for",
+                        "video pre-processing."
+                    ],
+                    "shortText": "2: Prioritizes the local preview quality."
+                }
+            }
+        }
+    }
+}

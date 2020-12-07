@@ -1,0 +1,24 @@
+{
+    "UserInfo": {
+        "comment": {
+            "shortText": "The user information."
+        },
+        "properties": {
+            "uid": {
+                "comment": {
+                    "shortText": "The user ID."
+                }
+            },
+            "userAccount": {
+                "comment": {
+                    "text": [
+                        "The maximum length of this parameter is 255 bytes.",
+                        "Ensure that you set this parameter and do not set it as null."
+                    ],
+                    "shortText": "The user account."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

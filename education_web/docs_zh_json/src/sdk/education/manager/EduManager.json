@@ -1,0 +1,12 @@
+{
+    "EduManager": {
+        "comment": {},
+        "properties": {},
+        "methods": {
+            "listenerCount": {
+                "comment": {}
+            }
+        },
+        "accessors": {}
+    }
+}

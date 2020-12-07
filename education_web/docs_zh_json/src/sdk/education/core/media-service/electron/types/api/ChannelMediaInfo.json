@@ -1,0 +1,19 @@
+{
+    "ChannelMediaInfo": {
+        "comment": {
+            "text": [
+                "- channel: The channel name. The default value is NULL, which means that",
+                "the SDK applies the current channel name.",
+                "- token: The token that enables the user to join the channel.",
+                "The default value is NULL, which means that the SDK applies the current",
+                "token.",
+                "- uid: The user ID.",
+                "**Note**:",
+                "String user accounts are not supported in media stream relay."
+            ],
+            "shortText": "The definition of {@link ChannelMediaInfo}."
+        },
+        "properties": {},
+        "methods": {}
+    }
+}

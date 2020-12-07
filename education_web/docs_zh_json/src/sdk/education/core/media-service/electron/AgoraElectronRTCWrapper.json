@@ -1,0 +1,11 @@
+{
+    "AgoraElectronRTCWrapper": {
+        "properties": {},
+        "methods": {
+            "listenerCount": {
+                "comment": {}
+            }
+        },
+        "accessors": {}
+    }
+}

@@ -1,0 +1,87 @@
+{
+    "LocalVideoStats": {
+        "comment": {
+            "shortText": "Statistics of the local video."
+        },
+        "properties": {
+            "sentBitrate": {
+                "comment": {
+                    "shortText": [
+                        "Bitrate (Kbps) sent in the reported interval, which does not include",
+                        "the bitrate of the re-transmission video after packet loss."
+                    ]
+                }
+            },
+            "sentFrameRate": {
+                "comment": {
+                    "shortText": [
+                        "Frame rate (fps) sent in the reported interval, which does not include",
+                        "the frame rate of the re-transmission video after packet loss."
+                    ]
+                }
+            },
+            "encoderOutputFrameRate": {
+                "comment": {
+                    "shortText": "The encoder output frame rate (fps) of the local video."
+                }
+            },
+            "rendererOutputFrameRate": {
+                "comment": {
+                    "shortText": "The renderer output frame rate (fps) of the local video."
+                }
+            },
+            "targetBitrate": {
+                "comment": {
+                    "text": [
+                        "This value is estimated by the SDK based on the current network",
+                        "conditions."
+                    ],
+                    "shortText": "The target bitrate (Kbps) of the current encoder."
+                }
+            },
+            "targetFrameRate": {
+                "comment": {
+                    "shortText": "The target frame rate (fps) of the current encoder."
+                }
+            },
+            "qualityAdaptIndication": {
+                "comment": {
+                    "shortText": [
+                        "Quality change of the local video in terms of target frame rate and",
+                        "target bit rate in this reported interval.",
+                        "See {@link QualityAdaptIndication}."
+                    ]
+                }
+            },
+            "encodedBitrate": {
+                "comment": {}
+            },
+            "encodedFrameWidth": {
+                "comment": {}
+            },
+            "encodedFrameHeight": {
+                "comment": {}
+            },
+            "encodedFrameCount": {
+                "comment": {}
+            },
+            "codecType": {
+                "comment": {}
+            },
+            "txPacketLossRate": {
+                "comment": {
+                    "shortText": [
+                        "The packet loss rate (%) from the local client to Agora's edge server,",
+                        "before network countermeasures."
+                    ]
+                }
+            },
+            "captureFrameRate": {
+                "comment": {
+                    "shortText": "The capture frame rate (fps) of the local video."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

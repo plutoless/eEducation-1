@@ -1,0 +1,150 @@
+{
+    "EduClassroomManager": {
+        "comment": {
+            "shortText": [
+                "This class is used to connect with agora.io edu backend service.",
+                "There is a userService, which provide the sender responsibility to interactive with other classroom user participants.",
+                "It is only provide the message-passing and message receiving in the edu scenarios."
+            ]
+        },
+        "properties": {},
+        "methods": {
+            "join": {
+                "comment": {
+                    "shortText": "Run the join for start live room lifecycle"
+                }
+            },
+            "getLocalStreamData": {
+                "comment": {
+                    "returns": "local stream data @link EduStreamData\n"
+                }
+            },
+            "getLocalScreenData": {
+                "comment": {
+                    "returns": "local screen data @link EduStreamData\n"
+                }
+            },
+            "getLocalUser": {
+                "comment": {
+                    "returns": "local user data @link EduUserData\n"
+                }
+            },
+            "getFullUserList": {
+                "comment": {
+                    "returns": "full users list @link EduUser[]\n"
+                }
+            },
+            "getFullStreamList": {
+                "comment": {
+                    "returns": "full stream list @link EduStream[]\n"
+                }
+            },
+            "getClassroomInfo": {
+                "comment": {
+                    "returns": "classroom info @type EduClassroom\n"
+                }
+            },
+            "getStudentCount": {
+                "comment": {
+                    "returns": "students count @type number\n"
+                }
+            },
+            "getTeacherCount": {
+                "comment": {
+                    "returns": "teachers count @type number\n"
+                }
+            },
+            "getTeacherList": {
+                "comment": {
+                    "shortText": "alias method for {@link teacherList}",
+                    "returns": "teachers list @type EduUser[]\n"
+                }
+            },
+            "getStudentList": {
+                "comment": {
+                    "shortText": "alias method for {@link studentList}",
+                    "returns": "students list @type EduUser[]\n"
+                }
+            },
+            "listenerCount": {
+                "comment": {}
+            }
+        },
+        "accessors": {
+            "roomName": {
+                "getter": {
+                    "comment": {
+                        "shortText": "Get current roomName",
+                        "returns": "roomName {@link string}\n"
+                    }
+                }
+            },
+            "roomUuid": {
+                "getter": {
+                    "comment": {
+                        "shortText": "Get current roomUuid",
+                        "returns": "roomUuid {@link string}\n"
+                    }
+                }
+            },
+            "apiService": {
+                "getter": {
+                    "comment": {
+                        "shortText": "Get current apiService",
+                        "returns": "apiService {@link AgoraEduApi}\n"
+                    }
+                }
+            },
+            "localUser": {
+                "getter": {
+                    "comment": {
+                        "shortText": "Get current local user info",
+                        "returns": "localUser {@link EduUserData}\n"
+                    }
+                }
+            },
+            "userService": {
+                "getter": {
+                    "comment": {
+                        "shortText": "Get current local user service",
+                        "returns": "userService {@link EduUserService}\n"
+                    }
+                }
+            },
+            "data": {
+                "getter": {
+                    "comment": {
+                        "shortText": [
+                            "Get current internal data controller,",
+                            "It contains the room manager living data from {@link agora.io education backend service}."
+                        ],
+                        "returns": "data {@link EduClassroomDataController}\n"
+                    }
+                }
+            },
+            "userToken": {
+                "getter": {
+                    "comment": {
+                        "returns": "user token @paramType string\n"
+                    }
+                }
+            },
+            "studentList": {
+                "getter": {
+                    "comment": {
+                        "shortText": "Run studentList getter method return students list",
+                        "returns": "students list @type EduUser[]\n"
+                    }
+                }
+            },
+            "teacherList": {
+                "getter": {
+                    "comment": {
+                        "shortText": "Run teacherList getter method return teachers list",
+                        "returns": "teachers list {@link EduUser[]}\n"
+                    }
+                }
+            }
+        }
+    }
+}

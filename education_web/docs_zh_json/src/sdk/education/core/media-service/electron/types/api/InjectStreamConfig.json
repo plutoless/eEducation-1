@@ -1,0 +1,71 @@
+{
+    "InjectStreamConfig": {
+        "comment": {
+            "shortText": "Configuration of the imported live broadcast voice or video stream."
+        },
+        "properties": {
+            "width": {
+                "comment": {
+                    "text": "The default value is 0 pixel (same width as the original stream).",
+                    "shortText": "Width of the added stream in the live broadcast."
+                }
+            },
+            "height": {
+                "comment": {
+                    "text": "The default value is 0 pixel (same height as the original stream).",
+                    "shortText": "Height of the added stream in the live broadcast."
+                }
+            },
+            "videoBitrate": {
+                "comment": {
+                    "text": "The default value is 400 Kbps.",
+                    "shortText": "Video bitrate of the added stream in the live broadcast."
+                }
+            },
+            "videoFrameRate": {
+                "comment": {
+                    "text": "The default value is 15 fps.",
+                    "shortText": "Video frame rate of the added stream in the live broadcast."
+                }
+            },
+            "videoGop": {
+                "comment": {
+                    "text": "The default value is 30 fps.",
+                    "shortText": "Video GOP of the added stream in the live broadcast in frames."
+                }
+            },
+            "audioSampleRate": {
+                "comment": {
+                    "text": [
+                        "The default value is 44100 Hz.",
+                        "**Note**: Agora recommends setting the default value.",
+                        "- AUDIO_SAMPLE_RATE_32000 = 32000 Hz",
+                        "- AUDIO_SAMPLE_RATE_44100 = 44100 Hz",
+                        "- AUDIO_SAMPLE_RATE_48000 = 48000 Hz"
+                    ],
+                    "shortText": "Audio-sampling rate of the added stream in the live broadcast."
+                }
+            },
+            "audioBitrate": {
+                "comment": {
+                    "text": [
+                        "The default value is 48 Kbps.",
+                        "**Note**: Agora recommends setting the default value."
+                    ],
+                    "shortText": "Audio bitrate of the added stream in the live broadcast."
+                }
+            },
+            "audioChannels": {
+                "comment": {
+                    "text": "**Note**: Agora recommends setting the default value.",
+                    "shortText": [
+                        "Audio channels in the live broadcast.",
+                        "- 1: (Default) Mono",
+                        "- 2: Two-channel stereo"
+                    ]
+                }
+            }
+        },
+        "methods": {}
+    }
+}

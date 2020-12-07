@@ -1,0 +1,30 @@
+{
+    "DegradationPreference": {
+        "comment": {
+            "shortText": "The video encoding degradation preference under limited bandwidth."
+        },
+        "members": {
+            "MAINTAIN_QUALITY": {
+                "comment": {
+                    "shortText": [
+                        "0: (Default) Degrade the frame rate in order to maintain the video",
+                        "quality."
+                    ]
+                }
+            },
+            "MAINTAIN_FRAMERATE": {
+                "comment": {
+                    "shortText": "1: Degrade the video quality in order to maintain the frame rate."
+                }
+            },
+            "MAINTAIN_BALANCED": {
+                "comment": {
+                    "shortText": [
+                        "2: (For future use) Maintain a balance between the frame rate and video",
+                        "quality."
+                    ]
+                }
+            }
+        }
+    }
+}

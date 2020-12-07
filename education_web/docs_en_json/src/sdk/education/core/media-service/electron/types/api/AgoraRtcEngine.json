@@ -1,0 +1,1965 @@
+{
+    "AgoraRtcEngine": {
+        "comment": {
+            "shortText": [
+                "The AgoraRtcEngine class.",
+                "The AgoraRtcEngine interface."
+            ]
+        },
+        "properties": {},
+        "methods": {
+            "getConfigObject": {
+                "comment": {
+                    "shortText": "return sdk config object"
+                }
+            },
+            "setRenderMode": {
+                "comment": {
+                    "shortText": "Decide whether to use webgl/software/custom rendering."
+                }
+            },
+            "setCustomRenderer": {
+                "comment": {
+                    "shortText": [
+                        "Use this method to set custom Renderer when set renderMode in the",
+                        "{@link setRenderMode} method to 3.",
+                        "CustomRender should be a class."
+                    ]
+                }
+            },
+            "resizeRender": {
+                "comment": {
+                    "text": [
+                        "When the size of the view changes, this method refresh the zoom level so",
+                        "that video is sized appropriately while waiting for the next video frame",
+                        "to arrive.",
+                        "Calling this method prevents a view discontinutity."
+                    ],
+                    "shortText": "Resizes the renderer."
+                }
+            },
+            "initRender": {
+                "comment": {
+                    "shortText": "Initializes the renderer."
+                }
+            },
+            "destroyRender": {
+                "comment": {
+                    "shortText": "Destroys the renderer."
+                }
+            },
+            "initialize": {
+                "comment": {
+                    "shortText": "Initializes the agora real-time-communicating engine with your App ID.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "createChannel": {
+                "comment": {
+                    "shortText": "Create a channel object, use this only if you want to join multiple channel at one time"
+                }
+            },
+            "getVersion": {
+                "comment": {
+                    "shortText": "Returns the version and the build information of the current SDK.",
+                    "returns": "The version of the current SDK.\n"
+                }
+            },
+            "getErrorDescription": {
+                "comment": {
+                    "shortText": "Retrieves the error description.",
+                    "returns": "The error description.\n"
+                }
+            },
+            "getConnectionState": {
+                "comment": {
+                    "shortText": "Gets the connection state of the SDK.",
+                    "returns": "Connect states. See {@link ConnectionState}.\n"
+                }
+            },
+            "joinChannel": {
+                "comment": {
+                    "text": [
+                        "Users in the same channel can talk to each other, and multiple users in",
+                        "the same channel can start a group chat.",
+                        "Users with different App IDs cannot call each other.You must call the",
+                        "{@link leaveChannel} method to exit the current call",
+                        "before entering another channel.",
+                        "This method call triggers the following callbacks:",
+                        "- The local client: joinedChannel",
+                        "- The remote client: userJoined, if the user joining the channel is in",
+                        "the Communication profile,",
+                        "or is a BROADCASTER in the Live Broadcast profile.",
+                        "When the connection between the client and Agora's server is interrupted",
+                        "due to poor network conditions,",
+                        "the SDK tries reconnecting to the server. When the local client",
+                        "successfully rejoins the channel, the SDK",
+                        "triggers the rejoinedChannel callback on the local client."
+                    ],
+                    "shortText": "Allows a user to join a channel.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "leaveChannel": {
+                "comment": {
+                    "text": [
+                        "Allows a user to leave a channel, such as hanging up or exiting a call.",
+                        "The user must call the method to end the call before",
+                        "joining another channel after call the {@link joinChannel} method.",
+                        "This method returns 0 if the user leaves the channel and releases all",
+                        "resources related to the call.",
+                        "This method call is asynchronous, and the user has not left the channel",
+                        "when the method call returns.",
+                        "Once the user leaves the channel, the SDK triggers the leavechannel",
+                        "callback.",
+                        "A successful leavechannel method call triggers the removeStream callback",
+                        "for the remote client when the user leaving the channel",
+                        "is in the Communication channel, or is a BROADCASTER in the Live Broadcast",
+                        "profile."
+                    ],
+                    "shortText": "Allows a user to leave a channel.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "release": {
+                "comment": {
+                    "text": [
+                        "Once the App calls this method to release the created AgoraRtcEngine",
+                        "instance, no other methods in the SDK",
+                        "can be used and no callbacks can occur. To start it again, initialize",
+                        "{@link initialize} to establish a new",
+                        "AgoraRtcEngine instance.",
+                        "**Note**: Call this method in the subthread."
+                    ],
+                    "shortText": "Releases the AgoraRtcEngine instance.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setHighQualityAudioParameters": {
+                "comment": {
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "subscribe": {
+                "comment": {
+                    "shortText": "Subscribes to a remote user and initializes the corresponding renderer.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setupLocalVideo": {
+                "comment": {
+                    "shortText": "Sets the local video view and the corresponding renderer.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setVideoRenderDimension": {
+                "comment": {
+                    "text": [
+                        "This method ONLY affects size of data sent to js layer, while native video",
+                        "size is determined by {@link setVideoEncoderConfiguration}."
+                    ],
+                    "shortText": "Sets the renderer dimension of video."
+                }
+            },
+            "setVideoRenderFPS": {
+                "comment": {
+                    "text": [
+                        "This method is mainly used to improve the performance of js rendering",
+                        "once set, the video data will be sent with this frame rate. This can",
+                        "reduce the CPU consumption of js rendering.",
+                        "This applies to ALL views except the ones added to the high frame rate",
+                        "stream."
+                    ],
+                    "shortText": "Sets the global renderer frame rate (fps)."
+                }
+            },
+            "setVideoRenderHighFPS": {
+                "comment": {
+                    "text": [
+                        "The high stream here has nothing to do with the dual stream.",
+                        "It means the stream that is added to the high frame rate stream by calling",
+                        "the {@link addVideoRenderToHighFPS} method.",
+                        "This is often used when we want to set the low frame rate for most of",
+                        "views, but high frame rate for one",
+                        "or two special views, e.g. screen sharing."
+                    ],
+                    "shortText": "Sets renderer frame rate for the high stream."
+                }
+            },
+            "addVideoRenderToHighFPS": {
+                "comment": {
+                    "shortText": [
+                        "Adds a video stream to the high frame rate stream.",
+                        "Streams added to the high frame rate stream will be controlled by the",
+                        "{@link setVideoRenderHighFPS} method."
+                    ]
+                }
+            },
+            "removeVideoRenderFromHighFPS": {
+                "comment": {
+                    "shortText": [
+                        "Removes a stream from the high frame rate stream.",
+                        "Streams removed from the high frame rate stream will be controlled by the",
+                        "{@link setVideoRenderFPS} method."
+                    ]
+                }
+            },
+            "setupViewContentMode": {
+                "comment": {
+                    "shortText": "Sets the view content mode.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "renewToken": {
+                "comment": {
+                    "text": [
+                        "The key expires after a certain period of time once the Token schema is",
+                        "enabled when:",
+                        "- The onError callback reports the ERR_TOKEN_EXPIRED(109) error, or",
+                        "- The requestChannelKey callback reports the ERR_TOKEN_EXPIRED(109) error,",
+                        "or",
+                        "- The user receives the tokenPrivilegeWillExpire callback.",
+                        "The app should retrieve a new token from the server and then call this",
+                        "method to renew it. Failure to do so results in the SDK disconnecting",
+                        "from the server."
+                    ],
+                    "shortText": "Renews the token when the current token expires.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setChannelProfile": {
+                "comment": {
+                    "text": [
+                        "The AgoraRtcEngine applies different optimization according to the app",
+                        "scenario.",
+                        "**Note**:",
+                        "-  Call this method before the {@link joinChannel} method.",
+                        "- Users in the same channel must use the same channel profile."
+                    ],
+                    "shortText": "Sets the channel profile.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setClientRole": {
+                "comment": {
+                    "text": [
+                        "This method sets the role of a user, such as a host or an audience",
+                        "(default), before joining a channel.",
+                        "This method can be used to switch the user role after a user joins a",
+                        "channel. In the Live Broadcast profile,",
+                        "when a user switches user roles after joining a channel, a successful",
+                        "{@link setClientRole} method call triggers the following callbacks:",
+                        "- The local client: clientRoleChanged",
+                        "- The remote client: userJoined"
+                    ],
+                    "shortText": "Sets the role of a user (Live Broadcast only).",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startEchoTest": {
+                "comment": {
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopEchoTest": {
+                "comment": {
+                    "shortText": "Stops the audio call test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startEchoTestWithInterval": {
+                "comment": {
+                    "text": [
+                        "This method starts an audio call test to determine whether the audio",
+                        "devices",
+                        "(for example, headset and speaker) and the network connection are working",
+                        "properly.",
+                        "In the audio call test, you record your voice. If the recording plays back",
+                        "within the set time interval,",
+                        "the audio devices and the network connection are working properly.",
+                        "**Note**:",
+                        "- Call this method before the {@link joinChannel} method.",
+                        "- After calling this method, call the {@link stopEchoTest} method to end",
+                        "the test. Otherwise, the app cannot run the next echo test,",
+                        "nor can it call the {@link joinChannel} method to start a new call.",
+                        "- In the Live Broadcast profile, only hosts can call this method."
+                    ],
+                    "shortText": "Starts an audio call test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableLastmileTest": {
+                "comment": {
+                    "text": [
+                        "This method tests the quality of the users' network connections and is",
+                        "disabled by default.",
+                        "Before users join a channel or before an audience switches to a host,",
+                        "call this method to check the uplink network quality.",
+                        "This method consumes additional network traffic, which may affect the",
+                        "communication quality.",
+                        "Call the {@link disableLastmileTest} method to disable this test after",
+                        "receiving the lastmileQuality callback, and before the user joins a",
+                        "channel or switches the user role.",
+                        "**Note**:",
+                        "- Do not call any other methods before receiving the lastmileQuality",
+                        "callback. Otherwise,",
+                        "the callback may be interrupted by other methods, and hence may not be",
+                        "triggered.",
+                        "- A host should not call this method after joining a channel",
+                        "(when in a call)."
+                    ],
+                    "shortText": "Enables the network connection quality test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "disableLastmileTest": {
+                "comment": {
+                    "shortText": "This method disables the network connection quality test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startLastmileProbeTest": {
+                "comment": {
+                    "text": [
+                        "Once this method is enabled, the SDK returns the following callbacks:",
+                        "- lastmileQuality: the SDK triggers this callback within two seconds",
+                        "depending on the network conditions.",
+                        "This callback rates the network conditions with a score and is more",
+                        "closely linked to the user experience.",
+                        "- lastmileProbeResult: the SDK triggers this callback within 30 seconds",
+                        "depending on the network conditions.",
+                        "This callback returns the real-time statistics of the network conditions",
+                        "and is more objective.",
+                        "Call this method to check the uplink network quality before users join",
+                        "a channel or before an audience switches to a host.",
+                        "**Note**:",
+                        "- This method consumes extra network traffic and may affect communication",
+                        "quality. We do not recommend calling this method together with",
+                        "{@link enableLastmileTest}.",
+                        "- Do not call other methods before receiving the lastmileQuality and",
+                        "lastmileProbeResult callbacks. Otherwise, the callbacks may be interrupted",
+                        "by other methods.",
+                        "- In the Live Broadcast profile, a host should not call this method after",
+                        "joining a channel."
+                    ],
+                    "shortText": [
+                        "Starts the last-mile network probe test before",
+                        "joining a channel to get the uplink and downlink last-mile network",
+                        "statistics,",
+                        "including the bandwidth, packet loss, jitter, and average round-trip",
+                        "time (RTT)."
+                    ]
+                }
+            },
+            "stopLastmileProbeTest": {
+                "comment": {
+                    "shortText": "Stops the last-mile network probe test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableVideo": {
+                "comment": {
+                    "text": [
+                        "You can call this method either before joining a channel or during a call.",
+                        "If you call this method before joining a channel,",
+                        "the service starts in the video mode. If you call this method during an",
+                        "audio call, the audio mode switches to the video mode.",
+                        "To disable the video, call the {@link disableVideo} method.",
+                        "**Note**:",
+                        "- This method affects the internal engine and can be called after calling",
+                        "the {@link leaveChannel} method. You can call this method either before",
+                        "or after joining a channel.",
+                        "- This method resets the internal engine and takes some time to take",
+                        "effect. We recommend using the following API methods to control the video",
+                        "engine modules separately:",
+                        "  - {@link enableLocalVideo}: Whether to enable the camera to create the",
+                        "local video stream.",
+                        "  - {@link muteLocalVideoStream}: Whether to publish the local video",
+                        "stream.",
+                        "  - {@link muteLocalVideoStream}: Whether to publish the local video",
+                        "stream.",
+                        "  - {@link muteAllRemoteVideoStreams}: Whether to subscribe to and play",
+                        "all remote video streams."
+                    ],
+                    "shortText": "Enables the video module.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "disableVideo": {
+                "comment": {
+                    "text": [
+                        "You can call this method before joining a channel or during a call. If you",
+                        "call this method before joining a channel,",
+                        "the service starts in audio mode. If you call this method during a video",
+                        "call, the video mode switches to the audio mode.",
+                        "To enable the video mode, call the {@link enableVideo} method.",
+                        "**Note**:",
+                        "- This method affects the internal engine and can be called after calling",
+                        "the {@link leaveChannel} method. You can call this method either before",
+                        "or after joining a channel.",
+                        "- This method resets the internal engine and takes some time to take",
+                        "effect. We recommend using the following API methods to control the video",
+                        "engine modules separately:",
+                        "  - {@link enableLocalVideo}: Whether to enable the camera to create the",
+                        "local video stream.",
+                        "  - {@link muteLocalVideoStream}: Whether to publish the local video",
+                        "stream.",
+                        "  - {@link muteLocalVideoStream}: Whether to publish the local video",
+                        "stream.",
+                        "  - {@link muteAllRemoteVideoStreams}: Whether to subscribe to and play",
+                        "all remote video streams."
+                    ],
+                    "shortText": "Disables the video module.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startPreview": {
+                "comment": {
+                    "text": [
+                        "Before starting the preview, always call {@link setupLocalVideo} to set",
+                        "up the preview window and configure the attributes,",
+                        "and also call the {@link enableVideo} method to enable video.",
+                        "If startPreview is called to start the local video preview before",
+                        "calling {@link joinChannel} to join a channel, the local preview",
+                        "remains after after you call {@link leaveChannel} to leave the channel.",
+                        "Call {@link stopPreview} to disable the local preview."
+                    ],
+                    "shortText": "Starts the local video preview before joining a channel.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopPreview": {
+                "comment": {
+                    "shortText": "Stops the local video preview and closes the video.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setVideoProfile": {
+                "comment": {
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setCameraCapturerConfiguration": {
+                "comment": {
+                    "text": [
+                        "For a video call or live broadcast, generally the SDK controls the camera",
+                        "output parameters.",
+                        "When the default camera capture settings do not meet special requirements",
+                        "or cause performance problems, we recommend using this method to set the",
+                        "camera capture preference:",
+                        "- If the resolution or frame rate of the captured raw video data are",
+                        "higher than those set by {@link setVideoEncoderConfiguration},",
+                        "processing video frames requires extra CPU and RAM usage and degrades",
+                        "performance. We recommend setting config as",
+                        "CAPTURER_OUTPUT_PREFERENCE_PERFORMANCE(1) to avoid such problems.",
+                        "- If you do not need local video preview or are willing to sacrifice",
+                        "preview quality,",
+                        "we recommend setting config as CAPTURER_OUTPUT_PREFERENCE_PERFORMANCE(1)",
+                        "to optimize CPU and RAM usage.",
+                        "- If you want better quality for the local video preview, we recommend",
+                        "setting config as CAPTURER_OUTPUT_PREFERENCE_PREVIEW(2).",
+                        "**Note**: Call this method before enabling the local camera. That said,",
+                        "you can call this method before calling {@link joinChannel},",
+                        "{@link enableVideo}, or {@link enableLocalVideo},",
+                        "depending on which method you use to turn on your local camera."
+                    ],
+                    "shortText": "Sets the camera capturer configuration.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setVideoEncoderConfiguration": {
+                "comment": {
+                    "text": [
+                        "Each video encoder configuration corresponds to a set of video parameters,",
+                        "including the resolution, frame rate, bitrate, and video orientation.",
+                        "The parameters specified in this method are the maximum values under ideal",
+                        "network conditions. If the video engine cannot render the video using",
+                        "the specified parameters due to poor network conditions, the parameters",
+                        "further down the list are considered until a successful configuration is",
+                        "found.",
+                        "If you do not set the video encoder configuration after joining the",
+                        "channel, you can call this method before calling the {@link enableVideo}",
+                        "method to reduce the render time of the first video frame."
+                    ],
+                    "shortText": "Sets the video encoder configuration.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setBeautyEffectOptions": {
+                "comment": {
+                    "shortText": "Enables/Disables image enhancement and sets the options",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setRemoteUserPriority": {
+                "comment": {
+                    "text": [
+                        "Use this method with the {@link setRemoteSubscribeFallbackOption} method.",
+                        "If the fallback function is enabled for a subscribed stream, the SDK",
+                        "ensures",
+                        "the high-priority user gets the best possible stream quality.",
+                        "**Note**: The Agora SDK supports setting userPriority as high for one",
+                        "user only."
+                    ],
+                    "shortText": "Sets the priority of a remote user's media stream.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableAudio": {
+                "comment": {
+                    "text": [
+                        "The audio module is enabled by default.",
+                        "**Note**:",
+                        "- This method affects the internal engine and can be called after calling",
+                        "the {@link leaveChannel} method. You can call this method either before",
+                        "or after joining a channel.",
+                        "- This method resets the internal engine and takes some time to take",
+                        "effect. We recommend using the following API methods to control the",
+                        "audio engine modules separately:",
+                        "  - {@link enableLocalAudio}: Whether to enable the microphone to create",
+                        "the local audio stream.",
+                        "  - {@link muteLocalAudioStream}: Whether to publish the local audio",
+                        "stream.",
+                        "  - {@link muteRemoteAudioStream}: Whether to subscribe to and play the",
+                        "remote audio stream.",
+                        "  - {@link muteAllRemoteAudioStreams}: Whether to subscribe to and play",
+                        "all remote audio streams."
+                    ],
+                    "shortText": "Enables the audio module.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "disableAudio": {
+                "comment": {
+                    "text": [
+                        "**Note**:",
+                        "- This method affects the internal engine and can be called after calling",
+                        "the {@link leaveChannel} method. You can call this method either before",
+                        "or after joining a channel.",
+                        "- This method resets the internal engine and takes some time to take",
+                        "effect. We recommend using the following API methods to control the audio",
+                        "engine modules separately:",
+                        "  - {@link enableLocalAudio}: Whether to enable the microphone to create",
+                        "the local audio stream.",
+                        "  - {@link muteLocalAudioStream}: Whether to publish the local audio",
+                        "stream.",
+                        "  - {@link muteRemoteAudioStream}: Whether to subscribe to and play the",
+                        "remote audio stream.",
+                        "  - {@link muteAllRemoteAudioStreams}: Whether to subscribe to and play",
+                        "all remote audio streams."
+                    ],
+                    "shortText": "Disables the audio module.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setAudioProfile": {
+                "comment": {
+                    "shortText": "Sets audio parameters and application scenarios.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setVideoQualityParameters": {
+                "comment": {
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setEncryptionSecret": {
+                "comment": {
+                    "text": [
+                        "All users in a channel must set the same encryption password.",
+                        "The encryption password is automatically cleared once a user has left",
+                        "the channel.",
+                        "If the encryption password is not specified or set to empty, the",
+                        "encryption function will be disabled.",
+                        "**Note**:",
+                        "- For optimal transmission, ensure that the encrypted data size does not",
+                        "exceed the original data size + 16 bytes. 16 bytes is the maximum padding",
+                        "size for AES encryption.",
+                        "- Do not use this method for CDN live streaming."
+                    ],
+                    "shortText": [
+                        "Enables built-in encryption with an encryption password before joining",
+                        "a channel."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setEncryptionMode": {
+                "comment": {
+                    "text": [
+                        "The Agora SDK supports built-in encryption, which is set to aes-128-xts",
+                        "mode by default.",
+                        "Call this method to set the encryption mode to use other encryption modes.",
+                        "All users in the same channel must use the same encryption mode and",
+                        "password.",
+                        "Refer to the information related to the AES encryption algorithm on the",
+                        "differences between the encryption modes.",
+                        "**Note**: Call the {@link setEncryptionSecret} method before calling",
+                        "this method."
+                    ],
+                    "shortText": "Sets the built-in encryption mode.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "muteLocalAudioStream": {
+                "comment": {
+                    "text": [
+                        "A successful muteLocalAudioStream method call triggers the userMuteAudio",
+                        "callback on the remote client.",
+                        "**Note**: muteLocalAudioStream(true) does not disable the microphone and",
+                        "thus does not affect any ongoing recording."
+                    ],
+                    "shortText": "Stops/Resumes sending the local audio stream.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "muteAllRemoteAudioStreams": {
+                "comment": {
+                    "shortText": "Stops/Resumes receiving all remote audio streams.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setDefaultMuteAllRemoteAudioStreams": {
+                "comment": {
+                    "text": [
+                        "You can call this method either before or after joining a channel. If you",
+                        "call this method after joining a channel,",
+                        "the remote audio streams of all subsequent users are not received."
+                    ],
+                    "shortText": "Sets whether to receive all remote audio streams by default.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "muteRemoteAudioStream": {
+                "comment": {
+                    "shortText": "Stops/Resumes receiving a specified audio stream.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "muteLocalVideoStream": {
+                "comment": {
+                    "text": [
+                        "A successful muteLocalVideoStream method call triggers the userMuteVideo",
+                        "callback on the remote client.",
+                        "**Note**: muteLocalVideoStream(true) does not disable the camera and thus",
+                        "does not affect the retrieval of the local video streams."
+                    ],
+                    "shortText": "Stops/Resumes sending the local video stream.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableLocalVideo": {
+                "comment": {
+                    "text": [
+                        "This method disables or re-enables the local video capturer, and does not",
+                        "affect receiving the remote video stream.",
+                        "After you call the {@link enableVideo} method, the local video capturer",
+                        "is enabled",
+                        "by default. You can call enableLocalVideo(false) to disable the local",
+                        "video capturer. If you want to re-enable it, call enableLocalVideo(true).",
+                        "After the local video capturer is successfully disabled or re-enabled,",
+                        "the SDK triggers the userEnableVideo callback on the remote client."
+                    ],
+                    "shortText": "Disables/Re-enables the local video capture.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableLocalAudio": {
+                "comment": {
+                    "text": [
+                        "The audio function is enabled by default. This method disables/re-enables",
+                        "the local audio function, that is, to stop or restart local audio capture",
+                        "and processing.",
+                        "This method does not affect receiving or playing the remote audio streams,",
+                        "and enableLocalAudio(false) is applicable to scenarios where the user",
+                        "wants to receive remote",
+                        "audio streams without sending any audio stream to other users in the",
+                        "channel.",
+                        "The SDK triggers the microphoneEnabled callback once the local audio",
+                        "function is disabled or re-enabled."
+                    ],
+                    "shortText": "Enables/Disables the local audio capture.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "muteAllRemoteVideoStreams": {
+                "comment": {
+                    "shortText": "Stops/Resumes receiving all remote video streams.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setDefaultMuteAllRemoteVideoStreams": {
+                "comment": {
+                    "shortText": "Sets whether to receive all remote video streams by default.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableAudioVolumeIndication": {
+                "comment": {
+                    "text": [
+                        "Once this method is enabled, the SDK returns the volume indication in the",
+                        "groupAudioVolumeIndication callback at the set time interval,",
+                        "regardless of whether any user is speaking in the channel."
+                    ],
+                    "shortText": [
+                        "Enables the groupAudioVolumeIndication callback at a set time interval to",
+                        "report on which users are speaking and the speakers' volume."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "muteRemoteVideoStream": {
+                "comment": {
+                    "shortText": "Stops/Resumes receiving a specified remote user's video stream.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setInEarMonitoringVolume": {
+                "comment": {
+                    "shortText": "Sets the volume of the in-ear monitor.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "pauseAudio": {
+                "comment": {
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "resumeAudio": {
+                "comment": {
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLogFile": {
+                "comment": {
+                    "text": [
+                        "The log file records all log data for the SDK’s operation. Ensure that",
+                        "the directory for the log file exists and is writable."
+                    ],
+                    "shortText": "Specifies an SDK output log file.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setAddonLogFile": {
+                "comment": {
+                    "text": [
+                        "The log file records all log data for the SDK’s operation. Ensure that",
+                        "the directory for the log file exists and is writable."
+                    ],
+                    "shortText": "Specifies an SDK output log file.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLogFileSize": {
+                "comment": {
+                    "text": [
+                        "The Agora SDK has two log files, each with a default size of 512 KB.",
+                        "If you set size as 1024 KB, the SDK outputs log files with a total",
+                        "maximum size of 2 MB.",
+                        "If the total size of the log files exceed the set value, the new output",
+                        "log files overwrite the old output log files."
+                    ],
+                    "shortText": "Sets the log file size (KB).",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceSetLogFile": {
+                "comment": {
+                    "text": "**Note**: Call this method after the {@link videoSourceInitialize} method.",
+                    "shortText": "Specifies an SDK output log file for the video source object.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceSetAddonLogFile": {
+                "comment": {
+                    "text": "**Note**: Call this method after the {@link videoSourceInitialize} method.",
+                    "shortText": "Specifies an SDK output log file for the video source object.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLogFilter": {
+                "comment": {
+                    "text": [
+                        "You can use one or a combination of the filters. The log level follows",
+                        "the sequence of OFF, CRITICAL, ERROR, WARNING, INFO, and DEBUG.",
+                        "Choose a level to see the logs preceding that level. For example, if you",
+                        "set the log level to WARNING, you see the logs within levels CRITICAL,",
+                        "ERROR, and WARNING."
+                    ],
+                    "shortText": "Sets the output log level of the SDK.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableDualStreamMode": {
+                "comment": {
+                    "text": [
+                        "If dual-stream mode is enabled, the receiver can choose to receive the",
+                        "high stream (high-resolution high-bitrate video stream)",
+                        "or low stream (low-resolution low-bitrate video stream) video."
+                    ],
+                    "shortText": "Enables/Disables the dual video stream mode.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setRemoteVideoStreamType": {
+                "comment": {
+                    "text": [
+                        "If the dual-stream mode is enabled by calling enableDualStreamMode, you",
+                        "will receive the",
+                        "high-video stream by default. This method allows the application to adjust",
+                        "the",
+                        "corresponding video-stream type according to the size of the video windows",
+                        "to save the bandwidth",
+                        "and calculation resources.",
+                        "If the dual-stream mode is not enabled, you will receive the high-video",
+                        "stream by default.",
+                        "The result after calling this method will be returned in",
+                        "apiCallExecuted. The Agora SDK receives",
+                        "the high-video stream by default to save the bandwidth. If needed, users",
+                        "can switch to the low-video",
+                        "stream using this method."
+                    ],
+                    "shortText": [
+                        "Sets the video stream type of the remotely subscribed video stream when",
+                        "the remote user sends dual streams."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setRemoteDefaultVideoStreamType": {
+                "comment": {
+                    "shortText": [
+                        "Sets the default video-stream type of the remotely subscribed video stream",
+                        "when the remote user sends dual streams."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableWebSdkInteroperability": {
+                "comment": {
+                    "text": [
+                        "Use this method when the channel profile is Live Broadcast.",
+                        "Interoperability with the Agora Web SDK is enabled by default when the",
+                        "channel profile is Communication."
+                    ],
+                    "shortText": "Enables interoperability with the Agora Web SDK (Live Broadcast only).",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLocalVideoMirrorMode": {
+                "comment": {
+                    "text": [
+                        "Use this method before startPreview, or it does not take effect until you",
+                        "re-enable startPreview."
+                    ],
+                    "shortText": "Sets the local video mirror mode.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLocalVoicePitch": {
+                "comment": {
+                    "shortText": "Changes the voice pitch of the local speaker.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLocalVoiceEqualization": {
+                "comment": {
+                    "shortText": "Sets the local voice equalization effect.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLocalVoiceReverb": {
+                "comment": {
+                    "shortText": "Sets the local voice reverberation.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLocalVoiceChanger": {
+                "comment": {
+                    "shortText": "Sets the local voice changer option."
+                }
+            },
+            "setLocalVoiceReverbPreset": {
+                "comment": {
+                    "text": [
+                        "**Note**:",
+                        "- Do not use this method together with {@link setLocalVoiceReverb}.",
+                        "- Do not use this method together with {@link setLocalVoiceChanger},",
+                        "or the method called eariler does not take effect."
+                    ],
+                    "shortText": "Sets the preset local voice reverberation effect."
+                }
+            },
+            "setLocalPublishFallbackOption": {
+                "comment": {
+                    "shortText": [
+                        "Sets the fallback option for the locally published video stream based on",
+                        "the network conditions.",
+                        "The default setting for option is STREAM_FALLBACK_OPTION_AUDIO_ONLY, where",
+                        "there is no fallback for the locally published video stream when the",
+                        "uplink network conditions are poor.",
+                        "If `option` is set toSTREAM_FALLBACK_OPTION_AUDIO_ONLY, the SDK will:",
+                        "- Disable the upstream video but enable audio only when the network",
+                        "conditions worsen and cannot support both video and audio.",
+                        "- Re-enable the video when the network conditions improve.",
+                        "When the locally published stream falls back to audio only or when the",
+                        "audio stream switches back to the video,",
+                        "the localPublishFallbackToAudioOnly callback is triggered.",
+                        "**Note**:",
+                        "Agora does not recommend using this method for CDN live streaming, because",
+                        "the remote CDN live user will have a noticeable lag when the locally",
+                        "publish stream falls back to audio-only."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setRemoteSubscribeFallbackOption": {
+                "comment": {
+                    "text": [
+                        "If `option` is set as STREAM_FALLBACK_OPTION_VIDEO_STREAM_LOW or",
+                        "STREAM_FALLBACK_OPTION_AUDIO_ONLY(2):",
+                        "- the SDK automatically switches the video from a high-stream to a",
+                        "low-stream, or disables the video when the downlink network condition",
+                        "cannot support both audio and video",
+                        "to guarantee the quality of the audio.",
+                        "- The SDK monitors the network quality and restores the video stream when",
+                        "the network conditions improve.",
+                        "When the remote video stream falls back to audio only or when",
+                        "the audio-only stream switches back to the video stream,",
+                        "the SDK triggers the remoteSubscribeFallbackToAudioOnly callback."
+                    ],
+                    "shortText": [
+                        "Sets the fallback option for the remote video stream based",
+                        "on the network conditions."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "registerLocalUserAccount": {
+                "comment": {
+                    "text": [
+                        "To join a channel with a user account, you can choose either of the",
+                        "following:",
+                        "- Call the {@link registerLocalUserAccount} method to create a user",
+                        "account, and then the {@link joinChannelWithUserAccount} method to",
+                        "join the channel.",
+                        "- Call the {@link joinChannelWithUserAccount} method to join the",
+                        "channel.",
+                        "The difference between the two is that for the former, the time elapsed",
+                        "between calling the {@link joinChannelWithUserAccount} method and joining",
+                        "the channel is shorter than the latter.",
+                        "To ensure smooth communication, use the same parameter type to identify",
+                        "the user. For example, if a user joins the channel with a user ID, then",
+                        "ensure all the other users use the user ID too. The same applies to the",
+                        "user account. If a user joins the channel with the Agora Web SDK, ensure",
+                        "that the `uid` of the user is set to the same parameter type.",
+                        "**Note**:",
+                        "- Ensure that you set the `userAccount` parameter. Otherwise, this method",
+                        "does not take effect.",
+                        "- Ensure that the value of the `userAccount` parameter is unique in the",
+                        "channel."
+                    ],
+                    "shortText": [
+                        "Registers a user account.",
+                        "Once registered, the user account can be used to identify the local user",
+                        "when the user joins the channel. After the user successfully registers a",
+                        "user account,  the SDK triggers the onLocalUserRegistered callback on the",
+                        "local client,",
+                        "reporting the user ID and user account of the local user."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "joinChannelWithUserAccount": {
+                "comment": {
+                    "text": [
+                        "After the user successfully joins the channel, the SDK triggers the",
+                        "following callbacks:",
+                        "- The local client: localUserRegistered and userInfoUpdated.",
+                        "- The remote client: userJoined and userInfoUpdated, if the user joining",
+                        "the channel is in the Communication profile, or is a BROADCASTER in the",
+                        "Live Broadcast profile.",
+                        "**Note**: To ensure smooth communication, use the same parameter type to",
+                        "identify the user. For example, if a user joins the channel with a user",
+                        "ID, then ensure all the other users use the user ID too.",
+                        "The same applies to the user account. If a user joins the channel with",
+                        "the Agora Web SDK, ensure that the `uid` of the user is set to the same",
+                        "parameter type."
+                    ],
+                    "shortText": "Joins the channel with a user account.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getUserInfoByUserAccount": {
+                "comment": {
+                    "text": [
+                        "After a remote user joins the channel, the SDK gets the user ID and user",
+                        "account of the remote user, caches them in a mapping table object",
+                        "(UserInfo),",
+                        "and triggers the userInfoUpdated callback on the local client.",
+                        "After receiving the callback, you can call this method to get the user ID",
+                        "of the remote user from the UserInfo object by passing in the user",
+                        "account."
+                    ],
+                    "shortText": "Gets the user information by passing in the user account.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getUserInfoByUid": {
+                "comment": {
+                    "text": [
+                        "After a remote user joins the channel, the SDK gets the user ID and user",
+                        "account of the remote user, caches them in a mapping table object",
+                        "(UserInfo), and triggers the userInfoUpdated callback on the local client.",
+                        "After receiving the callback, you can call this method to get the user",
+                        "account of the remote user from the UserInfo object by passing in the",
+                        "user ID."
+                    ],
+                    "shortText": "Gets the user information by passing in the user ID.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "switchChannel": {
+                "comment": {
+                    "text": [
+                        "This method allows the audience of a Live-broadcast channel to switch to",
+                        "a different channel.",
+                        "After the user successfully switches to another channel, the leavechannel",
+                        "and joinedChannel callbacks are triggered to indicate that the user has",
+                        "left the original channel and joined a new one.",
+                        "**Note**:",
+                        "This method applies to the audience role in a Live-broadcast channel only."
+                    ],
+                    "shortText": "Switches to a different channel.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "adjustRecordingSignalVolume": {
+                "comment": {
+                    "shortText": "Adjusts the recording volume.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "adjustPlaybackSignalVolume": {
+                "comment": {
+                    "shortText": "Adjusts the playback volume of the voice.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setExternalAudioSource": {
+                "comment": {
+                    "shortText": "Sets the external audio source.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getVideoDevices": {
+                "comment": {
+                    "shortText": "Gets the list of the video devices.",
+                    "returns": "The array of the video devices.\n"
+                }
+            },
+            "setVideoDevice": {
+                "comment": {
+                    "shortText": "Sets the video device using the device Id.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getCurrentVideoDevice": {
+                "comment": {
+                    "shortText": "Gets the current video device.",
+                    "returns": "The video device.\n"
+                }
+            },
+            "startVideoDeviceTest": {
+                "comment": {
+                    "text": [
+                        "**Note**:",
+                        "This method tests whether the video-capture device works properly.",
+                        "Ensure that you call the {@link enableVideo} method before calling this",
+                        "method and that the HWND window handle of the incoming parameter is valid."
+                    ],
+                    "shortText": "Starts a video-capture device test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopVideoDeviceTest": {
+                "comment": {
+                    "text": [
+                        "**Note**:",
+                        "This method stops testing the video-capture device.",
+                        "You must call this method to stop the test after calling the",
+                        "{@link startVideoDeviceTest} method."
+                    ],
+                    "shortText": "Stops the video-capture device test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getAudioPlaybackDevices": {
+                "comment": {
+                    "shortText": "Retrieves the audio playback device associated with the device ID.",
+                    "returns": "The array of the audio playback device.\n"
+                }
+            },
+            "setAudioPlaybackDevice": {
+                "comment": {
+                    "shortText": "Sets the audio playback device using the device ID.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getPlaybackDeviceInfo": {
+                "comment": {
+                    "shortText": [
+                        "Retrieves the audio playback device information associated with the",
+                        "device ID and device name."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getCurrentAudioPlaybackDevice": {
+                "comment": {
+                    "shortText": "Gets the current audio playback device.",
+                    "returns": "The current audio playback device.\n"
+                }
+            },
+            "setAudioPlaybackVolume": {
+                "comment": {
+                    "shortText": "Sets the volume of the audio playback device.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getAudioPlaybackVolume": {
+                "comment": {
+                    "shortText": "Retrieves the volume of the audio playback device.",
+                    "returns": "The audio playback device volume.\n"
+                }
+            },
+            "getAudioRecordingDevices": {
+                "comment": {
+                    "shortText": "Retrieves the audio recording device associated with the device ID.",
+                    "returns": "The array of the audio recording device.\n"
+                }
+            },
+            "setAudioRecordingDevice": {
+                "comment": {
+                    "shortText": "Sets the audio recording device using the device ID.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getRecordingDeviceInfo": {
+                "comment": {
+                    "shortText": [
+                        "Retrieves the audio recording device information associated with the",
+                        "device ID and device name."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getCurrentAudioRecordingDevice": {
+                "comment": {
+                    "shortText": "Gets the current audio recording device.",
+                    "returns": "The audio recording device.\n"
+                }
+            },
+            "getAudioRecordingVolume": {
+                "comment": {
+                    "shortText": "Retrieves the volume of the microphone.",
+                    "returns": "The microphone volume. The volume value ranges between\n0 (lowest volume) and 255 (highest volume).\n"
+                }
+            },
+            "setAudioRecordingVolume": {
+                "comment": {
+                    "shortText": "Sets the volume of the microphone.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startAudioPlaybackDeviceTest": {
+                "comment": {
+                    "text": [
+                        "This method tests if the playback device works properly. In the test,",
+                        "the SDK plays an audio file specified by the user.",
+                        "If the user can hear the audio, the playback device works properly."
+                    ],
+                    "shortText": "Starts the audio playback device test.",
+                    "returns": "\n- 0: Success, and you can hear the sound of the specified audio file.\n- < 0: Failure.\n"
+                }
+            },
+            "stopAudioPlaybackDeviceTest": {
+                "comment": {
+                    "text": [
+                        "This method stops testing the audio playback device.",
+                        "You must call this method to stop the test after calling the",
+                        "{@link startAudioPlaybackDeviceTest} method."
+                    ],
+                    "shortText": "Stops the audio playback device test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startAudioDeviceLoopbackTest": {
+                "comment": {
+                    "text": [
+                        "This method tests whether the local audio devices are working properly.",
+                        "After calling this method, the microphone captures the local audio and",
+                        "plays it through the speaker.",
+                        "**Note**:",
+                        "This method tests the local audio devices and does not report the network",
+                        "conditions."
+                    ],
+                    "shortText": "Starts the audio device loopback test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopAudioDeviceLoopbackTest": {
+                "comment": {
+                    "text": [
+                        "**Note**:",
+                        "Ensure that you call this method to stop the loopback test after calling",
+                        "the {@link startAudioDeviceLoopbackTest} method."
+                    ],
+                    "shortText": "Stops the audio device loopback test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableLoopbackRecording": {
+                "comment": {
+                    "shortText": [
+                        "Enables the loopback recording. Once enabled, the SDK collects all local",
+                        "sounds."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startAudioRecordingDeviceTest": {
+                "comment": {
+                    "text": "This method checks whether the microphone works properly.",
+                    "shortText": "Starts the microphone test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopAudioRecordingDeviceTest": {
+                "comment": {
+                    "text": [
+                        "**Note**:",
+                        "This method stops the microphone test.",
+                        "You must call this method to stop the test after calling the",
+                        "{@link startAudioRecordingDeviceTest} method."
+                    ],
+                    "shortText": "Stops the microphone test.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getAudioPlaybackDeviceMute": {
+                "comment": {
+                    "shortText": "check whether selected audio playback device is muted",
+                    "returns": "muted/unmuted\n"
+                }
+            },
+            "setAudioPlaybackDeviceMute": {
+                "comment": {
+                    "shortText": "Mutes the audio playback device.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getAudioRecordingDeviceMute": {
+                "comment": {
+                    "shortText": "Retrieves the mute status of the audio playback device.",
+                    "returns": "Whether to mute/unmute the audio playback device:\n- true: Mutes.\n- false: Unmutes.\n"
+                }
+            },
+            "setAudioRecordingDeviceMute": {
+                "comment": {
+                    "shortText": "Mutes/Unmutes the microphone.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceInitialize": {
+                "comment": {
+                    "shortText": "Initializes agora real-time-communicating video source with the app Id.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setupLocalVideoSource": {
+                "comment": {
+                    "shortText": "Sets the video renderer for video source."
+                }
+            },
+            "videoSourceEnableWebSdkInteroperability": {
+                "comment": {
+                    "text": [
+                        "**Note**:",
+                        "You must call this method after calling the {@link videoSourceInitialize}",
+                        "method."
+                    ],
+                    "shortText": [
+                        "Enables the web interoperability of the video source, if you set it to",
+                        "true."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceJoin": {
+                "comment": {
+                    "shortText": "Allows a user to join a channel when using the video source.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceLeave": {
+                "comment": {
+                    "text": [
+                        "**Note**:",
+                        "You must call this method after calling the {@link videoSourceJoin} method."
+                    ],
+                    "shortText": "Allows a user to leave a channe when using the video source.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceRenewToken": {
+                "comment": {
+                    "text": [
+                        "The application should call this method to get the new `token`.",
+                        "Failure to do so will result in the SDK disconnecting from the server."
+                    ],
+                    "shortText": [
+                        "Gets a new token for a user using the video source when the current token",
+                        "expires after a period of time."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceSetChannelProfile": {
+                "comment": {
+                    "shortText": "Sets the channel profile when using the video source.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceSetVideoProfile": {
+                "comment": {
+                    "shortText": "Sets the video profile when using the video source.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getScreenWindowsInfo": {
+                "comment": {
+                    "text": [
+                        "This method gets the ID of the whole window and relevant inforamtion.",
+                        "You can share the whole or part of a window by specifying the window ID."
+                    ],
+                    "shortText": "Gets the window ID when using the video source.",
+                    "returns": "The array list of the window ID and relevant information.\n"
+                }
+            },
+            "getScreenDisplaysInfo": {
+                "comment": {
+                    "text": [
+                        "This method gets the ID of the whole display and relevant inforamtion.",
+                        "You can share the whole or part of a display by specifying the window ID."
+                    ],
+                    "shortText": "Gets the display ID when using the video source.",
+                    "returns": "The array list of the display ID and relevant information.\n"
+                }
+            },
+            "startScreenCapture2": {
+                "comment": {
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopScreenCapture2": {
+                "comment": {
+                    "shortText": "Stop the video source.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startScreenCapturePreview": {
+                "comment": {
+                    "shortText": "Starts the video source preview.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopScreenCapturePreview": {
+                "comment": {
+                    "shortText": "Stops the video source preview.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceEnableDualStreamMode": {
+                "comment": {
+                    "shortText": "Enables the dual-stream mode for the video source.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceSetParameters": {
+                "comment": {
+                    "shortText": "Sets the video source parameters.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceUpdateScreenCaptureRegion": {
+                "comment": {
+                    "shortText": "Updates the screen capture region for the video source.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceRelease": {
+                "comment": {
+                    "shortText": "Releases the video source object.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceStartScreenCaptureByScreen": {
+                "comment": {
+                    "shortText": "Shares the whole or part of a screen by specifying the screen rect.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceStartScreenCaptureByWindow": {
+                "comment": {
+                    "shortText": "Shares the whole or part of a window by specifying the window ID.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceUpdateScreenCaptureParameters": {
+                "comment": {
+                    "shortText": "Updates the video source parameters.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "videoSourceSetScreenCaptureContentHint": {
+                "comment": {
+                    "shortText": " Updates the video source parameters.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startScreenCapture": {
+                "comment": {
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopScreenCapture": {
+                "comment": {
+                    "shortText": "Stops screen sharing.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "updateScreenCaptureRegion": {
+                "comment": {
+                    "shortText": "Updates the screen capture region.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startAudioMixing": {
+                "comment": {
+                    "text": [
+                        "This method mixes the specified local audio file with the audio stream",
+                        "from the microphone, or replaces the microphone’s audio stream with the",
+                        "specified",
+                        "local audio file. You can choose whether the other user can hear the",
+                        "local audio playback",
+                        "and specify the number of loop playbacks. This API also supports online",
+                        "music playback.",
+                        "The SDK returns the state of the audio mixing file playback in the",
+                        "audioMixingStateChanged callback.",
+                        "**Note**:",
+                        "- Call this method when you are in the channel, otherwise it may cause",
+                        "issues.",
+                        "- If the local audio mixing file does not exist, or if the SDK does not",
+                        "support the file format",
+                        "or cannot access the music file URL, the SDK returns the warning code 701."
+                    ],
+                    "shortText": "Starts playing and mixing the music file.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopAudioMixing": {
+                "comment": {
+                    "text": "Call this API when you are in a channel.",
+                    "shortText": "Stops playing or mixing the music file.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "pauseAudioMixing": {
+                "comment": {
+                    "text": " Call this API when you are in a channel.",
+                    "shortText": "Pauses playing and mixing the music file.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "resumeAudioMixing": {
+                "comment": {
+                    "text": " Call this API when you are in a channel.",
+                    "shortText": "Resumes playing and mixing the music file.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "adjustAudioMixingVolume": {
+                "comment": {
+                    "text": " Call this API when you are in a channel.",
+                    "shortText": "Adjusts the volume of audio mixing.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "adjustAudioMixingPlayoutVolume": {
+                "comment": {
+                    "shortText": "Adjusts the audio mixing volume for local playback.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "adjustAudioMixingPublishVolume": {
+                "comment": {
+                    "shortText": "Adjusts the audio mixing volume for publishing (sending to other users).",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getAudioMixingDuration": {
+                "comment": {
+                    "text": "Call this API when you are in a channel.",
+                    "shortText": "Gets the duration (ms) of the music file.",
+                    "returns": "\n- ≥ 0: The audio mixing duration, if this method call succeeds.\n- < 0: Failure.\n"
+                }
+            },
+            "getAudioMixingCurrentPosition": {
+                "comment": {
+                    "text": "Call this API when you are in a channel.",
+                    "shortText": "Gets the playback position (ms) of the music file.",
+                    "returns": "\n- ≥ 0: The current playback position of the audio mixing, if this method\ncall succeeds.\n- < 0: Failure.\n"
+                }
+            },
+            "getAudioMixingPlayoutVolume": {
+                "comment": {
+                    "text": "Call this API when you are in a channel.",
+                    "shortText": "Adjusts the audio mixing volume for publishing (for remote users).",
+                    "returns": "\n- ≥ 0: The audio mixing volume for local playout, if this method call\nsucceeds. The value range is [0,100].\n- < 0: Failure.\n"
+                }
+            },
+            "getAudioMixingPublishVolume": {
+                "comment": {
+                    "text": "Call this API when you are in a channel.",
+                    "shortText": "Retrieves the audio mixing volume for publishing.",
+                    "returns": "\n- ≥ 0: The audio mixing volume for publishing, if this method call\nsucceeds. The value range is [0,100].\n- < 0: Failure.\n"
+                }
+            },
+            "setAudioMixingPosition": {
+                "comment": {
+                    "text": [
+                        "This method drags the playback progress bar of the audio mixing file to",
+                        "where",
+                        "you want to play instead of playing it from the beginning."
+                    ],
+                    "shortText": [
+                        "Sets the playback position of the music file to a different starting",
+                        "position."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "addPublishStreamUrl": {
+                "comment": {
+                    "text": [
+                        "The SDK returns the result of this method call in the streamPublished",
+                        "callback.",
+                        "**Note**:",
+                        "- Ensure that the user joins the channel before calling this method.",
+                        "- This method adds only one stream RTMP URL address each time it is",
+                        "called.",
+                        "- The RTMP URL address must not contain special characters, such as",
+                        "Chinese language characters.",
+                        "- This method applies to Live Broadcast only."
+                    ],
+                    "shortText": [
+                        "Publishes the local stream to a specified CDN live RTMP address. (CDN",
+                        "live only)"
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "removePublishStreamUrl": {
+                "comment": {
+                    "shortText": [
+                        "Removes an RTMP stream from the CDN. (CDN live only)",
+                        "**Note**:",
+                        "- This method removes only one RTMP URL address each time it is called.",
+                        "- The RTMP URL address must not contain special characters, such as",
+                        "Chinese language characters.",
+                        "- This method applies to Live Broadcast only."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setLiveTranscoding": {
+                "comment": {
+                    "shortText": "ets the video layout and audio settings for CDN live. (CDN live only)",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "addInjectStreamUrl": {
+                "comment": {
+                    "text": [
+                        "This method applies to the Native SDK v2.4.1 and later.",
+                        "If this method call is successful, the server pulls the voice or video",
+                        "stream and injects it into a live channel.",
+                        "This is applicable to scenarios where all audience members in the channel",
+                        "can watch a live show and interact with each other.",
+                        "The {@link addInjectStreamUrl} method call triggers the following",
+                        "callbacks:",
+                        "- The local client:",
+                        " - streamInjectStatus, with the state of the injecting the online stream.",
+                        " - userJoined (uid: 666), if the method call is successful and the online",
+                        "media stream is injected into the channel.",
+                        "- The remote client:",
+                        " - userJoined (uid: 666), if the method call is successful and the online",
+                        "media stream is injected into the channel."
+                    ],
+                    "shortText": "Adds a voice or video stream HTTP/HTTPS URL address to a live broadcast.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "removeInjectStreamUrl": {
+                "comment": {
+                    "shortText": "Removes the injected online media stream from a live broadcast.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setRecordingAudioFrameParameters": {
+                "comment": {
+                    "shortText": "Sets the audio recording format.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setPlaybackAudioFrameParameters": {
+                "comment": {
+                    "shortText": "Sets the audio playback format.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setMixedAudioFrameParameters": {
+                "comment": {
+                    "shortText": "Sets the mixed audio format.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "createDataStream": {
+                "comment": {
+                    "text": [
+                        "Each user can create up to five data streams during the lifecycle of the",
+                        "AgoraRtcEngine.",
+                        "**Note**:",
+                        "Set both the `reliable` and `ordered` parameters to true or false. Do not",
+                        "set one as true and the other as false."
+                    ],
+                    "shortText": "Creates a data stream.",
+                    "returns": "\n- Returns the ID of the data stream, if this method call succeeds.\n- < 0: Failure and returns an error code.\n"
+                }
+            },
+            "sendStreamMessage": {
+                "comment": {
+                    "text": [
+                        "The SDK has the following restrictions on this method:",
+                        "- Up to 30 packets can be sent per second in a channel with each packet",
+                        "having a maximum size of 1 kB.",
+                        "- Each client can send up to 6 kB of data per second.",
+                        "- Each user can have up to five data streams simultaneously.",
+                        "A successful {@link sendStreamMessage} method call triggers the",
+                        "streamMessage callback on the remote client, from which the remote user",
+                        "gets the stream message.",
+                        "A failed {@link sendStreamMessage} method call triggers the",
+                        "streamMessageError callback on the remote client.",
+                        "**Note**:",
+                        "This method applies only to the Communication profile or to the hosts in",
+                        "the Live-broadcast profile.",
+                        "If an audience in the Live-broadcast profile calls this method, the",
+                        "audience may be switched to a host."
+                    ],
+                    "shortText": "Sends data stream messages to all users in a channel.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "startChannelMediaRelay": {
+                "comment": {
+                    "text": [
+                        "After a successful method call, the SDK triggers the",
+                        "channelMediaRelayState and channelMediaRelayEvent callbacks,",
+                        "and these callbacks report the states and events of the media stream",
+                        "relay.",
+                        "- If the channelMediaRelayState callback reports the state code `1` and",
+                        "`0` in {@link ChannelMediaRelayState}, and the and the",
+                        "channelMediaRelayEvent",
+                        "callback reports the event code `4` in {@link ChannelMediaRelayEvent}, the",
+                        "SDK starts relaying media streams between the original and the",
+                        "destination channel.",
+                        "- If the channelMediaRelayState callback  reports the state code `3` in",
+                        "{@link ChannelMediaRelayState}, an exception occurs during the media",
+                        "stream relay.",
+                        "**Note**:",
+                        "- Call this method after the {@link joinChannel} method.",
+                        "- This method takes effect only when you are a broadcaster in a",
+                        "Live-broadcast channel.",
+                        "- After a successful method call, if you want to call this method again,",
+                        "ensure that you call the {@link stopChannelMediaRelay} method to quit",
+                        "the current relay."
+                    ],
+                    "shortText": "Starts to relay media streams across channels.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "updateChannelMediaRelay": {
+                "comment": {
+                    "text": [
+                        "After the channel media relay starts, if you want to relay the media",
+                        "stream to more channels, or leave the current relay channel, you can call",
+                        "the {@link updateChannelMediaRelay} method.",
+                        "After a successful method call, the SDK triggers the",
+                        "channelMediaRelayState callback with the state code `7` in",
+                        "{@link ChannelMediaRelayEvent}.",
+                        "**Note**:",
+                        "Call this method after the {@link startChannelMediaRelay} method to",
+                        "update the destination channel."
+                    ],
+                    "shortText": "Updates the channels for media stream relay.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopChannelMediaRelay": {
+                "comment": {
+                    "text": [
+                        "Once the relay stops, the broadcaster quits all the destination channels.",
+                        "After a successful method call, the SDK triggers the",
+                        "channelMediaRelayState callback. If the callback reports the state",
+                        "code `0` and `1` in {@link ChannelMediaRelayState} the broadcaster",
+                        "successfully stops the relay.",
+                        "**Note**:",
+                        "If the method call fails, the SDK triggers the",
+                        "channelMediaRelayState callback with the error code `2` and `8` in",
+                        "{@link ChannelMediaRelayError}. You can leave the channel by calling",
+                        "the {@link leaveChannel} method, and",
+                        "the media stream relay automatically stops."
+                    ],
+                    "shortText": "Stops the media stream relay.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getEffectsVolume": {
+                "comment": {
+                    "text": "The value ranges between 0.0 and 100.0.",
+                    "shortText": "Retrieves the volume of the audio effects.",
+                    "returns": "\n- ≥ 0: Volume of the audio effects, if this method call succeeds.\n- < 0: Failure.\n"
+                }
+            },
+            "setEffectsVolume": {
+                "comment": {
+                    "shortText": "Sets the volume of the audio effects.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setVolumeOfEffect": {
+                "comment": {
+                    "shortText": "Sets the volume of a specified audio effect.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "playEffect": {
+                "comment": {
+                    "text": [
+                        "This method allows you to set the loop count, pitch, pan, and gain of the",
+                        "audio effect file, as well as whether the remote user can hear the audio",
+                        "effect.",
+                        "To play multiple audio effect files simultaneously, call this method",
+                        "multiple times with different soundIds and filePaths.",
+                        "We recommend playing no more than three audio effect files at the same",
+                        "time.",
+                        "When the audio effect file playback finishes, the SDK returns the",
+                        "audioEffectFinished callback."
+                    ],
+                    "shortText": "Plays a specified local or online audio effect file.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopEffect": {
+                "comment": {
+                    "shortText": "Stops playing a specified audio effect.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "stopAllEffects": {
+                "comment": {
+                    "shortText": "Stops playing all audio effects.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "preloadEffect": {
+                "comment": {
+                    "text": [
+                        "To ensure smooth communication, limit the size of the audio effect file.",
+                        "We recommend using this method to preload the audio effect before calling",
+                        "the {@link joinChannel} method.",
+                        "Supported audio formats: mp3, aac, m4a, 3gp, and wav.",
+                        "**Note**:",
+                        "This method does not support online audio effect files."
+                    ],
+                    "shortText": "Preloads a specified audio effect file into the memory.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "unloadEffect": {
+                "comment": {
+                    "shortText": "Releases a specified preloaded audio effect from the memory.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "pauseEffect": {
+                "comment": {
+                    "shortText": "Pauses a specified audio effect.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "pauseAllEffects": {
+                "comment": {
+                    "shortText": "Pauses all the audio effects.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "resumeEffect": {
+                "comment": {
+                    "shortText": "Resumes playing a specified audio effect.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "resumeAllEffects": {
+                "comment": {
+                    "shortText": "Resumes playing all audio effects.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getEffectCurrentPosition": {
+                "comment": {
+                    "shortText": [
+                        "Retrieves the playback position (ms) of specified audio effect.",
+                        "Call this method when you are in a channel."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setEffectPosition": {
+                "comment": {
+                    "shortText": "Sets the instantaneous playback position of specified audio effect file.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getEffectDuration": {
+                "comment": {
+                    "shortText": [
+                        "Retrieves the duration (ms) of specified audio effect.",
+                        "Call this method when you are in a channel."
+                    ],
+                    "returns": "\n- >= 0: The duration (ms) of specified audio effect, if this method call is successful.\n- < 0: Failure.\n"
+                }
+            },
+            "adjustEffectPlayoutVolume": {
+                "comment": {
+                    "shortText": [
+                        "Adjusts the volume of specified audio effect for local playback.",
+                        "Call this method when you are in a channel."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "adjustEffectPublishVolume": {
+                "comment": {
+                    "shortText": [
+                        "Adjusts the volume of specified audio effect for publishing (sending to other users).",
+                        "Call this method when you are in a channel."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getEffectPlayoutVolume": {
+                "comment": {
+                    "shortText": [
+                        "Retrieves the volume of specified audio effect for local playback.",
+                        "Call this method when you are in a channel."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getEffectPublishVolume": {
+                "comment": {
+                    "shortText": [
+                        "Retrieves the volume of specified audio effect for publishing (sending to other users).",
+                        "Call this method when you are in a channel."
+                    ],
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "enableSoundPositionIndication": {
+                "comment": {
+                    "text": [
+                        "Ensure that you call this method before {@link joinChannel} to enable",
+                        "stereo panning",
+                        "for remote users so that the local user can track the position of a",
+                        "remote user",
+                        "by calling {@link setRemoteVoicePosition}."
+                    ],
+                    "shortText": "Enables/Disables stereo panning for remote users.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "setRemoteVoicePosition": {
+                "comment": {
+                    "text": [
+                        "When the local user calls this method to set the sound position of a",
+                        "remote user, the sound difference between the left and right channels",
+                        "allows",
+                        "the local user to track the real-time position of the remote user,",
+                        "creating a real sense of space. This method applies to massively",
+                        "multiplayer online games, such as Battle Royale games.",
+                        "**Note**:",
+                        "- For this method to work, enable stereo panning for remote users by",
+                        "calling the {@link enableSoundPositionIndication} method before joining",
+                        "a channel.",
+                        "- This method requires hardware support. For the best sound positioning,",
+                        "we recommend using a stereo speaker."
+                    ],
+                    "shortText": "Sets the sound position and gain of a remote user.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "getCallId": {
+                "comment": {
+                    "text": [
+                        "The {@link rate} and {@link complain} methods require the `callId`",
+                        "parameter retrieved from the {@link getCallId} method during a call.",
+                        "`callId` is passed as an argument into the {@link rate} and",
+                        "{@link complain} methods after the call ends."
+                    ],
+                    "shortText": [
+                        "Retrieves the current call ID.",
+                        "When a user joins a channel on a client, a `callId` is generated to",
+                        "identify the call from the client.",
+                        "Feedback methods, such as {@link rate} and {@link complain}, must be",
+                        "called after the call ends to submit feedback to the SDK."
+                    ],
+                    "returns": "The current call ID.\n"
+                }
+            },
+            "rate": {
+                "comment": {
+                    "shortText": "Allows a user to rate a call after the call ends.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "complain": {
+                "comment": {
+                    "shortText": "Allows a user to complain about the call quality after a call ends.",
+                    "returns": "\n- 0: Success.\n- < 0: Failure.\n"
+                }
+            },
+            "listenerCount": {
+                "comment": {}
+            },
+            "on": {
+                "comment": {
+                    "text": "- event: The event code. See {@link ChannelMediaRelayEvent}.",
+                    "shortText": "Reports events during the media stream relay."
+                }
+            }
+        },
+        "accessors": {}
+    }
+}

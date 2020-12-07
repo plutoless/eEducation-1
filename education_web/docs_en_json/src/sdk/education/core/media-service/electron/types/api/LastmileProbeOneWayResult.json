@@ -1,0 +1,25 @@
+{
+    "LastmileProbeOneWayResult": {
+        "comment": {
+            "shortText": "The one-way last-mile probe result."
+        },
+        "properties": {
+            "packetLossRate": {
+                "comment": {
+                    "shortText": "The packet loss rate (%)."
+                }
+            },
+            "jitter": {
+                "comment": {
+                    "shortText": "The network jitter (ms)."
+                }
+            },
+            "availableBandwidth": {
+                "comment": {
+                    "shortText": "The estimated available bandwidth (Kbps)."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

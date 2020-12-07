@@ -1,0 +1,87 @@
+{
+    "RemoteAudioStats": {
+        "comment": {
+            "shortText": "Reports the statistics of the remote audio."
+        },
+        "properties": {
+            "uid": {
+                "comment": {
+                    "shortText": "User ID of the remote user sending the audio streams."
+                }
+            },
+            "quality": {
+                "comment": {
+                    "shortText": "Audio quality received by the user. See {@link AgoraNetworkQuality}."
+                }
+            },
+            "networkTransportDelay": {
+                "comment": {
+                    "shortText": "Network delay (ms) from the sender to the receiver."
+                }
+            },
+            "jitterBufferDelay": {
+                "comment": {
+                    "shortText": "Network delay (ms) from the receiver to the jitter buffer."
+                }
+            },
+            "audioLossRate": {
+                "comment": {
+                    "shortText": "Packet loss rate in the reported interval."
+                }
+            },
+            "numChannels": {
+                "comment": {
+                    "shortText": "The number of the channels."
+                }
+            },
+            "receivedSampleRate": {
+                "comment": {
+                    "shortText": [
+                        "The sample rate (Hz) of the received audio stream in the reported",
+                        "interval."
+                    ]
+                }
+            },
+            "receivedBitrate": {
+                "comment": {
+                    "shortText": [
+                        "The average bitrate (Kbps) of the received audio stream in the reported",
+                        "interval."
+                    ]
+                }
+            },
+            "totalFrozenTime": {
+                "comment": {
+                    "text": [
+                        "In the reported interval, audio freeze occurs when the audio frame loss",
+                        "rate reaches 4%. `totalFrozenTime` = the number of audio freeze x 2 x",
+                        "1000(ms)."
+                    ],
+                    "shortText": [
+                        "The total freeze time (ms) of the remote audio stream after the remote",
+                        "user joins the channel."
+                    ]
+                }
+            },
+            "frozenRate": {
+                "comment": {
+                    "shortText": [
+                        "The total audio freeze time as a percentage (%) of the total time",
+                        "when the audio is available."
+                    ]
+                }
+            },
+            "totalActiveTime": {
+                "comment": {
+                    "shortText": "The total active time (ms) of the remote audio stream after the remote user joins the channel."
+                }
+            },
+            "publishDuration": {
+                "comment": {
+                    "shortText": "The total active time (ms) of the remote audio stream after the remote user publish the audio stream."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

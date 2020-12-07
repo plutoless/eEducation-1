@@ -1,0 +1,245 @@
+{
+    "VideoEncoderConfiguration": {
+        "comment": {
+            "shortText": "VideoEncoderConfiguration"
+        },
+        "properties": {
+            "width": {
+                "comment": {
+                    "text": "The default value is 640(width) x 360(hight).",
+                    "shortText": "Width (pixels) of the video."
+                }
+            },
+            "height": {
+                "comment": {
+                    "text": "The default value is 640(width) x 360(hight).",
+                    "shortText": "Height (pixels) of the video."
+                }
+            },
+            "frameRate": {
+                "comment": {
+                    "text": [
+                        "The default value is 15 fps.",
+                        "**Noete**:",
+                        "We do not recommend setting this to a value greater than 30 fps."
+                    ],
+                    "shortText": "The frame rate (fps) of the video."
+                }
+            },
+            "minFrameRate": {
+                "comment": {
+                    "text": "The default value is -1.",
+                    "shortText": "The minimum frame rate of the video."
+                }
+            },
+            "bitrate": {
+                "comment": {
+                    "text": [
+                        "Choose one of the following options:",
+                        "- 0: (Recommended) The standard bitrate.",
+                        " - The Communication profile: the encoding bitrate equals the base",
+                        "bitrate.",
+                        " - The Live-broadcast profile: the encoding bitrate is twice the base",
+                        "bitrate.",
+                        "- -1: The compatible bitrate: the bitrate stays the same regardless of",
+                        "the profile.",
+                        "The Communication profile prioritizes smoothness, while the",
+                        "Live-broadcast profile prioritizes video quality",
+                        "(requiring a higher bitrate). We recommend setting the bitrate mode to",
+                        "address this difference.",
+                        "The following table lists the recommended video encoder configurations,",
+                        "where the base bitrate applies to the Communication profile.",
+                        "Set your bitrate based on this table. If you set a bitrate beyond the",
+                        "proper range, the SDK automatically sets it to within the range.",
+                        "<table>",
+                        "    <tr>",
+                        "        <th>Resolution</th>",
+                        "        <th>Frame Rate (fps)</th>",
+                        "        <th>Base Bitrate (Kbps, for Communication)</th>",
+                        "        <th>Live Bitrate (Kbps, for Live Broadcast)</th>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>160 &times; 120</td>",
+                        "        <td>15</td>",
+                        "        <td>65</td>",
+                        "        <td>130</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>120 &times; 120</td>",
+                        "        <td>15</td>",
+                        "        <td>50</td>",
+                        "        <td>100</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>320 &times; 180</td>",
+                        "        <td>15</td>",
+                        "        <td>140</td>",
+                        "        <td>280</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>180 &times; 180</td>",
+                        "        <td>15</td>",
+                        "        <td>100</td>",
+                        "        <td>200</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>240 &times; 180</td>",
+                        "        <td>15</td>",
+                        "        <td>120</td>",
+                        "        <td>240</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>320 &times; 240</td>",
+                        "        <td>15</td>",
+                        "        <td>200</td>",
+                        "        <td>400</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>240 &times; 240</td>",
+                        "        <td>15</td>",
+                        "        <td>140</td>",
+                        "        <td>280</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>424 &times; 240</td>",
+                        "        <td>15</td>",
+                        "        <td>220</td>",
+                        "        <td>440</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>640 &times; 360</td>",
+                        "        <td>15</td>",
+                        "        <td>400</td>",
+                        "        <td>800</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>360 &times; 360</td>",
+                        "        <td>15</td>",
+                        "        <td>260</td>",
+                        "        <td>520</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>640 &times; 360</td>",
+                        "        <td>30</td>",
+                        "        <td>600</td>",
+                        "        <td>1200</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>360 &times; 360</td>",
+                        "        <td>30</td>",
+                        "        <td>400</td>",
+                        "        <td>800</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>480 &times; 360</td>",
+                        "        <td>15</td>",
+                        "        <td>320</td>",
+                        "        <td>640</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>480 &times; 360</td>",
+                        "        <td>30</td>",
+                        "        <td>490</td>",
+                        "        <td>980</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>640 &times; 480</td>",
+                        "        <td>15</td>",
+                        "        <td>500</td>",
+                        "        <td>1000</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>480 &times; 480</td>",
+                        "        <td>15</td>",
+                        "        <td>400</td>",
+                        "        <td>800</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>640 &times; 480</td>",
+                        "        <td>30</td>",
+                        "        <td>750</td>",
+                        "        <td>1500</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>480 &times; 480</td>",
+                        "        <td>30</td>",
+                        "        <td>600</td>",
+                        "        <td>1200</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>848 &times; 480</td>",
+                        "        <td>15</td>",
+                        "        <td>610</td>",
+                        "        <td>1220</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>848 &times; 480</td>",
+                        "        <td>30</td>",
+                        "        <td>930</td>",
+                        "        <td>1860</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>640 &times; 480</td>",
+                        "        <td>10</td>",
+                        "        <td>400</td>",
+                        "        <td>800</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>1280 &times; 720</td>",
+                        "        <td>15</td>",
+                        "        <td>1130</td>",
+                        "        <td>2260</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>1280 &times; 720</td>",
+                        "        <td>30</td>",
+                        "        <td>1710</td>",
+                        "        <td>3420</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>960 &times; 720</td>",
+                        "        <td>15</td>",
+                        "        <td>910</td>",
+                        "        <td>1820</td>",
+                        "    </tr>",
+                        "    <tr>",
+                        "        <td>960 &times; 720</td>",
+                        "        <td>30</td>",
+                        "        <td>1380</td>",
+                        "        <td>2760</td>",
+                        "    </tr>",
+                        "</table>"
+                    ],
+                    "shortText": "The video encoding bitrate (Kbps)."
+                }
+            },
+            "minBitrate": {
+                "comment": {
+                    "text": [
+                        "The default value is 1 kbps.",
+                        "Using a value greater than the default value",
+                        "forces the video encoder to output high-quality images but may cause more",
+                        "packet loss and hence sacrifice the smoothness of the video transmission.",
+                        "That said, unless you have special requirements for image quality,",
+                        "Agora does not recommend changing this value."
+                    ],
+                    "shortText": "The minimum encoding bitrate (Kbps)."
+                }
+            },
+            "orientationMode": {
+                "comment": {
+                    "shortText": "The orientation mode. See {@link OrientationMode}."
+                }
+            },
+            "degradationPreference": {
+                "comment": {
+                    "shortText": [
+                        "The video encoding degradation preference under limited bandwidth.",
+                        "See {@link DegradationPreference}."
+                    ]
+                }
+            }
+        },
+        "methods": {}
+    }
+}

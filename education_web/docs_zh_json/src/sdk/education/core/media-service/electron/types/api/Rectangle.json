@@ -1,0 +1,30 @@
+{
+    "Rectangle": {
+        "comment": {
+            "shortText": "The relative location of the region to the screen or window."
+        },
+        "properties": {
+            "x": {
+                "comment": {
+                    "shortText": "The horizontal offset from the top-left corner."
+                }
+            },
+            "y": {
+                "comment": {
+                    "shortText": "The vertical offset from the top-left corner."
+                }
+            },
+            "width": {
+                "comment": {
+                    "shortText": "The width of the region."
+                }
+            },
+            "height": {
+                "comment": {
+                    "shortText": "The height of the region."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

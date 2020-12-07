@@ -1,0 +1,38 @@
+{
+    "CaptureParam": {
+        "comment": {
+            "shortText": "Screen sharing encoding parameters."
+        },
+        "properties": {
+            "width": {
+                "comment": {
+                    "shortText": "Width (pixels) of the video."
+                }
+            },
+            "height": {
+                "comment": {
+                    "shortText": "Height (pixels) of the video."
+                }
+            },
+            "frameRate": {
+                "comment": {
+                    "text": [
+                        "The default value is 5.",
+                        "We do not recommend setting this to a value greater than 15."
+                    ],
+                    "shortText": "The frame rate (fps) of the shared region."
+                }
+            },
+            "bitrate": {
+                "comment": {
+                    "text": [
+                        "The default value is 0 (the SDK works out a bitrate according to the",
+                        "dimensions of the current screen)."
+                    ],
+                    "shortText": "The bitrate (Kbps) of the shared region."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

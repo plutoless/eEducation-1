@@ -1,0 +1,109 @@
+{
+    "RtcStats": {
+        "comment": {
+            "shortText": "Statistics of the channel."
+        },
+        "properties": {
+            "duration": {
+                "comment": {
+                    "shortText": "Call duration (s), represented by an aggregate value."
+                }
+            },
+            "txBytes": {
+                "comment": {
+                    "shortText": "Total number of bytes transmitted, represented by an aggregate value."
+                }
+            },
+            "rxBytes": {
+                "comment": {
+                    "shortText": "Total number of bytes received, represented by an aggregate value."
+                }
+            },
+            "txKBitRate": {
+                "comment": {
+                    "shortText": "Transmission bitrate (Kbps), represented by an instantaneous value."
+                }
+            },
+            "rxKBitRate": {
+                "comment": {
+                    "shortText": "Receive bitrate (Kbps), represented by an instantaneous value."
+                }
+            },
+            "rxAudioKBitRate": {
+                "comment": {
+                    "shortText": "Audio receive bitrate (Kbps), represented by an instantaneous value."
+                }
+            },
+            "txAudioKBitRate": {
+                "comment": {
+                    "shortText": [
+                        "Audio transmission bitrate (Kbps), represented by an instantaneous",
+                        "value."
+                    ]
+                }
+            },
+            "rxVideoKBitRate": {
+                "comment": {
+                    "shortText": "Video receive bitrate (Kbps), represented by an instantaneous value."
+                }
+            },
+            "txVideoKBitRate": {
+                "comment": {
+                    "shortText": [
+                        "Video transmission bitrate (Kbps), represented by an instantaneous",
+                        "value."
+                    ]
+                }
+            },
+            "rxAudioKBytes": {
+                "comment": {}
+            },
+            "txAudioKBytes": {
+                "comment": {}
+            },
+            "rxVideoKBytes": {
+                "comment": {}
+            },
+            "txVideoKBytes": {
+                "comment": {}
+            },
+            "lastmileDelay": {
+                "comment": {
+                    "shortText": "Client-server latency."
+                }
+            },
+            "txPacketLossRate": {
+                "comment": {
+                    "shortText": [
+                        "The packet loss rate (%) from the local client to Agora's edge server,",
+                        "before using the anti-packet-loss method."
+                    ]
+                }
+            },
+            "rxPacketLossRate": {
+                "comment": {
+                    "shortText": [
+                        "The packet loss rate (%) from Agora's edge server to the local client,",
+                        "before using the anti-packet-loss method."
+                    ]
+                }
+            },
+            "userCount": {
+                "comment": {
+                    "shortText": "Number of users in the channel."
+                }
+            },
+            "cpuAppUsage": {
+                "comment": {
+                    "shortText": "Application CPU usage (%)."
+                }
+            },
+            "cpuTotalUsage": {
+                "comment": {
+                    "shortText": "System CPU usage (%)."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "QualityAdaptIndication": {
+        "comment": {
+            "shortText": "Quality change of the local video."
+        },
+        "members": {
+            "ADAPT_NONE": {
+                "comment": {
+                    "shortText": "0: The quality of the local video stays the same."
+                }
+            },
+            "ADAPT_UP_BANDWIDTH": {
+                "comment": {
+                    "shortText": "1: The quality improves because the network bandwidth increases."
+                }
+            },
+            "ADAPT_DOWN_BANDWIDTH": {
+                "comment": {
+                    "shortText": "2: The quality worsens because the network bandwidth decreases."
+                }
+            }
+        }
+    }
+}

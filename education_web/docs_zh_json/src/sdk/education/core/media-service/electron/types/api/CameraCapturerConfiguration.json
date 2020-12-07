@@ -1,0 +1,15 @@
+{
+    "CameraCapturerConfiguration": {
+        "comment": {
+            "shortText": "Camera capturer configuration."
+        },
+        "properties": {
+            "preference": {
+                "comment": {
+                    "shortText": "The output configuration of camera capturer."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

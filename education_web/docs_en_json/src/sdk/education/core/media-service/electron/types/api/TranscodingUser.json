@@ -1,0 +1,80 @@
+{
+    "TranscodingUser": {
+        "comment": {
+            "shortText": "The TranscodingUser class."
+        },
+        "properties": {
+            "uid": {
+                "comment": {
+                    "shortText": "User ID of the user displaying the video in the CDN live."
+                }
+            },
+            "x": {
+                "comment": {
+                    "shortText": "Horizontal position from the top left corner of the video frame."
+                }
+            },
+            "y": {
+                "comment": {
+                    "shortText": "Vertical position from the top left corner of the video frame."
+                }
+            },
+            "width": {
+                "comment": {
+                    "shortText": "Width of the video frame. The default value is 360."
+                }
+            },
+            "height": {
+                "comment": {
+                    "shortText": "Height of the video frame. The default value is 640."
+                }
+            },
+            "zOrder": {
+                "comment": {
+                    "text": [
+                        "- 0: (Default) Lowest.",
+                        "- 100: Highest."
+                    ],
+                    "shortText": "Layer position of the video frame. The value ranges between 0 and 100."
+                }
+            },
+            "alpha": {
+                "comment": {
+                    "text": [
+                        "- 0: Completely transparent.",
+                        "- 1: (Default) Opaque."
+                    ],
+                    "shortText": [
+                        "Transparency of the video frame in CDN live.",
+                        "The value ranges between 0 and 1:"
+                    ]
+                }
+            },
+            "audioChannel": {
+                "comment": {
+                    "shortText": [
+                        "The audio channel of the sound.",
+                        "- 0: (Default) Supports dual channels at most, depending on the upstream",
+                        "of the broadcaster.",
+                        "- 1: The audio stream of the broadcaster uses the FL audio channel.",
+                        "If the upstream of the broadcaster uses multiple audio channels,",
+                        "these channels will be mixed into mono first.",
+                        "- 2: The audio stream of the broadcaster uses the FC audio channel.",
+                        "If the upstream of the broadcaster uses multiple audio channels,",
+                        "these channels will be mixed into mono first.",
+                        "- 3: The audio stream of the broadcaster uses the FR audio channel.",
+                        "If the upstream of the broadcaster uses multiple audio channels,",
+                        "these channels will be mixed into mono first.",
+                        "- 4: The audio stream of the broadcaster uses the BL audio channel.",
+                        "If the upstream of the broadcaster uses multiple audio channels,",
+                        "these channels will be mixed into mono first.",
+                        "- 5: The audio stream of the broadcaster uses the BR audio channel.",
+                        "If the upstream of the broadcaster uses multiple audio channels,",
+                        "these channels will be mixed into mono first."
+                    ]
+                }
+            }
+        },
+        "methods": {}
+    }
+}

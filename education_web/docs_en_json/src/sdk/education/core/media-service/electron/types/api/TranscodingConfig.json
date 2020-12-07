@@ -1,0 +1,135 @@
+{
+    "TranscodingConfig": {
+        "comment": {
+            "shortText": "Sets the CDN live audio/video transcoding settings."
+        },
+        "properties": {
+            "width": {
+                "comment": {
+                    "shortText": [
+                        "Width of the video. The default value is 360.",
+                        "The minimum value of width × height is 16 × 16."
+                    ]
+                }
+            },
+            "height": {
+                "comment": {
+                    "shortText": [
+                        "Height of the video. The default value is 640.",
+                        "The minimum value of width × height is 16 × 16."
+                    ]
+                }
+            },
+            "videoBitrate": {
+                "comment": {
+                    "text": [
+                        "Set this parameter according to the Video Bitrate Table.",
+                        "If you set a bitrate beyond the proper range, the SDK automatically",
+                        "adapts it to a value within the range."
+                    ],
+                    "shortText": [
+                        "Bitrate of the CDN live output video stream.",
+                        "The default value is 400 Kbps."
+                    ]
+                }
+            },
+            "videoFramerate": {
+                "comment": {
+                    "text": "**Note**: Agora adjusts all values over 30 to 30.",
+                    "shortText": [
+                        "Frame rate of the output video stream set for the CDN live broadcast.",
+                        "The default value is 15 fps."
+                    ]
+                }
+            },
+            "lowLatency": {
+                "comment": {
+                    "shortText": [
+                        "Latency mode.",
+                        "- true: Low latency with unassured quality.",
+                        "- false: (Default) High latency with assured quality."
+                    ]
+                }
+            },
+            "videoGop": {
+                "comment": {
+                    "shortText": "Video GOP in frames. The default value is 30 fps."
+                }
+            },
+            "videoCodecProfile": {
+                "comment": {
+                    "shortText": [
+                        "Self-defined video codec profile.",
+                        "- VIDEO_CODEC_PROFILE_BASELINE = 66: Baseline video codec profile.",
+                        "Generally used in video calls on mobile phones.",
+                        "- VIDEO_CODEC_PROFILE_MAIN = 77: Main video codec profile.",
+                        "Generally used in mainstream electronics, such as MP4 players, portable",
+                        "video players, PSP, and iPads.",
+                        "- VIDEO_CODEC_PROFILE_HIGH = 100: (Default) High video codec profile.",
+                        "Generally used in high-resolution broadcasts or television."
+                    ]
+                }
+            },
+            "backgroundColor": {
+                "comment": {
+                    "text": [
+                        "The background color in RGB hex value. Value only, do not include a #.",
+                        "For example, 0xFFB6C1 (light pink). The default value is 0x000000 (black)."
+                    ],
+                    "shortText": "RGB hex value."
+                }
+            },
+            "userCount": {
+                "comment": {
+                    "shortText": "The number of users in the live broadcast."
+                }
+            },
+            "audioSampleRateType": {
+                "comment": {
+                    "shortText": [
+                        "Self-defined audio-sample rate:",
+                        "- AUDIO_SAMPLE_RATE_32000 = 32000 Hz",
+                        "- AUDIO_SAMPLE_RATE_44100 = (Default)44100 Hz",
+                        "- AUDIO_SAMPLE_RATE_48000 = 48000 Hz"
+                    ]
+                }
+            },
+            "audioChannels": {
+                "comment": {
+                    "text": [
+                        "We recommend choosing option 1 or 2.",
+                        "A special player is required if you choose option 3, 4, or 5:",
+                        "- 1: (Default) Mono.",
+                        "- 2: Two-channel stereo.",
+                        "- 3: Three-channel stereo.",
+                        "- 4: Four-channel stereo.",
+                        "- 5: Five-channel stereo."
+                    ],
+                    "shortText": "Agora's self-defined audio-channel types."
+                }
+            },
+            "audioBitrate": {
+                "comment": {
+                    "shortText": "Bitrate of the CDN live audio output stream. The default value is 48 Kbps, and the highest value is 128."
+                }
+            },
+            "transcodingExtraInfo": {
+                "comment": {
+                    "text": "For more information on SEI frame, see [SEI-related questions](https://docs.agora.io/cn/Agora%20Platform/live_related_faq?platform=%E7%9B%B4%E6%92%AD%E7%9B%B8%E5%85%B3#sei).",
+                    "shortText": "Reserved property. Extra user-defined information to send SEI for the H.264/H.265 video stream to the CDN live client. Maximum length: 4096 Bytes."
+                }
+            },
+            "watermark": {
+                "comment": {
+                    "shortText": "The watermark image added to the CDN live publishing stream."
+                }
+            },
+            "transcodingUsers": {
+                "comment": {
+                    "shortText": "The TranscodingUsers Array."
+                }
+            }
+        },
+        "methods": {}
+    }
+}

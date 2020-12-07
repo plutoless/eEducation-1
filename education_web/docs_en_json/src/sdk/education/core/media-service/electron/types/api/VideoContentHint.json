@@ -1,0 +1,32 @@
+{
+    "VideoContentHint": {
+        "comment": {
+            "shortText": "Content hints for screen sharing."
+        },
+        "members": {
+            "CONTENT_HINT_NONE": {
+                "comment": {
+                    "shortText": "0: (Default) No content hint."
+                }
+            },
+            "CONTENT_HINT_MOTION": {
+                "comment": {
+                    "text": [
+                        "Choose this option if you prefer smoothness or when you are sharing a",
+                        "video clip, movie, or video game."
+                    ],
+                    "shortText": "1: Motion-intensive content."
+                }
+            },
+            "CONTENT_HINT_DETAILS": {
+                "comment": {
+                    "text": [
+                        "Choose this option if you prefer sharpness or when you are sharing a",
+                        "picture, PowerPoint slide, or text."
+                    ],
+                    "shortText": "2: Motionless content."
+                }
+            }
+        }
+    }
+}

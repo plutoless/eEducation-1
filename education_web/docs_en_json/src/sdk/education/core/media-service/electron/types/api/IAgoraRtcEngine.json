@@ -1,0 +1,9 @@
+{
+    "IAgoraRtcEngine": {
+        "comment": {
+            "shortText": "The IAgoraRtcEngine interface"
+        },
+        "properties": {},
+        "methods": {}
+    }
+}

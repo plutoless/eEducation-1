@@ -1,0 +1,11 @@
+{
+    "EduUserService": {
+        "properties": {},
+        "methods": {
+            "listenerCount": {
+                "comment": {}
+            }
+        },
+        "accessors": {}
+    }
+}

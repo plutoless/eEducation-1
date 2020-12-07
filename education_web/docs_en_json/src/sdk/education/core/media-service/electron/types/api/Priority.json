@@ -1,0 +1,19 @@
+{
+    "Priority": {
+        "comment": {
+            "shortText": "The priority of the remote user."
+        },
+        "members": {
+            "PRIORITY_HIGH": {
+                "comment": {
+                    "shortText": "50: The user's priority is high."
+                }
+            },
+            "PRIORITY_NORMAL": {
+                "comment": {
+                    "shortText": "100: (Default) The user's priority is normal."
+                }
+            }
+        }
+    }
+}

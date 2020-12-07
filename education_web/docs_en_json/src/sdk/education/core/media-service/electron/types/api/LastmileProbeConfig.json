@@ -1,0 +1,47 @@
+{
+    "LastmileProbeConfig": {
+        "comment": {
+            "shortText": "Configurations of the last-mile network probe test."
+        },
+        "properties": {
+            "probeUplink": {
+                "comment": {
+                    "text": [
+                        "- true: test",
+                        "- false: do not test"
+                    ],
+                    "shortText": [
+                        "Sets whether or not to test the uplink network. Some users, for example,",
+                        "the audience in a Live-broadcast channel, do not need such a test."
+                    ]
+                }
+            },
+            "probeDownlink": {
+                "comment": {
+                    "text": [
+                        "- true: test",
+                        "- false: do not test"
+                    ],
+                    "shortText": "Sets whether or not to test the downlink network."
+                }
+            },
+            "expectedUplinkBitrate": {
+                "comment": {
+                    "shortText": [
+                        "The expected maximum sending bitrate (Kbps) of the local user.",
+                        "The value ranges between 100 and 5000."
+                    ]
+                }
+            },
+            "expectedDownlinkBitrate": {
+                "comment": {
+                    "shortText": [
+                        "The expected maximum receiving bitrate (Kbps) of the local user.",
+                        "The value ranges between 100 and 5000."
+                    ]
+                }
+            }
+        },
+        "methods": {}
+    }
+}

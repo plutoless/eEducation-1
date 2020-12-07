@@ -1,0 +1,43 @@
+{
+    "LastmileProbeResult": {
+        "comment": {
+            "shortText": "The uplink and downlink last-mile network probe test result."
+        },
+        "properties": {
+            "state": {
+                "comment": {
+                    "text": [
+                        "- 1: The last-mile network probe test is complete.",
+                        "- 2: The last-mile network probe test is incomplete and the bandwidth",
+                        "estimation is not available, probably due to limited test resources.",
+                        "- 3: The last-mile network probe test is not carried out, probably due",
+                        "to poor network conditions."
+                    ],
+                    "shortText": "States of the last-mile network probe test."
+                }
+            },
+            "uplinkReport": {
+                "comment": {
+                    "shortText": [
+                        "The uplink last-mile network probe test result.",
+                        "See {@link LastmileProbeOneWayResult}."
+                    ]
+                }
+            },
+            "downlinkReport": {
+                "comment": {
+                    "shortText": [
+                        "The downlink last-mile network probe test result.",
+                        "See {@link LastmileProbeOneWayResult}."
+                    ]
+                }
+            },
+            "rtt": {
+                "comment": {
+                    "shortText": "The round-trip delay time (ms)."
+                }
+            }
+        },
+        "methods": {}
+    }
+}
