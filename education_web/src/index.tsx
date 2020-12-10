@@ -11,7 +11,9 @@ import {isElectron} from './utils/platform';
 //@ts-ignore
 import { stopReportingRuntimeErrors } from "react-error-overlay";
 
-stopReportingRuntimeErrors()
+if (process.env.NODE_ENV === "development") {
+  stopReportingRuntimeErrors(); // disables error overlays
+}
 
 const parser = new UAParser();
 
