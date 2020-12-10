@@ -16,31 +16,6 @@ import { GlobalStorage } from '@/utils/custom-storage';
 import { EduManager } from '@/sdk/education/manager';
 import {isElectron} from '@/utils/platform';
 
-// 学思教育
-// 查询地址栏 用于获取参数信息
-const getQuery = function(url: any) {
-  let search = url.split('?')[1]
-  
-  if (!search) {
-      return {}
-  }
-  let items = search.split('&')
-  
-  if(!items) {
-      return
-  }
-  let object: any = {}
-  items.forEach((item: any) => {
-      let element = item.split('=')
-      let [key, value] = element
-      object[key] = value
-  })
-  return object
-}
-
-
-// http://localhost:3000/#/classroom/one-to-one?roomName=932225&roomType=0&role=student&userName=users
-
 const useStyles = makeStyles ((theme: Theme) => ({
   formControl: {
     minWidth: '240px',

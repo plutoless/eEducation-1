@@ -49,11 +49,12 @@ const RoomController = observer(({children}: any) => {
 
   const params = new URLSearchParams(location.search)
 
-  const urlObject = {
-    roomName: params.get("roomName"),
-    roomType: params.get("roomType"),
-    role: params.get("role"),
-    userName: params.get("userName"),
+  const searchParams = {
+    roomUuid: `${params.get("roomUuid")}`,
+    roomType:  +`${params.get("roomType")}`,
+    role: `${params.get("role")}`,
+    userName: `${params.get("userName")}`,
+    userUuid: `${params.get("userUuid")}`,
   }
 
   useEffect(() => {
@@ -79,7 +80,7 @@ const RoomController = observer(({children}: any) => {
     let pathList = location.pathname.split('/')
     let path = pathList[pathList.length - 1]
 
-    roomStore.join(urlObject).then(() => {
+    roomStore.join(searchParams).then(() => {
       uiStore.addToast(t('toast.successfully_joined_the_room'))
     }).catch((err) => {
       console.warn(err.msg)

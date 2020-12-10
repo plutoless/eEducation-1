@@ -8,6 +8,10 @@ import TagManager from 'react-gtm-module';
 import Eruda from 'eruda';
 import UAParser from 'ua-parser-js';
 import {isElectron} from './utils/platform';
+//@ts-ignore
+import { stopReportingRuntimeErrors } from "react-error-overlay";
+
+stopReportingRuntimeErrors()
 
 const parser = new UAParser();
 

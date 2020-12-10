@@ -23,6 +23,14 @@ import { DialogType } from '@/components/dialog';
 
 const delay = 2000
 
+type SearchParams = {
+  roomUuid: string
+  roomType: number
+  role: string
+  userName: string
+  userUuid: string
+}
+
 const ms = 500
 
 export const networkQualities: {[key: string]: string} = {
@@ -812,17 +820,20 @@ export class RoomStore extends SimpleInterval {
     };
   }
 
+  // 学思教育url参数入口
   @action
-  async join(params: any) {
+  async join(params: SearchParams) {
     try {
+      // roomInfo作为核心状态会被大班课场景强依赖
+      // 这里设置roomInfo，
       this.appStore.setRoomInfo({
-        roomName: params.roomName,
+        roomName: params.roomUuid,
         roomType: params.roomType,
         userName: params.userName,
         userRole: params.role,
         userUuid: `${params.userUuid}`
       })
-      
+
       this.appStore.uiStore.startLoading()
       this.roomApi = new RoomApi()
       let {roomUuid} = await this.roomApi.fetchRoom({
