@@ -1,0 +1,29 @@
+{
+  "name": "Agora Edu SDK",
+  "inputFiles": [
+    "./src/sdk/education/user/edu-user-service.ts",
+    "./src/sdk/education/core/media-service/renderer/index.ts",
+    "./src/sdk/education/core/media-service/index.ts",
+    "./src/sdk/education/manager/index.ts",
+    "./src/sdk/education/room/edu-classroom-manager.ts",
+    "./src/sdk/education/interfaces/index.ts",
+    "./src/sdk/education/core/media-service/interfaces.d.ts",
+    "./src/global.d.ts"
+  ],
+  "tsconfig": "sdk.doc.json",
+  "moduleResolution": "node",
+  "mode": "file",
+  "out": "docs/api",
+  "includeDeclarations": true,
+  "toc": [
+    "EduManager",
+    "EduClassroomManager",
+    "MediaService",
+    "EduUserService"
+  ],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeNotExported": true,
+  "stripInternal": true,
+  "excludeExternals": true
+}
