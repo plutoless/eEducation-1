@@ -194,8 +194,8 @@ const zhCN: any = {
     'room_type': '房间类型',
     'room_join': '加入房间',
     'short_title': {
-      'title': '声网云课堂',
-      'subtitle': '由声网提供',
+      'title': '学思教育',
+      'subtitle': '学思教育',
     },
     'name_too_long': '名字过长，不得超过20个字符',
     '1v1': '一对一',

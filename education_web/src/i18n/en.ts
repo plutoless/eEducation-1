@@ -195,8 +195,8 @@ const en = {
     'room_type': 'Room Type',
     'room_join': 'Join',
     'short_title': {
-      'title': 'Agora Cloud Class',
-      'subtitle': 'Powered by agora.io, a leading online learning engagement platform',
+      'title': 'Xue Si Education',
+      'subtitle': 'Xue Si Education',
     },
     'name_too_long': 'name too long, should <= 20 characters',
     '1v1': 'One to One Classroom',

@@ -16,6 +16,31 @@ import { GlobalStorage } from '@/utils/custom-storage';
 import { EduManager } from '@/sdk/education/manager';
 import {isElectron} from '@/utils/platform';
 
+// 学思教育
+// 查询地址栏 用于获取参数信息
+const getQuery = function(url: any) {
+  let search = url.split('?')[1]
+  
+  if (!search) {
+      return {}
+  }
+  let items = search.split('&')
+  
+  if(!items) {
+      return
+  }
+  let object: any = {}
+  items.forEach((item: any) => {
+      let element = item.split('=')
+      let [key, value] = element
+      object[key] = value
+  })
+  return object
+}
+
+
+// http://localhost:3000/#/classroom/one-to-one?roomName=932225&roomType=0&role=student&userName=users
+
 const useStyles = makeStyles ((theme: Theme) => ({
   formControl: {
     minWidth: '240px',
@@ -107,6 +132,37 @@ function HomePage() {
       // history.push(`/classroom/${path}`)
   }
 
+  // 学思教育
+  // location.href 为拿到当前网页地址栏地址
+// window.onload = function() {
+//   // 跳转登陆页 进行验证
+//   if(location.href.indexOf('?') === -1) {
+//       console.log('地址栏参数错误')
+//       return {}
+//   }
+//   let urlObject = getQuery(location.href)
+  
+//   setSessionInfo({
+//     roomName: urlObject.roomName,
+//     roomType: urlObject.roomType,
+//     role: urlObject.role,
+//     userName: urlObject.userName,
+//   })
+  
+// // }
+
+//   appStore.setRoomInfo({
+//     ...session,
+//     roomType: roomTypes[session.roomType].value
+//   })
+//   const path = roomTypes[session.roomType].path
+
+//   if (session.role === 'assistant') {
+//     history.push(`/breakout-class/assistant/courses`)
+//   } else {
+//     history.push(`/classroom/${path}`)
+//   }
+
   return (
     <div className={`flex-container ${uiStore.isElectron ? 'draggable' : 'home-cover-web' }`}>
       {uiStore.isElectron ? null : 
@@ -148,7 +204,7 @@ function HomePage() {
       </div>
       }
       <div className="custom-card">
-        {!uiStore.isElectron ? <GithubIcon /> : null}
+        {/* {!uiStore.isElectron ? <GithubIcon /> : null} */}
         <div className="flex-item cover">
           {uiStore.isElectron ? 
           <>
