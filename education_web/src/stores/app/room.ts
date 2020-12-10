@@ -813,8 +813,16 @@ export class RoomStore extends SimpleInterval {
   }
 
   @action
-  async join() {
+  async join(params: any) {
     try {
+      this.appStore.setRoomInfo({
+        roomName: params.roomName,
+        roomType: params.roomType,
+        userName: params.userName,
+        userRole: params.role,
+        userUuid: `${params.userUuid}`
+      })
+      
       this.appStore.uiStore.startLoading()
       this.roomApi = new RoomApi()
       let {roomUuid} = await this.roomApi.fetchRoom({

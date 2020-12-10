@@ -207,7 +207,7 @@ export class AppStore {
       roomType: payload.roomType,
       userName: payload.userName,
       userRole: payload.role,
-      userUuid: `${payload.userName}${payload.role}`
+      userUuid: `${payload.userUuid}`
     })
   }
 

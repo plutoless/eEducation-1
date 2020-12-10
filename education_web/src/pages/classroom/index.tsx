@@ -47,11 +47,20 @@ const RoomController = observer(({children}: any) => {
 
   const history = useHistory()
 
+  const params = new URLSearchParams(location.search)
+
+  const urlObject = {
+    roomName: params.get("roomName"),
+    roomType: params.get("roomType"),
+    role: params.get("role"),
+    userName: params.get("userName"),
+  }
+
   useEffect(() => {
-    if (!appStore.userRole) {
-      history.push('/')
-      return
-    }
+    // if (!appStore.userRole) {
+    //   history.push('/')
+    //   return
+    // }
 
     window.history.pushState(null, document.title, window.location.href);
 
@@ -70,7 +79,7 @@ const RoomController = observer(({children}: any) => {
     let pathList = location.pathname.split('/')
     let path = pathList[pathList.length - 1]
 
-    roomStore.join().then(() => {
+    roomStore.join(urlObject).then(() => {
       uiStore.addToast(t('toast.successfully_joined_the_room'))
     }).catch((err) => {
       console.warn(err.msg)
