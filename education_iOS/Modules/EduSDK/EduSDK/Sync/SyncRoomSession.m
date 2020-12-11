@@ -74,7 +74,7 @@ static dispatch_queue_t AgoraAsyncGetReleaseQueue() {
 - (instancetype)initWithUserUuid:(NSString *)userUuid roomClass:(Class)roomClass useClass:(Class)userClass streamClass:(Class)streamClass {
     
     if(self = [super init]) {
-        self.currentMaxSeq = 0;
+        self.currentMaxSeq = -1;
         self.userUuid = userUuid;
     
         NSAssert([[roomClass alloc] isKindOfClass:BaseSnapshotRoomModel.class], @"roomClass should kind of class BaseSnapshotRoomModel");
@@ -102,7 +102,7 @@ static dispatch_queue_t AgoraAsyncGetReleaseQueue() {
 }
 - (void)_syncSnapshot:(NSDictionary *)syncData complete:(void (^) (void))block {
     
-    self.currentMaxSeq = 0;
+    self.currentMaxSeq = -1;
     [self.localStreams removeAllObjects];
     [self.users removeAllObjects];
     [self.streams removeAllObjects];
@@ -206,7 +206,7 @@ static dispatch_queue_t AgoraAsyncGetReleaseQueue() {
     [AgoraLogManager logMessageWithDescribe:@"sync updateRoom:" message:@{@"room":NoNull(room), @"cause":NoNull(cause), @"sequence":@(sequence), @"currentMaxSeq":@(self.currentMaxSeq)}];
 
     NSInteger gap = sequence - self.currentMaxSeq;
-    if (gap == 1 && self.currentMaxSeq != 0) {
+    if (gap == 1 && self.currentMaxSeq != -1) {
         self.currentMaxSeq = sequence;
         if (room == nil || ![room isKindOfClass:self.roomClass]) {
             [self checkCacheRoomSession];
@@ -248,7 +248,7 @@ static dispatch_queue_t AgoraAsyncGetReleaseQueue() {
     [AgoraLogManager logMessageWithDescribe:@"sync updateUser:" message:@{@"room":NoNull(self.room), @"users":NoNull(users), @"sequence":@(sequence), @"currentMaxSeq":@(self.currentMaxSeq)}];
 
     NSInteger gap = sequence - self.currentMaxSeq;
-    if (gap == 1) {
+    if (gap == 1 && self.currentMaxSeq != -1) {
         self.currentMaxSeq = sequence;
         if (users == nil || users.count == 0 || ![users.firstObject isKindOfClass:self.userClass]) {
             [self checkCacheRoomSession];
@@ -401,7 +401,7 @@ static dispatch_queue_t AgoraAsyncGetReleaseQueue() {
     [AgoraLogManager logMessageWithDescribe:@"sync updateStream:" message:@{@"room":NoNull(self.room), @"streams":NoNull(streams), @"sequence":@(sequence), @"currentMaxSeq":@(self.currentMaxSeq)}];
 
     NSInteger gap = sequence - self.currentMaxSeq;
-    if (gap == 1) {
+    if (gap == 1 && self.currentMaxSeq != -1) {
         
         self.currentMaxSeq = sequence;
         
@@ -508,7 +508,7 @@ static dispatch_queue_t AgoraAsyncGetReleaseQueue() {
     [AgoraLogManager logMessageWithDescribe:@"sync updateOther:" message:@{@"room":NoNull(self.room), @"value":NoNull(value), @"sequence":@(sequence), @"currentMaxSeq":@(self.currentMaxSeq)}];
     
     NSInteger gap = sequence - self.currentMaxSeq;
-    if (gap == 1) {
+    if (gap == 1 && self.currentMaxSeq != -1) {
         
         self.currentMaxSeq = sequence;
         if (value == nil) {
@@ -610,6 +610,10 @@ static dispatch_queue_t AgoraAsyncGetReleaseQueue() {
 }
 
 - (void)handelFetchMessageListStart:(NSInteger)nextId count:(NSInteger)count {
+    //  如果同步没有完成，等待同步完成。 不做增量更新
+    if (self.currentMaxSeq == -1) {
+        return;
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         self.fetchMessageList(nextId, count);
     });
