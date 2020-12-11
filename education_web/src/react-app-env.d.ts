@@ -55,16 +55,6 @@ declare interface RecordingConfig {
 declare module 'react-gtm-module'
 declare module 'eruda'
 
-declare module 'js-md5' {
-  const MD5: any;
-  export default MD5;
-}
-
-declare module 'ua-parser-js' {
-  const UAParserJs: any;
-  export default UAParserJs;
-}
-
 declare interface Device {
   deviceId: string
   label: string
