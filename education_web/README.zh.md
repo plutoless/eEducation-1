@@ -10,7 +10,7 @@
 
 ### 在线体验
 
-[web demo](https://solutions.agora.io/education/web_v2/)
+[点击进入](https://solutions.agora.io/education/web_v2/)
 
 ### 使用的 SDK
 
@@ -51,13 +51,13 @@
    ```bash
    REACT_APP_NETLESS_APP_ID=netless appId
    ```
-   - **（选填）适用于白板课件服务，如不需要可以直接按照下列配置**
+   - **（选填）适用于白板课件服务，如不需要请保留默认配置**
    ```bash
    # 你自己的 OSS bucket name
    REACT_APP_YOUR_OWN_OSS_BUCKET_NAME=your_oss_bucket_name
    # 你自己的 OSS bucket folder
    REACT_APP_YOUR_OWN_OSS_BUCKET_FOLDER=your_oss_bucket_folder
-   # 你自己的 OSS bucket region
+   # 你自己的 OSS bucket region, 需要填写英文region id,如oss-cn-shanghai,可参考[此页面](https://help.aliyun.com/document_detail/31837.html)找到对应的region id.
    REACT_APP_YOUR_OWN_OSS_BUCKET_REGION=your_bucket_region
    # 你自己的 OSS bucket access key
    REACT_APP_YOUR_OWN_OSS_BUCKET_KEY=your_bucket_ak
