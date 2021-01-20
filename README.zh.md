@@ -73,7 +73,11 @@ eEducation 示例项目目前存在以下限制条件。
 
 #### 获取第三方白板 Netless 的 AppIdentifier 和 sdkToken，并把 sdkToken 注册到 Agora 教育云服务
 1. 登录 [Netless 控制台](https://console.herewhite.com/)，点击左侧导航栏**应用管理**按钮，创建一个应用后，点击**配置**，获取 `AppIdentifier`，然后点击**生成 sdkToken**，然后复制此 `sdkToken`。
-2. 登录 [Agora 控制台](https://console.agora.io/)，点击左侧导航栏项目管理按钮，再点击对应项目的**编辑**按钮，点击**更新 token**，然后将上一步复制的白板 `sdkToken` 粘贴至弹出的对话框中。
+2. 登录  [Agora 控制台](https://console.agora.io/)，点击左侧导航栏项目管理按钮，再点击对应项目的**编辑**按钮.
+点击**aPaas配置**按钮，勾选**白板**，按照下面格式填写到输入框中。
+{
+    "token": "<your whiteboard sdk token>"// The Netless sdkToken you get in the previous step
+}
 
 ### <a name="run"></a>运行示例项目
 
