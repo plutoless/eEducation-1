@@ -70,11 +70,11 @@ Follow these steps to get an Agora App ID:
 1. Log in to the [Agora console](https://console.agora.io/), click the username in the upper right corner of the page, and open the RESTful API page in the drop-down list.
 2. Click **download** to get the customer ID (customerId) and customer secret (customerSecret).
 
-### Get a Netless app identifier and sdk token, and register the sdk token in Agora Edu Cloud Service
-1. Log in to the [Netless console](https://console.herewhite.com/en/login/), click the **application** button on the left navigation bar to create a new application. After creating an application, click the **configuration** button, make a note of the `AppIdentifier`. Then click **Generate sdktoken**, and make a note of the generated sdktoken.
+### Get an App Identifier and SDK Token for using the whiteboard, and register the SDK token in Agora Room Management Service
+1. Contact [support@agora.io](mailto:support@agora.io) to get an App Identifier and a SDK Token for using the Agora Interactive Whiteboard service, and then pass the SDK Token to the Agora Room Management service.
 2. Log in to the [Agora console](https://sso.agora.io/cn/login/), click the **project management** button in the left navigation bar, then click the **edit** button. After entering the **project edit** page, click the **Config** button of aPaaS. Select the tickbox next to Whiteboard and then pass in a JSON object as follows:
 {
-        "token": "<your whiteboard sdk token>" // The Netless sdkToken you get in the previous step
+        "token": "<your whiteboard sdk token>" // The whiteborad SDK Token you get in the previous step
  }
 
 ### <a name="run"></a>Run the sample project
