@@ -77,9 +77,11 @@ eEducation 示例项目目前存在以下限制条件。
 2. [获取互动白板服务的 App Identifier](https://docs.agora.io/cn/whiteboard/enable_whiteboard?platform=Android#获取-app-identifier)。你需要保存此 App Identifier。
 3. [获取互动白板服务的 SDK Token](https://docs.agora.io/cn/whiteboard/enable_whiteboard?platform=Android#获取-sdk-token)。你需要保存此 SDK Token。
 4. 登录  [Agora 控制台](https://console.agora.io/)，点击左侧导航栏项目管理按钮，再点击对应项目的**编辑**按钮。点击**aPaas配置**按钮，勾选**白板**，按照下面格式填写到输入框中。
+```json
 {
-    "token": "<your whiteboard sdk token>"// The Netless sdkToken you get in the previous step
+    "token": "<your whiteboard sdk token>"// The sdkToken you get in the previous step
 }
+```
 
 ### <a name="run"></a>运行示例项目
 
@@ -88,8 +90,8 @@ eEducation 示例项目目前存在以下限制条件。
 * [iOS 运行指南](./education_iOS/README.zh.md)
 * [Web & Electron 运行指南](./education_web/README.zh.md)
 
-## <a name="edu-cloud-service"></a>教育云服务
-教育云服务是 Agora 专为后端开发能力不够的开发者提供的云服务，能够实现房间、用户和流的状态管理以及状态变更的消息通知。详见[教育云服务 RESTful API 文档](https://agoradoc.github.io/cn/edu-cloud-service/restfulapi/)。
+## <a name="edu-cloud-service"></a>房间管理服务
+房间管理服务是 Agora 专为后端开发能力稍弱的开发者提供的云服务，能够实现房间、用户和流的状态管理以及状态变更的消息通知。详见[房间管理云服务 RESTful API 文档](https://agoradoc.github.io/cn/edu-cloud-service/restfulapi/)。
 
 ## <a name="faq"></a>常见问题
 ### 安全相关
