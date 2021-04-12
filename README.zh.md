@@ -71,10 +71,12 @@ eEducation 示例项目目前存在以下限制条件。
 1. 登录声网[控制台](https://console.agora.io/)，点击页面右上角的用户名，在下拉列表中打开 RESTful API 页面。
 2. 点击下载，即可获取客户 ID（customerId）和客户密钥（customerSecret）。
 
-#### 获取第三方白板 Netless 的 AppIdentifier 和 sdkToken，并把 sdkToken 注册到 Agora 教育云服务
-1. 登录 [Netless 控制台](https://console.herewhite.com/)，点击左侧导航栏**应用管理**按钮，创建一个应用后，点击**配置**，获取 `AppIdentifier`，然后点击**生成 sdkToken**，然后复制此 `sdkToken`。
-2. 登录  [Agora 控制台](https://console.agora.io/)，点击左侧导航栏项目管理按钮，再点击对应项目的**编辑**按钮.
-点击**aPaas配置**按钮，勾选**白板**，按照下面格式填写到输入框中。
+#### 获取 Agora 互动白板服务 的 App Identifier 和 sdk Token，并把 sdk Token 注册到 Agora 房间管理服务
+
+1. 登录 [Agora 控制台](https://console.agora.io/#onboarding)，为你在第一步创建的 Agora 项目[开启互动白板服务](https://docs.agora.io/cn/whiteboard/enable_whiteboard?platform=Android#开启互动白板服务)。
+2. [获取互动白板服务的 App Identifier](https://docs.agora.io/cn/whiteboard/enable_whiteboard?platform=Android#获取-app-identifier)。你需要保存此 App Identifier。
+3. [获取互动白板服务的 SDK Token](https://docs.agora.io/cn/whiteboard/enable_whiteboard?platform=Android#获取-sdk-token)。你需要保存此 SDK Token。
+4. 登录  [Agora 控制台](https://console.agora.io/)，点击左侧导航栏项目管理按钮，再点击对应项目的**编辑**按钮。点击**aPaas配置**按钮，勾选**白板**，按照下面格式填写到输入框中。
 {
     "token": "<your whiteboard sdk token>"// The Netless sdkToken you get in the previous step
 }
