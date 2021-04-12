@@ -16,7 +16,7 @@ _其他语言版本_: [简体中文](README.zh.md)
 * [FAQ](#faq)
 
 ## <a name="overview"></a>About the project
-eEducation is a sample project provided by Agora for developers in the education industry, which demonstrates how to use **[Agora Edu Cloud Service](https://agoradoc.github.io/cn/edu-cloud-service/restfulapi/)**, **Agora RTC SDK**, **Agora RTM SDK**, **Agora Cloud Recording**, and the third-party **Netless whiteboard SDK** to quickly implement basic online interactive tutoring scenarios.
+eEducation is a sample project provided by Agora for developers in the education industry, which demonstrates how to use **[Agora Edu Cloud Service](https://agoradoc.github.io/cn/edu-cloud-service/restfulapi/)**, **Agora RTC SDK**, **Agora RTM SDK**, **Agora Cloud Recording**, and the Agora **Interactive Whiteboard SDK** to quickly implement basic online interactive tutoring scenarios.
 
 ### <a name="scene"></a>Applicable scenarios
 eEducation supports the following scenarios:
@@ -71,11 +71,13 @@ Follow these steps to get an Agora App ID:
 2. Click **download** to get the customer ID (customerId) and customer secret (customerSecret).
 
 ### Get an App Identifier and SDK Token for using the whiteboard, and register the SDK token in Agora Room Management Service
-1. Contact [support@agora.io](mailto:support@agora.io) to get an App Identifier and a SDK Token for using the Agora Interactive Whiteboard service, and then pass the SDK Token to the Agora Room Management service.
+1. Contact [support@agora.io](mailto:support@agora.io) to get an App Identifier and a SDK Token for using the Agora Interactive Whiteboard SDK, and then pass the SDK Token to the Agora Room Management service.
 2. Log in to the [Agora console](https://sso.agora.io/cn/login/), click the **project management** button in the left navigation bar, then click the **edit** button. After entering the **project edit** page, click the **Config** button of aPaaS. Select the tickbox next to Whiteboard and then pass in a JSON object as follows:
+```
 {
         "token": "<your whiteboard sdk token>" // The whiteborad SDK Token you get in the previous step
  }
+```
 
 ### <a name="run"></a>Run the sample project
 See the following documents to compile and run the sample project:
@@ -84,8 +86,8 @@ See the following documents to compile and run the sample project:
 * [Run the iOS project](./education_iOS/README.md)
 * [Run Web and Electron project](./education_web/README.md)
 
-## <a name="edu-cloud-service"></a>Agora Edu Cloud Service
-Designed for developers who are not familiar with back end development, Agora Edu Cloud Service enables managing the states of rooms, users and streams, and notifying all the users in the classroom of state changes. For details, see [Edu Cloud Service RESTful API](https://agoradoc.github.io/en/edu-cloud-service/restfulapi/).
+## <a name="edu-cloud-service"></a>Agora Room Management Service
+Designed for developers who are not familiar with back end development, Agora Room Management Service enables managing the states of rooms, users and streams, and notifying all the users in the classroom of state changes. For details, see [Room Management Service Service RESTful API](https://agoradoc.github.io/en/edu-cloud-service/restfulapi/).
 
 ## <a name="faq"></a>FAQ
 ### Security
