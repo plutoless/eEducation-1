@@ -17,7 +17,7 @@ _Read this article in another language: [English](README.md)_
 * [常见问题](#faq)
 
 ## <a name="overview"></a>项目概述
-Agora eEducation 是声网专为教育行业提供的示例项目，演示了如何通过 [Agora 教育云服务](https://agoradoc.github.io/cn/edu-cloud-service/restfulapi/)，并配合 **Agora RTC SDK**、**Agora RTM SDK**、**Agora 云端录制服务**和**第三方 Netless 白板 SDK**，快速实现基本的在线互动教学场景。
+Agora eEducation 是声网专为教育行业提供的示例项目，演示了如何通过 [Agora 教育云服务](https://agoradoc.github.io/cn/edu-cloud-service/restfulapi/)，并配合 **Agora RTC SDK**、**Agora RTM SDK**、**Agora 云端录制服务**和**互动白板 SDK**，快速实现基本的在线互动教学场景。
 
 ### <a name="scene"></a>支持场景
 eEducation 示例项目支持以下教学场景：
@@ -96,7 +96,7 @@ eEducation 示例项目目前存在以下限制条件。
 ## <a name="faq"></a>常见问题
 ### 安全相关
 
-如果你担心白板 sdkToken 安全问题，你可以部署你自己的生成 Token 的服务。你需要将白板的 sdkToken 保存在你自己的服务端，然后参考以下 Netless 相关文档在你的客户端代码中部署一个生成当前白板房间 Token 的服务：
+如果你担心白板 sdkToken 安全问题，你可以部署你自己的生成 Token 的服务。你需要将白板的 sdkToken 保存在你自己的服务端，然后参考以下白板相关文档在你的客户端代码中部署一个生成当前白板房间 Token 的服务：
 * JS: [白板鉴权](https://developer.netless.link/document-zh/home/project-and-authority/)
 * Android: [创建白板房间和获取白板房间信息](https://developer.netless.link/android-zh/home/android-create-room/)
 * iOS：[创建白板房间和获取白板房间信息](https://developer.netless.link/ios-zh/home/ios-create-room/)
