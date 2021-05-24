@@ -1,6 +1,6 @@
 import { MultipartUploadResult } from 'ali-oss';
 import uuidv4 from 'uuid/v4';
-import { Room, PPT, PPTKind, ApplianceNames } from 'white-web-sdk';
+import { Room, PPT, PPTKind, ApplianceNames, createPPTTask } from 'white-web-sdk';
 import MD5 from 'js-md5';
 import { resolveFileInfo } from './helper';
 
@@ -60,49 +60,120 @@ export class UploadManager {
     folder: string,
     uuid: string,
     onProgress?: PPTProgressListener,
+    region?: string,
+    taskUuid?: string,
+    taskToken?: string
   ): Promise<void> {
     const {fileType} = resolveFileInfo(rawFile);
     const path = `/${folder}/${uuid}${fileType}`;
     const pptURL = await this.addFile(path, rawFile, onProgress);
     let res: PPT;
     if (kind === PPTKind.Static) {
-        res = await pptConverter.convert({
-          url: pptURL,
+        // res = await pptConverter.convert({
+        //   url: pptURL,
+        //   kind: kind,
+        //   onProgressUpdated: (progress: number) => {
+        //     if (onProgress) {
+        //       onProgress(PPTProgressPhase.Converting, progress);
+        //     }
+        //   },
+        // });
+
+        const resp = createPPTTask({
+          uuid: `${taskUuid}`,
           kind: kind,
-          onProgressUpdated: (progress: number) => {
-            if (onProgress) {
-              onProgress(PPTProgressPhase.Converting, progress);
-            }
-          },
-        });
+          taskToken: `${taskToken}`,
+          //@ts-ignore
+          region: `${region}` as any,
+          callbacks: {
+            onProgressUpdated: progress => {
+              console.log(' onProgressUpdated ', progress)
+                if (onProgress) {
+                  //@ts-ignore
+                  onProgress(PPTProgressPhase.Converting, progress);
+                }
+              },
+              onTaskFail: () => {
+                console.log(' onTaskFail ')
+                // payload.onProgress({
+                //   phase: 'finish',
+                //   progress: 1,
+                //   isTransFile: true,
+                // })
+              },
+              onTaskSuccess: () => {
+                console.log(' onTaskSuccess ')
+                // payload.onProgress({
+                //   phase: 'finish',
+                //   progress: 1,
+                //   isTransFile: true,
+                // })
+              },
+          }
+        })
+  
+        const ppt = await resp.checkUtilGet();
         const documentFile: PPTDataType = {
           active: true,
           id: `${uuidv4()}`,
           pptType: PPTType.static,
-          data: res.scenes,
+          data: ppt.scenes,
         };
         const scenePath = MD5(`/${uuid}/${documentFile.id}`);
-        this.room.putScenes(`/${scenePath}`, res.scenes);
-        this.room.setScenePath(`/${scenePath}/${res.scenes[0].name}`);
+        this.room.putScenes(`/${scenePath}`, ppt.scenes);
+        this.room.setScenePath(`/${scenePath}/${ppt.scenes[0].name}`);
     } else {
-        res = await pptConverter.convert({
-          url: pptURL,
-          kind: kind,
-          onProgressUpdated: (progress: number) => {
-            if (onProgress) {
-              onProgress(PPTProgressPhase.Converting, progress);
-            }
-          },
-        });
+      const resp = createPPTTask({
+        uuid: `${taskUuid}`,
+        kind: kind,
+        taskToken: `${taskToken}`,
+        //@ts-ignore
+        region: `${region}` as any,
+        callbacks: {
+          onProgressUpdated: progress => {
+            console.log(' onProgressUpdated ', progress)
+              if (onProgress) {
+                //@ts-ignore
+                onProgress(PPTProgressPhase.Converting, progress);
+              }
+            },
+            onTaskFail: () => {
+              console.log(' onTaskFail ')
+              // payload.onProgress({
+              //   phase: 'finish',
+              //   progress: 1,
+              //   isTransFile: true,
+              // })
+            },
+            onTaskSuccess: () => {
+              console.log(' onTaskSuccess ')
+              // payload.onProgress({
+              //   phase: 'finish',
+              //   progress: 1,
+              //   isTransFile: true,
+              // })
+            },
+        }
+      })
+      const ppt = await resp.checkUtilGet();
+        // res = await pptConverter.convert({
+        //   url: pptURL,
+        //   kind: kind,
+        //   onProgressUpdated: (progress: number) => {
+        //     if (onProgress) {
+        //       onProgress(PPTProgressPhase.Converting, progress);
+        //     }
+        //   },
+        // });
         const documentFile: PPTDataType = {
           active: true,
           id: `${uuidv4()}`,
           pptType: PPTType.dynamic,
-          data: res.scenes,
+          data: ppt.scenes,
         };
         const scenePath = MD5(`/${uuid}/${documentFile.id}`);
-        this.room.putScenes(`/${scenePath}`, res.scenes);
-        this.room.setScenePath(`/${scenePath}/${res.scenes[0].name}`);
+        this.room.putScenes(`/${scenePath}`, ppt.scenes);
+        this.room.setScenePath(`/${scenePath}/${ppt.scenes[0].name}`);
     }
     if (onProgress) {
         onProgress(PPTProgressPhase.Converting, 1);
