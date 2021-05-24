@@ -3,6 +3,7 @@ import { get } from "lodash";
 import { BoardInfoResponse } from "./interface";
 import { APP_ID, AUTHORIZATION } from "@/utils/config";
 import { HttpClient } from "../utils/http-client";
+import { region } from "@/components/netless-board/region";
 
 export class AgoraBoardApi {
 
@@ -81,7 +82,7 @@ export class AgoraBoardApi {
   async getBoardRoomInfo(roomUuid: string): Promise<any> {
     let res = await this.fetch({
       type: 'board',
-      url: `/v1/rooms/${roomUuid}`,
+      url: `/v1/rooms/${roomUuid}?region=${region}`,
       method: 'GET',
     })
     return res.data

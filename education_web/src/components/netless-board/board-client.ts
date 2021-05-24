@@ -1,8 +1,9 @@
 import { EventEmitter } from 'events';
-import { Room, WhiteWebSdk, DeviceType, createPlugins, Plugins, JoinRoomParams, Player, ReplayRoomParams, ViewMode, ScreenType } from 'white-web-sdk';
+import { Room, WhiteWebSdk, DeviceType, createPlugins, Plugins, JoinRoomParams, Player, ReplayRoomParams, ViewMode, ScreenType, LoggerReportMode, RoomState } from 'white-web-sdk';
 import { videoPlugin } from '@netless/white-video-plugin';
 import { audioPlugin } from '@netless/white-audio-plugin';
 import { get } from 'lodash';
+import { region } from './region';
 
 const appIdentifier = process.env.REACT_APP_NETLESS_APP_ID as string
 
@@ -31,26 +32,45 @@ export class BoardClient extends EventEmitter {
   }
   
   init () {
+    // this.client = new WhiteWebSdk({
+    //   deviceType: DeviceType.Surface,
+    //   plugins: this.plugins,
+    //   appIdentifier: appIdentifier,
+    //   loggerOptions: {
+    //     disableReportLog: true,
+    //     reportLevelMask: "debug",
+    //     printLevelMask: "debug",
+    //   }
+    // })
     this.client = new WhiteWebSdk({
-      deviceType: DeviceType.Surface,
-      plugins: this.plugins,
-      appIdentifier: appIdentifier,
-      loggerOptions: {
-        disableReportLog: true,
-        reportLevelMask: "debug",
-        printLevelMask: "debug",
-      }
-    })
+      // 其他参数
+    // invisiblePlugins: [IframeBridge],
+    // wrappedComponents: [IframeWrapper],
+    pptParams: {
+      useServerWrap: true
+    },
+    deviceType: DeviceType.Surface,
+    plugins: this.plugins,
+    appIdentifier: appIdentifier,
+    loggerOptions: {
+      reportQualityMode: LoggerReportMode.AlwaysReport,
+      reportDebugLogMode: LoggerReportMode.AlwaysReport,
+      // disableReportLog: true,
+      reportLevelMask: "debug",
+      printLevelMask: "debug",
+    }
+  })
     this.disconnected = true
   }
 
   async join(params: JoinRoomParams) {
     console.log('[breakout board] before board client join', params)
-    this.room = await this.client.joinRoom(params, {
+    //@ts-ignore
+    this.room = await this.client.joinRoom({...params, region: region}, {
       onPhaseChanged: phase => {
         this.emit('onPhaseChanged', phase);
       },
-      onRoomStateChanged: state => {
+      onRoomStateChanged: (state: Partial<RoomState>) => {
         this.emit('onRoomStateChanged', state)
       },
       onDisconnectWithError: error => {
@@ -77,7 +97,7 @@ export class BoardClient extends EventEmitter {
   }
 
   async replay(params: ReplayRoomParams) {
-    this.player = await this.client.replayRoom(params, {
+    this.player = await this.client.replayRoom({...params, region: region}, {
       onPhaseChanged: phase => {
         this.emit('onPhaseChanged', phase)
       },

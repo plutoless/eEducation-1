@@ -2,10 +2,17 @@ import { EduRecordService } from './../../sdk/record/edu-record-service';
 import { BoardClient } from '@/components/netless-board/board-client';
 import { AppStore } from '@/stores/app';
 import { observable, action, computed } from "mobx";
+import CombinePlayerFactory from '@netless/combine-player';
 import { t } from '@/i18n';
 import { PlayerPhase } from 'white-web-sdk';
 
 const cdnPrefix = 'https://agora-adc-artifacts.oss-accelerate.aliyuncs.com'
+
+export function getOSSUrl (mediaUrl: string): string {
+  const res = `${cdnPrefix}/${mediaUrl}`;
+  console.log("resolve: ", res, cdnPrefix);
+  return res;
+}
 
 export class ReplayStore {
 
@@ -30,6 +37,7 @@ export class ReplayStore {
   appStore: AppStore
   boardClient: BoardClient
   recordService: EduRecordService
+  combinePlayer: any;
 
   constructor(appStore: AppStore) {
     this.appStore = appStore
@@ -81,13 +89,13 @@ export class ReplayStore {
   @action
   loadFirstFrame() {
     this.firstFrame = true
-    if (this.player) {
-      this.player.seekToProgressTime(0)
+    if (this.combinePlayer) {
+      this.combinePlayer.seek(0)
     }
   }
 
   @action
-  async replay($el: HTMLDivElement) {
+  async replay($el: HTMLVideoElement) {
     console.log("[replay] replayed", $el);
     this.boardClient.on('onCatchErrorWhenRender', error => {
       console.warn('onCatchErrorWhenRender', error)
@@ -121,11 +129,21 @@ export class ReplayStore {
         beginTimestamp: this.startTime,
         duration: this.duration,
         room: this.boardId,
-        mediaURL: `${cdnPrefix}/${this.mediaUrl}`,
+        // mediaURL: `${cdnPrefix}/${this.mediaUrl}`,
         roomToken: this.boardToken,
       });
       this.player = this.boardClient.player
-      this.player.seekToProgressTime(0);
+      this.player.disableCameraTransform = true
+      const combinePlayerFactory = new CombinePlayerFactory(this.player, {
+        url: getOSSUrl(this.mediaUrl) as string,
+        videoElementID: 'whiteboard',
+      }, true)
+      const combinePlayer = combinePlayerFactory.create()
+      combinePlayer.setOnStatusChange((status: any, message: any) => {
+        console.log("[aclass] [replay] combine player status: ", status, message)
+      })
+      this.combinePlayer = combinePlayer
+      // this.player.seekToProgressTime(0);
     } catch (err) {
       this.appStore.uiStore.addToast(t('toast.replay_failed'))
       throw err
@@ -180,16 +198,16 @@ export class ReplayStore {
   }
 
   pauseCurrentTime() {
-    if (this.online && this.player) {
-      this.player.pause()
+    if (this.online && this.combinePlayer) {
+      this.combinePlayer.pause()
     }
   }
 
   seekToCurrentTime() {
-    const player = this.player
-    if (this.online && player) {
-      player.seekToProgressTime(this.currentTime);
-      player.play();
+    const combinePlayer = this.combinePlayer
+    if (this.online && combinePlayer) {
+      combinePlayer.seek(this.currentTime);
+      combinePlayer.play();
     }
   }
 
@@ -200,23 +218,25 @@ export class ReplayStore {
   updateProgress(v: number) {
     this.progress = v;
     this.currentTime = v;
+    // this.replayMessages = this.chatMessages.filter((it: any) => (this.startTime + this.currentTime >= it.ms))
+    this.combinePlayer.seek(v)
   }
 
   handlePlayerClick() {
-    const player = this.player
-    if (this.online && player) {
-      if (player.phase === PlayerPhase.Playing) {
-        player.pause();
+    const combinePlayer = this.combinePlayer
+    if (this.online && combinePlayer) {
+      if (this.phase === PlayerPhase.Playing) {
+        combinePlayer.pause();
         return;
       }
-      if (player.phase === PlayerPhase.WaitingFirstFrame || player.phase === PlayerPhase.Pause) {
-        player.play();
+      if (this.phase === PlayerPhase.WaitingFirstFrame || this.phase === PlayerPhase.Pause) {
+        combinePlayer.play();
         return;
       }
   
-      if (player.phase === PlayerPhase.Ended) {
-        player.seekToProgressTime(0);
-        player.play();
+      if (this.phase === PlayerPhase.Ended) {
+        combinePlayer.seekToProgressTime(0);
+        combinePlayer.play();
         return;
       }
     }
@@ -267,6 +287,7 @@ export class ReplayStore {
     this.statusText = ''
     this.currentTime = 0
     this.player = undefined
+    this.combinePlayer = undefined
     window.removeEventListener('resize', () => {})
     window.removeEventListener('keydown', () => {})
   }

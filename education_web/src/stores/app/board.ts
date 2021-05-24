@@ -22,12 +22,12 @@ export const resolveFileInfo = (file: any) => {
 }
 
 export const ossConfig: OSSConfig = {
-  "accessKeyId": get(process.env, 'REACT_APP_YOUR_OWN_OSS_BUCKET_KEY', 'empty-placeholder'),
-  "accessKeySecret": get(process.env, 'REACT_APP_YOUR_OWN_OSS_BUCKET_SECRET', 'empty-placeholder'),
-  "bucket": get(process.env, 'REACT_APP_YOUR_OWN_OSS_BUCKET_NAME', 'empty-placeholder'),
+  "accessKeyId": 'LTAI4Fv7DfKEtR347iL3uDmu',
+  "accessKeySecret": 'ycdfrOnz0a3MbDzi9Px4fqhXfKWqsy',
+  "bucket": 'beings',
   // "region": process.env.REACT_APP_YOUR_OWN_OSS_BUCKET_REGION as string,
-  "endpoint": get(process.env, 'REACT_APP_YOUR_OWN_OSS_CDN_ACCELERATE', 'empty-placeholder'),
-  "folder": get(process.env, 'REACT_APP_YOUR_OWN_OSS_BUCKET_FOLDER', 'empty-placeholder'),
+  "endpoint": 'oss-accelerate.aliyuncs.com',
+  "folder": 'test',
 }
 
 const pathName = (path: string): string => {
@@ -820,7 +820,9 @@ export class BoardStore {
           PPTKind.Dynamic,
           ossConfig.folder,
           room.uuid,
-          onProgress);
+          onProgress,
+          room.roomToken,
+          );
       } catch (err) {
         if (this.uploadPhase === 'uploading') {
           this.updateUploadPhase('upload_failure')
@@ -863,7 +865,9 @@ export class BoardStore {
           PPTKind.Static,
           ossConfig.folder,
           room.uuid,
-          onProgress);
+          onProgress,
+          room.roomToken,
+          );
       }
     } catch (err) {
       if (this.uploadPhase === 'uploading') {

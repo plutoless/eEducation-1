@@ -57,7 +57,7 @@ export const ReplayController: React.FC<any> = observer(() => {
 
   const replayStore = useReplayStore()
 
-  const replayRef = useRef<HTMLDivElement | null>(null)
+  const replayRef = useRef<HTMLVideoElement | null>(null)
 
   useInterval(() => {
     replayStore.getCourseRecordBy(roomUuid as string)
@@ -99,7 +99,7 @@ export const ReplayController: React.FC<any> = observer(() => {
         <PlayerCover />
         <div className="player">
           <div className="agora-log"></div>
-          <div ref={replayRef} id="whiteboard" className="whiteboard"></div>
+          <video ref={replayRef} id="whiteboard" className="whiteboard" />
           <div className="video-menu">
             <div className="control-btn">
               <div className={`btn ${replayStore.player && replayStore.phase === PlayerPhase.Playing ? 'paused' : 'play'}`} onClick={handlePlayerClick}></div>

@@ -3,6 +3,7 @@ import uuidv4 from 'uuid/v4';
 import { Room, PPT, PPTKind, ApplianceNames, createPPTTask } from 'white-web-sdk';
 import MD5 from 'js-md5';
 import { resolveFileInfo } from './helper';
+import { region } from "@/components/netless-board/region";
 
 export type imageSize = {
   width: number
@@ -60,14 +61,23 @@ export class UploadManager {
     folder: string,
     uuid: string,
     onProgress?: PPTProgressListener,
-    region?: string,
-    taskUuid?: string,
     taskToken?: string
   ): Promise<void> {
     const {fileType} = resolveFileInfo(rawFile);
     const path = `/${folder}/${uuid}${fileType}`;
     const pptURL = await this.addFile(path, rawFile, onProgress);
     let res: PPT;
+
+    // Conversion Api https://developer.netless.link/server-en/home/server-conversion
+    // Need Get taskUuid and taskToken from developer backend
+
+    //@ts-ignore
+    const taskUuid = '69c71b00bcb911eb8db3d1c19e1a6228'
+    // const token =
+    // const taskUuid = 'taskUuid'
+
+    //@ts-ignore
+    const token = 'NETLESSTASK_YWs9MU53eWgwbDFvWWs4WkVjbmRtZGloMHJiY1VlbEJxNVJKTzFTJm5vbmNlPTE2MjE4Nzk3Mzk4MzUwMCZyb2xlPTAmc2lnPTk3ZmUwZTlmNDFiOGQ5Yjc3MWEyZTVhMWRiNGVlMWVmODcwZGUwMzkzM2QxZTQ2N2ZiN2FkODMyOTUwYWFlZjQmdXVpZD02OWM3MWIwMGJjYjkxMWViOGRiM2QxYzE5ZTFhNjIyOA'
     if (kind === PPTKind.Static) {
         // res = await pptConverter.convert({
         //   url: pptURL,
@@ -82,9 +92,9 @@ export class UploadManager {
         const resp = createPPTTask({
           uuid: `${taskUuid}`,
           kind: kind,
-          taskToken: `${taskToken}`,
+          taskToken: `${token}`,
           //@ts-ignore
-          region: `${region}` as any,
+          region: region,
           callbacks: {
             onProgressUpdated: progress => {
               console.log(' onProgressUpdated ', progress)
@@ -93,8 +103,8 @@ export class UploadManager {
                   onProgress(PPTProgressPhase.Converting, progress);
                 }
               },
-              onTaskFail: () => {
-                console.log(' onTaskFail ')
+              onTaskFail: (err: any) => {
+                console.log(' onTaskFail ', err)
                 // payload.onProgress({
                 //   phase: 'finish',
                 //   progress: 1,
@@ -126,9 +136,9 @@ export class UploadManager {
       const resp = createPPTTask({
         uuid: `${taskUuid}`,
         kind: kind,
-        taskToken: `${taskToken}`,
+        taskToken: `${token}`,
         //@ts-ignore
-        region: `${region}` as any,
+        region: region,
         callbacks: {
           onProgressUpdated: progress => {
             console.log(' onProgressUpdated ', progress)
@@ -137,8 +147,8 @@ export class UploadManager {
                 onProgress(PPTProgressPhase.Converting, progress);
               }
             },
-            onTaskFail: () => {
-              console.log(' onTaskFail ')
+            onTaskFail: (err: any) => {
+              console.log(' onTaskFail ', err)
               // payload.onProgress({
               //   phase: 'finish',
               //   progress: 1,
